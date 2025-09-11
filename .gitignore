@@ -1,0 +1,22 @@
+# 忽略 Python 缓存文件
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# 忽略您提到的数据文件
+*.mat
+*.npy
+
+# 强烈建议：忽略您项目中的数据输出目录
+# 根据您的config.py，所有实验结果都存在这里
+data/
+output/
+
+# 忽略常见的IDE/编辑器配置文件
+.vscode/
+.idea/
+
+# 忽略常见的操作系统生成文件
+.DS_Store
+Thumbs.db
