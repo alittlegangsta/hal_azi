@@ -1,5 +1,6 @@
 import os
 import numpy as np
+import pywt
 
 # ==============================================================================
 # --- 项目根目录设置 (Project Root Directory) ---
@@ -61,8 +62,7 @@ TARGET_DEPTH_RANGE = (2732, 4132)
 
 # --- 物理模型参数 (Physical Model Parameters) ---
 # 基于 "数据信息.md" 的物理配置
-# 声波阵列以7号接收器为深度基准点 (D)
-# 接收器号越大，位置越浅。接收器间距0.5ft
+# 声波阵列以7号接收器为深度基准点 (D# 接收器号越大，位置越浅。接收器间距0.5ft
 # 声源在1号接收器下方1ft处
 
 # 1号接收器深度: D + (7-1)*0.5 = D + 3.0 ft
@@ -89,11 +89,15 @@ FFT_COEFFICIENTS = 30 # (N)
 # 为了在转换巨大的数据集时避免内存溢出，我们一次只处理一小块数据
 # 这个值可以根据系统RAM大小调整。对于拥有大量RAM的服务器，可以设大一些
 CWT_CHUNK_SIZE = 2048  # 一次处理2048个样本的CWT变换
-
 # CWT变换参数
 SAMPLING_RATE = 1e5  # Hz (采样间隔 10 us)
 CWT_SCALES = np.arange(1, 151) # 尺度数量
 CWT_WAVELET = 'cmor1.5-1.0'  # 复数Morlet小波
+
+# *** 新增：预计算CWT尺度对应的频率轴 (单位: kHz) ***
+SAMPLING_PERIOD = 1 / SAMPLING_RATE
+FREQUENCIES_HZ = pywt.scale2frequency(CWT_WAVELET, CWT_SCALES) / SAMPLING_PERIOD
+CWT_FREQUENCIES_KHZ = FREQUENCIES_HZ / 1000
 
 # 模型输入形状
 TIME_STEPS = 400
@@ -105,6 +109,10 @@ BATCH_SIZE = 128
 EPOCHS = 100
 LEARNING_RATE = 1e-4
 VALIDATION_SPLIT = 0.2
+
+# Grad-CAM 可解释性分析所需参数
+# 这是我们A²INet模型解码器路径中的最后一个卷积层的名字
+LAST_CONV_LAYER_NAME = 'conv2d_15' 
 
 # ==============================================================================
 # --- 旧回归任务参数 (Legacy Regression Task Parameters) - (存档) ---

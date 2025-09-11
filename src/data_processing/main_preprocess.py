@@ -4,18 +4,36 @@ import numpy as np
 import pandas as pd
 from scipy.io import loadmat
 from scipy.interpolate import interp1d
+from scipy.signal import butter, filtfilt
 import h5py
 from tqdm import tqdm
 
-#  添加项目根目录到系统路径，以便导入模块
+#  添加项目根目录到系统路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.utils.file_io import create_dir, save_pickle
 # 注意：config 模块的导入需要根据您的项目结构进行调整
 from config import (
     RAW_DATA_DIR, PROCESSED_DATA_DIR, ARRAY_ID,
-    TARGET_DEPTH_RANGE, SONIC_RECEIVER_OFFSET, SONIC_SOURCE_OFFSET, TIME_STEPS
+    TARGET_DEPTH_RANGE, SONIC_RECEIVER_OFFSET, SONIC_SOURCE_OFFSET, TIME_STEPS,
+    SAMPLING_RATE #  需要从config导入采样率
 )
+
+
+# *** 新增功能：高通滤波器 ***
+def apply_high_pass_filter(data, cutoff=1000, fs=SAMPLING_RATE, order=4):
+    """
+    对信号应用一个零相位高通巴特沃斯滤波器。
+    完全遵循 strategy_single3_azi.md 中的规范。
+    """
+    nyquist = 0.5 * fs
+    normal_cutoff = cutoff / nyquist
+    # 设计巴特沃斯滤波器
+    b, a = butter(order, normal_cutoff, btype='high', analog=False)
+    # 应用零相位滤波器
+    filtered_data = filtfilt(b, a, data)
+    return filtered_data
+
 
 def load_and_prepare_data(raw_data_dir, array_id):
     """
@@ -24,9 +42,7 @@ def load_and_prepare_data(raw_data_dir, array_id):
     print("Loading raw data files...")
     # 加载超声数据
     cast_data = loadmat(os.path.join(raw_data_dir, 'CAST.mat'))['CAST'][0, 0]
-    df_cast = pd.DataFrame({
-        'Depth': cast_data['Depth'].flatten(),
-    })
+    df_cast = pd.DataFrame({'Depth': cast_data['Depth'].flatten()})
     zc_data = cast_data['Zc']
 
     # 加载指定的声波阵列数据
@@ -56,10 +72,10 @@ def create_unified_depth_grid(target_range, resolution=0.1):
     min_depth, max_depth = target_range
     if min_depth > max_depth:
         min_depth, max_depth = max_depth, min_depth
-        
     unified_depth = np.arange(min_depth, max_depth, resolution)
     print(f"Unified depth grid created from {min_depth} ft to {max_depth} ft with {resolution} ft resolution.")
     return unified_depth
+
 
 def interpolate_to_grid(df, zc_data, unified_depth):
     """
@@ -77,6 +93,7 @@ def interpolate_to_grid(df, zc_data, unified_depth):
     print(f"Zc data interpolated to shape: {interpolated_zc.shape}")
     return interpolated_zc
 
+
 def build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_depth, config):
     """
     构建“真值数字孪生”HDF5数据库并保存处理后的波形pkl文件。
@@ -90,13 +107,11 @@ def build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_de
     
     print(f"Building Ground-Truth Digital Twin database at: {db_path}")
 
-    # 筛选出在目标深度范围内的声波深度点
     sonic_depths_df = df_sonic[
         (df_sonic['Depth'] >= min(config['TARGET_DEPTH_RANGE'])) & 
         (df_sonic['Depth'] <= max(config['TARGET_DEPTH_RANGE']))
     ].copy()
 
-    # 移除重复的深度值，并保留第一次出现的索引
     unique_indices = sonic_depths_df['Depth'].drop_duplicates().index
     unique_sonic_depths_df = sonic_depths_df.loc[unique_indices].sort_values(by='Depth')
     
@@ -104,30 +119,29 @@ def build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_de
     print(f"Found {len(df_sonic)} total sonic depths, "
           f"processing {len(unique_sonic_depths)} unique depths in target range.")
     
-    # *** NEW CODE STARTS HERE ***
-    # 根据唯一深度点的索引，筛选和处理波形数据
-    print("Processing and stacking waveforms for unique depths...")
+    print("Applying high-pass filter and stacking waveforms for unique depths...")
     processed_waveforms_list = []
     original_indices = unique_sonic_depths_df.index
     
-    for idx in tqdm(original_indices, desc="Stacking waveforms"):
+    for idx in tqdm(original_indices, desc="Filtering and Stacking"):
         stacked_waves = np.zeros((8, config['TIME_STEPS']), dtype=np.float32)
         for i, char_code in enumerate(range(ord('A'), ord('H') + 1)):
             side = chr(char_code)
-            # 波形数据形状是 (time, depth), 我们需要转置
-            stacked_waves[i, :] = waveforms_dict[side][:config['TIME_STEPS'], idx]
+            # 提取原始波形
+            raw_wave = waveforms_dict[side][:config['TIME_STEPS'], idx]
+            # *** 在此处应用高通滤波器 ***
+            filtered_wave = apply_high_pass_filter(raw_wave)
+            stacked_waves[i, :] = filtered_wave
         processed_waveforms_list.append(stacked_waves)
         
     processed_waveforms_array = np.stack(processed_waveforms_list, axis=0)
 
-    # 保存处理好的波形和深度到PKL文件
     waveforms_output = {
         'waveforms': processed_waveforms_array,
         'sonic_depths': unique_sonic_depths
     }
     save_pickle(waveforms_output, waveforms_pkl_path)
-    print(f"Processed waveforms and depths saved to: {waveforms_pkl_path}")
-    # *** NEW CODE ENDS HERE ***
+    print(f"Filtered waveforms and depths saved to: {waveforms_pkl_path}")
 
     with h5py.File(db_path, 'w') as hf:
         hf.create_dataset('unified_depth_axis', data=unified_depth)
@@ -156,10 +170,8 @@ def build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_de
 
 
 def main():
-    """
-    主执行函数
-    """
-    config = {
+    """主执行函数"""
+    config_dict = {
         'RAW_DATA_DIR': RAW_DATA_DIR,
         'PROCESSED_DATA_DIR': PROCESSED_DATA_DIR,
         'ARRAY_ID': ARRAY_ID,
@@ -169,10 +181,11 @@ def main():
         'TIME_STEPS': TIME_STEPS
     }
 
-    df_cast, zc_data, df_sonic, waveforms_dict = load_and_prepare_data(config['RAW_DATA_DIR'], config['ARRAY_ID'])
-    unified_depth = create_unified_depth_grid(config['TARGET_DEPTH_RANGE'])
+    df_cast, zc_data, df_sonic, waveforms_dict = load_and_prepare_data(config_dict['RAW_DATA_DIR'], config_dict['ARRAY_ID'])
+    unified_depth = create_unified_depth_grid(config_dict['TARGET_DEPTH_RANGE'])
     interpolated_zc = interpolate_to_grid(df_cast, zc_data, unified_depth)
-    build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_depth, config)
+    build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_depth, config_dict)
+
 
 if __name__ == '__main__':
     main()
