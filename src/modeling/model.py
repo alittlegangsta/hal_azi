@@ -3,18 +3,22 @@ import sys
 import tensorflow as tf
 from tensorflow.keras.layers import (
     Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate,
-    BatchNormalization, Activation, Conv2DTranspose, Multiply, Add, Cropping2D, Reshape
+    BatchNormalization, Activation, Conv2DTranspose, Multiply, Add, Cropping2D,
+    Permute, Dense, Lambda
 )
 from tensorflow.keras.models import Model
 
+#  Add project root to system path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from config import (
-    INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, TIME_STEPS
+    INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, LAST_CONV_LAYER_NAME
 )
 
 def attention_gate(g, x, inter_channels):
-    # ... (此函数保持不变)
+    """
+    Attention Gate module.
+    """
     g = Conv2D(inter_channels, kernel_size=1, strides=1, padding='same')(g)
     g = BatchNormalization()(g)
     x = Conv2D(inter_channels, kernel_size=1, strides=1, padding='same')(x)
@@ -28,9 +32,12 @@ def attention_gate(g, x, inter_channels):
     return f
 
 def build_attention_unet(input_shape, output_height, output_width, name="A2INet"):
+    """
+    Builds the Attention-Augmented U-Net (A²INet).
+    """
     inputs = Input(input_shape)
 
-    # --- 编码器 (Encoder) ---
+    # --- Encoder ---
     conv1 = Conv2D(32, 3, padding='same', activation='relu')(inputs)
     conv1 = BatchNormalization()(conv1)
     conv1 = Conv2D(32, 3, padding='same', activation='relu')(conv1)
@@ -48,7 +55,7 @@ def build_attention_unet(input_shape, output_height, output_width, name="A2INet"
     conv3 = Conv2D(128, 3, padding='same', activation='relu')(conv3)
     conv3 = BatchNormalization()(conv3)
 
-    # --- 解码器 (Decoder) ---
+    # --- Decoder ---
     up4 = Conv2DTranspose(64, kernel_size=2, strides=2, padding='same')(conv3)
     ch, cw = up4.shape[1], up4.shape[2]
     crop_conv2 = Cropping2D(cropping=((0, conv2.shape[1] - ch), (0, conv2.shape[2] - cw)))(conv2)
@@ -69,20 +76,27 @@ def build_attention_unet(input_shape, output_height, output_width, name="A2INet"
     conv5 = Conv2D(32, 3, padding='same', activation='relu')(conv5)
     conv5 = BatchNormalization()(conv5)
 
-    # *** BUG FIX STARTS HERE: Redesigned Output Head ***
-    # 1. 使用1x1卷积将通道数降为1。输出形状: (batch, height, width, 1)
-    final_conv = Conv2D(1, (1, 1), activation='linear', padding='same')(conv5)
-
-    # 2. 使用tf.squeeze移除最后的通道维度。输出形状: (batch, height, width)
-    squeezed = tf.squeeze(final_conv, axis=-1)
-
-    # 3. 使用tf.image.resize调整高度和宽度以匹配目标标签。输出形状: (batch, output_height, output_width)
-    final_output = tf.image.resize(tf.expand_dims(squeezed, -1), [output_height, output_width])
-    final_output = tf.squeeze(final_output, axis=-1)
+    # *** FINAL, COMPATIBLE OUTPUT HEAD ***
+    final_conv_head = Conv2D(output_width, (1, 1), activation='relu', padding='same', name=LAST_CONV_LAYER_NAME)(conv5)
+    
+    permuted = Permute((1, 3, 2))(final_conv_head)
+    
+    dense_on_width = Dense(1, activation='linear')(permuted)
+    
+    # *** BUG FIX STARTS HERE ***
+    # Use a Lambda layer to wrap the tf.squeeze function for compatibility
+    squeezed = Lambda(lambda x: tf.squeeze(x, axis=-1))(dense_on_width)
     # *** BUG FIX ENDS HERE ***
 
-    model = Model(inputs=inputs, outputs=final_output, name=name)
+    permuted_for_height = Permute((2, 1))(squeezed)
+
+    final_dense_height = Dense(output_height, activation='linear')(permuted_for_height)
+
+    final_output = Permute((2, 1), name="final_output")(final_dense_height)
+    
+    model = Model(inputs=inputs, outputs=final_output, name="A2INet_v4")
     return model
+
 
 if __name__ == '__main__':
     a2inet_model = build_attention_unet(
@@ -91,3 +105,4 @@ if __name__ == '__main__':
         output_width=FFT_COEFFICIENTS
     )
     a2inet_model.summary()
+    print(f"\nGrad-CAM will target this layer: '{LAST_CONV_LAYER_NAME}'")

@@ -5,122 +5,85 @@ import pywt
 # ==============================================================================
 # --- 项目根目录设置 (Project Root Directory) ---
 # ==============================================================================
-# 通常，config.py位于项目根目录，所以我们使用'.'
-# 如果您从其他地方运行，可能需要调整
 ROOT_DIR = '.'
+# 通过环境变量获取ARRAY_ID，确保main.py的命令行参数能被读取
+# 在直接运行脚本时，默认值为3
+ARRAY_ID = int(os.getenv('ARRAY_ID', '3'))
 
 # ==============================================================================
 # --- 核心实验参数 (Core Experiment Parameters) ---
 # ==============================================================================
-# 通过命令行参数 --array 指定要处理的阵列接收器ID
-# 默认值为3号阵列
-ARRAY_ID = int(os.getenv('ARRAY_ID', '3'))
-
-# 调试模式：如果为True，将只处理少量数据点以进行快速流程验证
-# 这直接响应了备忘录中关于高效调试的要求
 DEBUG_MODE = True
-DEBUG_SONIC_DEPTH_POINTS = 260 # 在调试模式下处理的声波深度点数量
+# 确保在调试时至少能产生3个批次的数据 (ceil(260/128) = 3)
+DEBUG_SONIC_DEPTH_POINTS = 260
 
 # ==============================================================================
 # --- 任务类型定义 (Task Type Definition) ---
 # ==============================================================================
-# 定义当前要执行的任务类型，这允许我们在新旧方案之间切换
-# 'regression': 旧的CSI回归任务
-# 'image_translation': 新的AVIP项目，从声波CWT图像到Zc FFT图像的翻译
 TASK_TYPE = 'image_translation'
 
 # ==============================================================================
 # --- 目录与路径设置 (Directories and Paths) ---
 # ==============================================================================
-# 原始数据目录
 RAW_DATA_DIR = os.path.join(ROOT_DIR, 'data', 'raw')
-
-# 处理后数据的根目录
 PROCESSED_DATA_DIR = os.path.join(ROOT_DIR, 'data', 'processed', TASK_TYPE)
-
-# 日志、模型和结果的输出目录
 OUTPUT_DIR = os.path.join(ROOT_DIR, 'output', TASK_TYPE, f'array_{str(ARRAY_ID).zfill(2)}')
 LOG_DIR = os.path.join(OUTPUT_DIR, 'logs')
 MODEL_DIR = os.path.join(OUTPUT_DIR, 'models')
 RESULTS_DIR = os.path.join(OUTPUT_DIR, 'results')
-
-# --- AVIP项目特定路径 ---
-# AVIP Phase 1: “真值数字孪生”数据库路径
 GROUND_TRUTH_DB_DIR = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}')
 GROUND_TRUTH_DB_PATH = os.path.join(GROUND_TRUTH_DB_DIR, f'ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5')
-
-# AVIP Phase 2: TFRecord数据集路径
 TFRECORD_DIR = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}', 'tfrecords')
-MAX_PATH_DEPTH_POINTS = 40
-# (将在下一阶段使用)
 
 # ==============================================================================
 # --- 数据处理参数 (Data Processing Parameters) ---
 # ==============================================================================
-# 目标分析的深度范围 (ft)
 TARGET_DEPTH_RANGE = (2732, 4132)
-
-# --- 物理模型参数 (Physical Model Parameters) ---
-# 基于 "数据信息.md" 的物理配置
-# 声波阵列以7号接收器为深度基准点 (D# 接收器号越大，位置越浅。接收器间距0.5ft
-# 声源在1号接收器下方1ft处
-
-# 1号接收器深度: D + (7-1)*0.5 = D + 3.0 ft
-# 声源深度: (D + 3.0) + 1.0 = D + 4.0 ft
-SONIC_SOURCE_OFFSET = 4.0  # ft, 相对于7号接收器测量深度的偏移量
-
-# 各接收器相对于7号接收器测量深度的偏移量 (ft)
-# 正值表示更深，负值表示更浅
+SONIC_SOURCE_OFFSET = 4.0
 SONIC_RECEIVER_OFFSET = {
     1: 3.0, 2: 2.5, 3: 2.0, 4: 1.5, 5: 1.0, 6: 0.5, 7: 0.0,
     8: -0.5, 9: -1.0, 10: -1.5, 11: -2.0, 12: -2.5, 13: -3.0
 }
-
-# --- AVIP项目特定数据参数 ---
-# 在FFT变换后保留的低频系数数量 (N)
-# 最终标签向量长度为 N (因为我们只取幅度)
-FFT_COEFFICIENTS = 30 # (N)
+FFT_COEFFICIENTS = 30
+MAX_PATH_DEPTH_POINTS = 70
 
 # ==============================================================================
 # --- CWT和模型参数 (CWT & Model Parameters) ---
 # ==============================================================================
-
-# --- CWT分块处理参数 (CWT Chunking Parameter) ---
-# 为了在转换巨大的数据集时避免内存溢出，我们一次只处理一小块数据
-# 这个值可以根据系统RAM大小调整。对于拥有大量RAM的服务器，可以设大一些
-CWT_CHUNK_SIZE = 2048  # 一次处理2048个样本的CWT变换
-# CWT变换参数
+# --- CWT变换参数 ---
 SAMPLING_RATE = 1e5  # Hz (采样间隔 10 us)
-CWT_SCALES = np.arange(1, 151) # 尺度数量
-CWT_WAVELET = 'cmor1.5-1.0'  # 复数Morlet小波
-
-# *** 新增：预计算CWT尺度对应的频率轴 (单位: kHz) ***
-SAMPLING_PERIOD = 1 / SAMPLING_RATE
-FREQUENCIES_HZ = pywt.scale2frequency(CWT_WAVELET, CWT_SCALES) / SAMPLING_PERIOD
-CWT_FREQUENCIES_KHZ = FREQUENCIES_HZ / 1000
-
-# 模型输入形状
+CWT_WAVELET = 'cmor1.5-1.0'
 TIME_STEPS = 400
 N_CHANNELS = 8
-INPUT_SHAPE = (len(CWT_SCALES), TIME_STEPS, N_CHANNELS)
+CWT_CHUNK_SIZE = 2048
 
-# 训练参数
+# *** 逻辑修正：根据目标频率范围 (1-30kHz) 计算CWT尺度 ***
+TARGET_FREQ_MIN_HZ = 1000  # 1 kHz
+TARGET_FREQ_MAX_HZ = 30000 # 30 kHz
+N_SCALES = 150 # 保持尺度的数量以维持图像分辨率
+
+# 计算能产生目标频率的尺度范围
+SAMPLING_PERIOD = 1 / SAMPLING_RATE
+# 尺度 s = (小波中心频率 * 采样率) / 目标频率
+# pywt.central_frequency('cmor1.5-1.0') -> 1.0
+CENTRAL_FREQ = pywt.central_frequency(CWT_WAVELET)
+MIN_SCALE = (CENTRAL_FREQ * SAMPLING_RATE) / TARGET_FREQ_MAX_HZ
+MAX_SCALE = (CENTRAL_FREQ * SAMPLING_RATE) / TARGET_FREQ_MIN_HZ
+
+# 使用对数间隔生成尺度数组，以在低频获得更好分辨率，符合原始方案建议
+CWT_SCALES = np.geomspace(MIN_SCALE, MAX_SCALE, N_SCALES)
+
+# 预计算CWT尺度对应的频率轴 (单位: kHz)
+FREQUENCIES_HZ = pywt.scale2frequency(CWT_WAVELET, CWT_SCALES) / SAMPLING_PERIOD
+CWT_FREQUENCIES_KHZ = FREQUENCIES_HZ / 1000
+# *** 修正结束 ***
+
+# --- 模型参数 ---
+INPUT_SHAPE = (N_SCALES, TIME_STEPS, N_CHANNELS)
+LAST_CONV_LAYER_NAME = 'final_conv_head'
+
+# --- 训练参数 (针对A100优化) ---
 BATCH_SIZE = 128
 EPOCHS = 100
 LEARNING_RATE = 1e-4
 VALIDATION_SPLIT = 0.2
-
-# Grad-CAM 可解释性分析所需参数
-# 这是我们A²INet模型解码器路径中的最后一个卷积层的名字
-LAST_CONV_LAYER_NAME = 'conv2d_15' 
-
-# ==============================================================================
-# --- 旧回归任务参数 (Legacy Regression Task Parameters) - (存档) ---
-# ==============================================================================
-# # 以下参数仅用于旧的CSI回归任务，在AVIP项目中不使用
-# CSI_THRESHOLD = 2.5
-# VERTICAL_WINDOW_SIZE = 2.0  # ft
-# DATA_BALANCE_CONFIG = {
-#     'bins': [0, 0.1, 0.2, 0.4, 0.6, 1.0],
-#     'samples_per_bin': 5000
-# }

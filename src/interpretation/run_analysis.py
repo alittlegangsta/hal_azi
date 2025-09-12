@@ -15,7 +15,7 @@ from src.utils.file_io import create_dir
 from config import (
     ARRAY_ID, PROCESSED_DATA_DIR, MODEL_DIR, RESULTS_DIR,
     INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, BATCH_SIZE,
-    CWT_FREQUENCIES_KHZ, TIME_STEPS, # 导入新变量
+    CWT_FREQUENCIES_KHZ, TIME_STEPS,
     LAST_CONV_LAYER_NAME
 )
 
@@ -78,7 +78,7 @@ def run_model_analysis(num_samples_to_visualize=10):
     create_dir(output_plot_dir)
     print(f"Saving visualization plots to: {output_plot_dir}")
     
-    time_axis_ms = np.arange(TIME_STEPS) * 0.01 # 采样间隔 10us = 0.01ms
+    time_axis_ms = np.arange(TIME_STEPS) * 0.01
 
     for i in tqdm(range(num_samples_to_visualize), desc="Generating plots"):
         input_cwt, true_fft_label, pred_fft_label = features_to_visualize[i], labels_to_visualize[i], predictions[i]
@@ -88,37 +88,43 @@ def run_model_analysis(num_samples_to_visualize=10):
         true_zc_image = reconstruct_zc_from_fft_magnitude(true_fft_label)
         pred_zc_image = reconstruct_zc_from_fft_magnitude(pred_fft_label)
         
-        fig, axes = plt.subplots(1, 4, figsize=(26, 6))
-        fig.suptitle(f'AVIP Analysis with Grad-CAM - Sample {i}', fontsize=16)
+        # *** PLOTTING FIX: 使用2x2网格布局 ***
+        fig, axes = plt.subplots(2, 2, figsize=(18, 14))
+        fig.suptitle(f'AVIP Analysis with Grad-CAM - Sample {i}', fontsize=20)
         
-        # --- 绘图修正 ---
         plot_extent = [time_axis_ms[0], time_axis_ms[-1], CWT_FREQUENCIES_KHZ[-1], CWT_FREQUENCIES_KHZ[0]]
         
-        ax1 = axes[0]
+        # --- Top-Left: Input CWT Image ---
+        ax1 = axes[0, 0]
         ax1.imshow(input_cwt[:, :, 0], aspect='auto', cmap='jet', extent=plot_extent)
-        ax1.set_title('Input: Sonic CWT Image')
+        ax1.set_title('Input: Sonic CWT Image', fontsize=14)
         ax1.set_xlabel('Time (ms)'), ax1.set_ylabel('Frequency (kHz)')
         
-        ax2 = axes[1]
+        # --- Top-Right: Grad-CAM Heatmap ---
+        ax2 = axes[0, 1]
         ax2.imshow(input_cwt[:, :, 0], aspect='auto', cmap='jet', extent=plot_extent)
         ax2.imshow(heatmap_resized, cmap='hot', alpha=0.5, extent=plot_extent)
-        ax2.set_title('Explanation: Grad-CAM Heatmap')
+        ax2.set_title('Explanation: Grad-CAM Heatmap', fontsize=14)
         ax2.set_xlabel('Time (ms)'), ax2.set_ylabel('Frequency (kHz)')
         
-        ax3 = axes[2]
+        # --- Bottom-Left: Ground Truth Zc Image ---
+        ax3 = axes[1, 0]
         im3 = ax3.imshow(true_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
-        ax3.set_title('Ground Truth: Reconstructed Zc Image')
+        ax3.set_title('Ground Truth: Reconstructed Zc Image', fontsize=14)
         ax3.set_xlabel('Azimuthal Angle (0-360 deg)'), ax3.set_ylabel('Relative Depth Points')
         
-        ax4 = axes[3]
+        # --- Bottom-Right: Prediction Zc Image ---
+        ax4 = axes[1, 1]
         im4 = ax4.imshow(pred_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
-        ax4.set_title('Prediction: Reconstructed Zc Image')
+        ax4.set_title('Prediction: Reconstructed Zc Image', fontsize=14)
         ax4.set_xlabel('Azimuthal Angle (0-360 deg)'), ax4.set_ylabel('Relative Depth Points')
-        fig.colorbar(im4, ax=[ax3, ax4], shrink=0.8)
         
-        plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+        # 为Zc图像创建一个共享的颜色条
+        fig.colorbar(im4, ax=axes[1, :].ravel().tolist(), shrink=0.8, label='Acoustic Impedance (Zc)')
+
+        plt.tight_layout(rect=[0, 0, 1, 0.96])
         plot_path = os.path.join(output_plot_dir, f'sample_{i}_comparison_gradcam.png')
-        plt.savefig(plot_path)
+        plt.savefig(plot_path, dpi=150) # 提高保存图像的分辨率
         plt.close(fig)
 
     print("\n--- Analysis and Visualization Complete! ---")
