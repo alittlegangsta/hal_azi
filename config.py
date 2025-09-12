@@ -13,7 +13,7 @@ ARRAY_ID = int(os.getenv('ARRAY_ID', '3'))
 # ==============================================================================
 # --- 核心实验参数 (Core Experiment Parameters) ---
 # ==============================================================================
-DEBUG_MODE = True
+DEBUG_MODE = False
 # 确保在调试时至少能产生3个批次的数据 (ceil(260/128) = 3)
 DEBUG_SONIC_DEPTH_POINTS = 260
 
@@ -80,7 +80,7 @@ CWT_FREQUENCIES_KHZ = FREQUENCIES_HZ / 1000
 
 # --- 模型参数 ---
 INPUT_SHAPE = (N_SCALES, TIME_STEPS, N_CHANNELS)
-LAST_CONV_LAYER_NAME = 'final_conv_head'
+LAST_CONV_LAYER_NAME = 'last_spatial_conv'
 
 # --- 训练参数 (针对A100优化) ---
 BATCH_SIZE = 128

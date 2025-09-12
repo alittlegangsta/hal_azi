@@ -3,8 +3,10 @@ import sys
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
 import math
 from tqdm import tqdm
+from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 #  添加项目根目录到系统路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -88,43 +90,54 @@ def run_model_analysis(num_samples_to_visualize=10):
         true_zc_image = reconstruct_zc_from_fft_magnitude(true_fft_label)
         pred_zc_image = reconstruct_zc_from_fft_magnitude(pred_fft_label)
         
-        # *** PLOTTING FIX: 使用2x2网格布局 ***
-        fig, axes = plt.subplots(2, 2, figsize=(18, 14))
+        # *** PLOTTING FIX: 使用GridSpec进行高级布局 ***
+        fig = plt.figure(figsize=(22, 12))
         fig.suptitle(f'AVIP Analysis with Grad-CAM - Sample {i}', fontsize=20)
         
+        # 创建一个2行3列的网格
+        gs = gridspec.GridSpec(2, 3, figure=fig)
+
+        # CWT图占据前两列
+        ax1 = fig.add_subplot(gs[0, :2]) # 第一行，前两列
+        ax2 = fig.add_subplot(gs[1, :2]) # 第二行，前两列
+        
+        # Zc图占据最后一列
+        ax3 = fig.add_subplot(gs[0, 2]) # 第一行，第三列
+        ax4 = fig.add_subplot(gs[1, 2]) # 第二行，第三列
+
         plot_extent = [time_axis_ms[0], time_axis_ms[-1], CWT_FREQUENCIES_KHZ[-1], CWT_FREQUENCIES_KHZ[0]]
         
-        # --- Top-Left: Input CWT Image ---
-        ax1 = axes[0, 0]
+        # --- 绘制CWT和Grad-CAM图 (现在有了充足的宽度) ---
         ax1.imshow(input_cwt[:, :, 0], aspect='auto', cmap='jet', extent=plot_extent)
         ax1.set_title('Input: Sonic CWT Image', fontsize=14)
         ax1.set_xlabel('Time (ms)'), ax1.set_ylabel('Frequency (kHz)')
         
-        # --- Top-Right: Grad-CAM Heatmap ---
-        ax2 = axes[0, 1]
         ax2.imshow(input_cwt[:, :, 0], aspect='auto', cmap='jet', extent=plot_extent)
         ax2.imshow(heatmap_resized, cmap='hot', alpha=0.5, extent=plot_extent)
         ax2.set_title('Explanation: Grad-CAM Heatmap', fontsize=14)
         ax2.set_xlabel('Time (ms)'), ax2.set_ylabel('Frequency (kHz)')
         
-        # --- Bottom-Left: Ground Truth Zc Image ---
-        ax3 = axes[1, 0]
+        # --- 绘制Zc图 (现在有了充足的高度) ---
         im3 = ax3.imshow(true_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
         ax3.set_title('Ground Truth: Reconstructed Zc Image', fontsize=14)
         ax3.set_xlabel('Azimuthal Angle (0-360 deg)'), ax3.set_ylabel('Relative Depth Points')
         
-        # --- Bottom-Right: Prediction Zc Image ---
-        ax4 = axes[1, 1]
         im4 = ax4.imshow(pred_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
         ax4.set_title('Prediction: Reconstructed Zc Image', fontsize=14)
         ax4.set_xlabel('Azimuthal Angle (0-360 deg)'), ax4.set_ylabel('Relative Depth Points')
         
-        # 为Zc图像创建一个共享的颜色条
-        fig.colorbar(im4, ax=axes[1, :].ravel().tolist(), shrink=0.8, label='Acoustic Impedance (Zc)')
+        # --- 绘制独立的颜色条 ---
+        divider3 = make_axes_locatable(ax3)
+        cax3 = divider3.append_axes("right", size="7%", pad=0.1)
+        fig.colorbar(im3, cax=cax3, label='Acoustic Impedance (Zc)')
+
+        divider4 = make_axes_locatable(ax4)
+        cax4 = divider4.append_axes("right", size="7%", pad=0.1)
+        fig.colorbar(im4, cax=cax4, label='Acoustic Impedance (Zc)')
 
         plt.tight_layout(rect=[0, 0, 1, 0.96])
         plot_path = os.path.join(output_plot_dir, f'sample_{i}_comparison_gradcam.png')
-        plt.savefig(plot_path, dpi=150) # 提高保存图像的分辨率
+        plt.savefig(plot_path, dpi=150)
         plt.close(fig)
 
     print("\n--- Analysis and Visualization Complete! ---")

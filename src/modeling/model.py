@@ -8,7 +8,7 @@ from tensorflow.keras.layers import (
 )
 from tensorflow.keras.models import Model
 
-#  Add project root to system path
+#  添加项目根目录到系统路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from config import (
@@ -17,7 +17,7 @@ from config import (
 
 def attention_gate(g, x, inter_channels):
     """
-    Attention Gate module.
+    注意力门模块
     """
     g = Conv2D(inter_channels, kernel_size=1, strides=1, padding='same')(g)
     g = BatchNormalization()(g)
@@ -33,11 +33,11 @@ def attention_gate(g, x, inter_channels):
 
 def build_attention_unet(input_shape, output_height, output_width, name="A2INet"):
     """
-    Builds the Attention-Augmented U-Net (A²INet).
+    构建注意力增强型U-Net (A²INet)
     """
     inputs = Input(input_shape)
 
-    # --- Encoder ---
+    # --- 编码器 (Encoder) ---
     conv1 = Conv2D(32, 3, padding='same', activation='relu')(inputs)
     conv1 = BatchNormalization()(conv1)
     conv1 = Conv2D(32, 3, padding='same', activation='relu')(conv1)
@@ -55,7 +55,7 @@ def build_attention_unet(input_shape, output_height, output_width, name="A2INet"
     conv3 = Conv2D(128, 3, padding='same', activation='relu')(conv3)
     conv3 = BatchNormalization()(conv3)
 
-    # --- Decoder ---
+    # --- 解码器 (Decoder) ---
     up4 = Conv2DTranspose(64, kernel_size=2, strides=2, padding='same')(conv3)
     ch, cw = up4.shape[1], up4.shape[2]
     crop_conv2 = Cropping2D(cropping=((0, conv2.shape[1] - ch), (0, conv2.shape[2] - cw)))(conv2)
@@ -73,20 +73,19 @@ def build_attention_unet(input_shape, output_height, output_width, name="A2INet"
     merge5 = concatenate([attn1, up5], axis=3)
     conv5 = Conv2D(32, 3, padding='same', activation='relu')(merge5)
     conv5 = BatchNormalization()(conv5)
-    conv5 = Conv2D(32, 3, padding='same', activation='relu')(conv5)
+    # *** 逻辑修正：为最后一个3x3卷积层命名，作为Grad-CAM的目标 ***
+    conv5 = Conv2D(32, 3, padding='same', activation='relu', name='last_spatial_conv')(conv5)
     conv5 = BatchNormalization()(conv5)
 
-    # *** FINAL, COMPATIBLE OUTPUT HEAD ***
-    final_conv_head = Conv2D(output_width, (1, 1), activation='relu', padding='same', name=LAST_CONV_LAYER_NAME)(conv5)
+    # *** 最终的、优化的输出层 ***
+    # 使用一个1x1卷积，将32个特征通道，转换为目标图像的宽度（即FFT系数的数量）
+    final_conv_head = Conv2D(output_width, (1, 1), activation='linear', padding='same')(conv5)
     
-    permuted = Permute((1, 3, 2))(final_conv_head)
+    reshaped_for_dense = Permute((1, 3, 2))(final_conv_head)
     
-    dense_on_width = Dense(1, activation='linear')(permuted)
+    dense_on_width = Dense(1, activation='linear')(reshaped_for_dense)
     
-    # *** BUG FIX STARTS HERE ***
-    # Use a Lambda layer to wrap the tf.squeeze function for compatibility
     squeezed = Lambda(lambda x: tf.squeeze(x, axis=-1))(dense_on_width)
-    # *** BUG FIX ENDS HERE ***
 
     permuted_for_height = Permute((2, 1))(squeezed)
 
