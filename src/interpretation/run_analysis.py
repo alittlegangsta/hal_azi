@@ -3,9 +3,9 @@ import sys
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
-import matplotlib.gridspec as gridspec
 import math
 from tqdm import tqdm
+from scipy.ndimage import zoom
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
 #  添加项目根目录到系统路径
@@ -36,7 +36,14 @@ def get_grad_cam_heatmap(model, img_array, last_conv_layer_name):
     heatmap = last_conv_layer_output @ pooled_grads[..., tf.newaxis]
     heatmap = tf.squeeze(heatmap)
     heatmap = tf.maximum(heatmap, 0) / (tf.math.reduce_max(heatmap) + 1e-10)
-    return heatmap.numpy()
+    
+    zoom_factors = [
+        img_array.shape[0] / heatmap.shape[0],
+        img_array.shape[1] / heatmap.shape[1]
+    ]
+    heatmap_resized = zoom(heatmap, zoom_factors)
+    
+    return heatmap_resized
 
 
 def reconstruct_zc_from_fft_magnitude(fft_mag_image):
@@ -48,7 +55,7 @@ def reconstruct_zc_from_fft_magnitude(fft_mag_image):
 
 
 def run_model_analysis(num_samples_to_visualize=10):
-    print("--- Starting AVIP Phase 4: Scientific Evaluation & Visualization with Grad-CAM ---")
+    print("--- Starting AVIP Phase 4: Scientific Evaluation & Visualization (Final Version) ---")
     print("Loading the best trained model...")
     model_path = os.path.join(MODEL_DIR, 'best_a2inet_model.h5')
     if not os.path.exists(model_path):
@@ -86,59 +93,53 @@ def run_model_analysis(num_samples_to_visualize=10):
         input_cwt, true_fft_label, pred_fft_label = features_to_visualize[i], labels_to_visualize[i], predictions[i]
         
         heatmap = get_grad_cam_heatmap(model, input_cwt, LAST_CONV_LAYER_NAME)
-        heatmap_resized = tf.image.resize(np.expand_dims(heatmap, axis=-1), [input_cwt.shape[0], input_cwt.shape[1]]).numpy()
         true_zc_image = reconstruct_zc_from_fft_magnitude(true_fft_label)
         pred_zc_image = reconstruct_zc_from_fft_magnitude(pred_fft_label)
         
-        # *** PLOTTING FIX: 使用GridSpec进行高级布局 ***
-        fig = plt.figure(figsize=(22, 12))
-        fig.suptitle(f'AVIP Analysis with Grad-CAM - Sample {i}', fontsize=20)
-        
-        # 创建一个2行3列的网格
-        gs = gridspec.GridSpec(2, 3, figure=fig)
-
-        # CWT图占据前两列
-        ax1 = fig.add_subplot(gs[0, :2]) # 第一行，前两列
-        ax2 = fig.add_subplot(gs[1, :2]) # 第二行，前两列
-        
-        # Zc图占据最后一列
-        ax3 = fig.add_subplot(gs[0, 2]) # 第一行，第三列
-        ax4 = fig.add_subplot(gs[1, 2]) # 第二行，第三列
-
         plot_extent = [time_axis_ms[0], time_axis_ms[-1], CWT_FREQUENCIES_KHZ[-1], CWT_FREQUENCIES_KHZ[0]]
         
-        # --- 绘制CWT和Grad-CAM图 (现在有了充足的宽度) ---
-        ax1.imshow(input_cwt[:, :, 0], aspect='auto', cmap='jet', extent=plot_extent)
-        ax1.set_title('Input: Sonic CWT Image', fontsize=14)
-        ax1.set_xlabel('Time (ms)'), ax1.set_ylabel('Frequency (kHz)')
+        # --- Figure 1: CWT 和 Grad-CAM (最终修正：灰度背景 + 彩色叠加) ---
+        fig1, ax1 = plt.subplots(1, 1, figsize=(18, 8))
+        fig1.suptitle(f'Input & Explanation - Sample {i}', fontsize=16)
         
-        ax2.imshow(input_cwt[:, :, 0], aspect='auto', cmap='jet', extent=plot_extent)
-        ax2.imshow(heatmap_resized, cmap='hot', alpha=0.5, extent=plot_extent)
-        ax2.set_title('Explanation: Grad-CAM Heatmap', fontsize=14)
-        ax2.set_xlabel('Time (ms)'), ax2.set_ylabel('Frequency (kHz)')
+        # 1. 将底层的CWT图绘制为灰度图
+        ax1.imshow(input_cwt[:, :, 0], aspect='auto', cmap='gray', extent=plot_extent)
         
-        # --- 绘制Zc图 (现在有了充足的高度) ---
+        # 2. 直接在同一个ax1上，叠加绘制半透明的彩色热力图
+        ax1.imshow(heatmap, cmap='jet', alpha=0.5, extent=plot_extent, aspect='auto')
+        
+        ax1.set_title('Input CWT (Grayscale) & Grad-CAM Heatmap (Color Overlay)')
+        ax1.set_xlabel('Time (ms)')
+        ax1.set_ylabel('Frequency (kHz)')
+        
+        fig1.tight_layout(rect=[0, 0, 1, 0.96])
+        plot_path1 = os.path.join(output_plot_dir, f'sample_{i}_input_and_gradcam.png')
+        plt.savefig(plot_path1, dpi=150)
+        plt.close(fig1)
+
+        # --- Figure 2: 真值和预测结果对比 ---
+        fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(12, 8))
+        fig2.suptitle(f'Ground Truth vs. Prediction - Sample {i}', fontsize=16)
+
         im3 = ax3.imshow(true_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
-        ax3.set_title('Ground Truth: Reconstructed Zc Image', fontsize=14)
-        ax3.set_xlabel('Azimuthal Angle (0-360 deg)'), ax3.set_ylabel('Relative Depth Points')
+        ax3.set_title('Ground Truth')
+        ax3.set_xlabel('Azimuthal Angle')
+        ax3.set_ylabel('Relative Depth Points')
+        divider3 = make_axes_locatable(ax3)
+        cax3 = divider3.append_axes("right", size="5%", pad=0.1)
+        fig2.colorbar(im3, cax=cax3, label='Acoustic Impedance (Zc)')
         
         im4 = ax4.imshow(pred_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
-        ax4.set_title('Prediction: Reconstructed Zc Image', fontsize=14)
-        ax4.set_xlabel('Azimuthal Angle (0-360 deg)'), ax4.set_ylabel('Relative Depth Points')
-        
-        # --- 绘制独立的颜色条 ---
-        divider3 = make_axes_locatable(ax3)
-        cax3 = divider3.append_axes("right", size="7%", pad=0.1)
-        fig.colorbar(im3, cax=cax3, label='Acoustic Impedance (Zc)')
-
+        ax4.set_title('Prediction')
+        ax4.set_xlabel('Azimuthal Angle')
         divider4 = make_axes_locatable(ax4)
-        cax4 = divider4.append_axes("right", size="7%", pad=0.1)
-        fig.colorbar(im4, cax=cax4, label='Acoustic Impedance (Zc)')
+        cax4 = divider4.append_axes("right", size="5%", pad=0.1)
+        fig2.colorbar(im4, cax=cax4, label='Acoustic Impedance (Zc)')
 
-        plt.tight_layout(rect=[0, 0, 1, 0.96])
-        plot_path = os.path.join(output_plot_dir, f'sample_{i}_comparison_gradcam.png')
-        plt.savefig(plot_path, dpi=150)
-        plt.close(fig)
+        fig2.tight_layout(rect=[0, 0, 1, 0.95])
+        plot_path2 = os.path.join(output_plot_dir, f'sample_{i}_truth_vs_prediction.png')
+        plt.savefig(plot_path2, dpi=150)
+        plt.close(fig2)
 
     print("\n--- Analysis and Visualization Complete! ---")
 
