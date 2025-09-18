@@ -1,3 +1,5 @@
+# 文件路径: src/interpretation/run_analysis.py
+
 import os
 import sys
 import numpy as np
@@ -47,9 +49,21 @@ def get_grad_cam_heatmap(model, img_array, last_conv_layer_name):
 
 
 def reconstruct_zc_from_fft_magnitude(fft_mag_image):
-    n_depths, n_coeffs = fft_mag_image.shape
+    # ==============================================================================
+    # >>>>>>>>>> 代码修改区域 <<<<<<<<<<<
+    # ==============================================================================
+    # 因为模型预测的是 log(1 + magnitude)，我们需要先进行逆变换 exp(x) - 1
+    # 才能得到真实的 magnitude，然后再进行iFFT。
+    # np.expm1(x) 是 np.exp(x) - 1 的高精度版本。
+    # 同时，要确保还原后的值不为负。
+    fft_mag_image_restored = np.maximum(0, np.expm1(fft_mag_image))
+    # ==============================================================================
+    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # ==============================================================================
+
+    n_depths, n_coeffs = fft_mag_image_restored.shape
     full_fft_coeffs = np.zeros((n_depths, 180), dtype=np.complex64)
-    full_fft_coeffs[:, :n_coeffs] = fft_mag_image
+    full_fft_coeffs[:, :n_coeffs] = fft_mag_image_restored
     reconstructed_zc = np.fft.ifft(full_fft_coeffs, axis=1)
     return np.real(reconstructed_zc)
 

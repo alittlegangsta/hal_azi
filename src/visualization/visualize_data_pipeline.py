@@ -1,3 +1,5 @@
+# 文件路径: src/visualization/visualize_data_pipeline.py
+
 import os
 import sys
 import numpy as np
@@ -83,11 +85,21 @@ def visualize_data_processing_steps(sample_index=100):
     plt.close()
     print("Saved plot: 02_cwt_result.png")
     
-    # --- 4. 可视化标签生成过程 (此部分无时间或频率单位，无需修改) ---
+    # --- 4. 可视化标签生成过程 ---
     avg_zc_profile = np.mean(zc_slice, axis=0)
-    fft_magnitudes = np.abs(np.fft.fft(avg_zc_profile))[:FFT_COEFFICIENTS]
+    
+    # ==============================================================================
+    # >>>>>>>>>> 代码修改区域 <<<<<<<<<<<
+    # ==============================================================================
+    # 同样应用对数变换，以确保可视化结果与模型训练时使用的标签一致
+    fft_magnitudes_raw = np.abs(np.fft.fft(avg_zc_profile))
+    fft_magnitudes = np.log1p(fft_magnitudes_raw)[:FFT_COEFFICIENTS]
+    # ==============================================================================
+    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # ==============================================================================
+    
     plt.figure(figsize=(15, 5))
-    plt.suptitle('Step 3: Label Generation Process', fontsize=16)
+    plt.suptitle('Step 3: Label Generation Process (with Log Scaling)', fontsize=16)
     plt.subplot(1, 2, 1)
     plt.imshow(zc_slice, aspect='auto', cmap='viridis', vmin=0, vmax=5)
     plt.title('Original Zc Slice (Ground Truth)')
@@ -95,9 +107,9 @@ def visualize_data_processing_steps(sample_index=100):
     plt.ylabel('Relative Depth Points')
     plt.subplot(1, 2, 2)
     plt.plot(fft_magnitudes)
-    plt.title(f'Final Label: FFT Magnitudes (First {FFT_COEFFICIENTS} coeffs)')
+    plt.title(f'Final Label: Log-Scaled FFT Magnitudes (First {FFT_COEFFICIENTS} coeffs)')
     plt.xlabel('FFT Coefficient Index')
-    plt.ylabel('Magnitude')
+    plt.ylabel('Log(1 + Magnitude)')
     plt.grid(True)
     plt.savefig(os.path.join(output_dir, '03_label_generation.png'))
     plt.close()

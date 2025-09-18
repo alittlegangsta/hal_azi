@@ -1,3 +1,5 @@
+# 文件路径: src/data_processing/create_tfrecords.py
+
 import os
 import sys
 import numpy as np
@@ -29,11 +31,21 @@ def process_zc_slice_to_label(zc_slice, n_fft_coeffs, max_len):
     # 1. 沿方位角轴（180个点）执行FFT
     fft_coeffs = np.fft.fft(zc_slice, axis=1)
     
-    # 2. 取绝对值幅度 (我们最终确认的、克服角度不匹配的最佳策略)
-    fft_magnitudes = np.abs(fft_coeffs)
+    # 2. 取绝对值幅度
+    fft_magnitudes_raw = np.abs(fft_coeffs)
     
+    # ==============================================================================
+    # >>>>>>>>>> 代码修改区域 <<<<<<<<<<<
+    # ==============================================================================
+    # 使用对数变换 log(1 + x) 来压缩数值范围，提升高频（结构）信号的权重。
+    # 这是本次优化的核心步骤。
+    fft_magnitudes = np.log1p(fft_magnitudes_raw).astype(np.float32)
+    # ==============================================================================
+    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # ==============================================================================
+
     # 3. 截取前N个低频系数
-    label_image = fft_magnitudes[:, :n_fft_coeffs].astype(np.float32)
+    label_image = fft_magnitudes[:, :n_fft_coeffs]
     
     # 4. 填充或截断深度轴以匹配max_len
     current_len = label_image.shape[0]
@@ -63,7 +75,7 @@ def create_tfrecords_for_translation():
     """
     主函数：读取CWT图像和Zc真值，创建用于图像翻译的TFRecord文件。
     """
-    print("--- Starting AVIP Phase 2b: TFRecord Generation ---")
+    print("--- Starting AVIP Phase 2b: TFRecord Generation (with Log Scaling) ---")
     
     # 定义输入路径
     array_dir = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}')
