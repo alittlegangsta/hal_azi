@@ -10,6 +10,18 @@ from tqdm import tqdm
 from scipy.ndimage import zoom
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
+# ==============================================================================
+# >>>>>>>>>> 代码修改区域：导入新的评估指标库 <<<<<<<<<<<
+# ==============================================================================
+# 我们将使用 scikit-image 库来计算 SSIM 和 PSNR
+# 如果您的环境中没有安装，请运行: pip install scikit-image
+from skimage.metrics import structural_similarity as ssim
+from skimage.metrics import peak_signal_noise_ratio as psnr
+# ==============================================================================
+# <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# ==============================================================================
+
+
 #  添加项目根目录到系统路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
@@ -22,6 +34,9 @@ from config import (
     CWT_FREQUENCIES_KHZ, TIME_STEPS,
     LAST_CONV_LAYER_NAME
 )
+
+# 强制CPU执行的临时解决方案 (如果GPU环境不稳定)
+# os.environ['CUDA_VISIBLE_DEVICES'] = '-1'
 
 
 def get_grad_cam_heatmap(model, img_array, last_conv_layer_name):
@@ -49,17 +64,9 @@ def get_grad_cam_heatmap(model, img_array, last_conv_layer_name):
 
 
 def reconstruct_zc_from_fft_magnitude(fft_mag_image):
-    # ==============================================================================
-    # >>>>>>>>>> 代码修改区域 <<<<<<<<<<<
-    # ==============================================================================
-    # 因为模型预测的是 log(1 + magnitude)，我们需要先进行逆变换 exp(x) - 1
-    # 才能得到真实的 magnitude，然后再进行iFFT。
-    # np.expm1(x) 是 np.exp(x) - 1 的高精度版本。
-    # 同时，要确保还原后的值不为负。
+    # 根据标签是否经过对数变换，选择合适的逆变换
+    # (假设我们最新的方案是使用了对数变换)
     fft_mag_image_restored = np.maximum(0, np.expm1(fft_mag_image))
-    # ==============================================================================
-    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-    # ==============================================================================
 
     n_depths, n_coeffs = fft_mag_image_restored.shape
     full_fft_coeffs = np.zeros((n_depths, 180), dtype=np.complex64)
@@ -69,7 +76,7 @@ def reconstruct_zc_from_fft_magnitude(fft_mag_image):
 
 
 def run_model_analysis(num_samples_to_visualize=10):
-    print("--- Starting AVIP Phase 4: Scientific Evaluation & Visualization (Final Version) ---")
+    print("--- Starting AVIP Phase 4: Scientific Evaluation with Quantitative Metrics ---")
     print("Loading the best trained model...")
     model_path = os.path.join(MODEL_DIR, 'best_a2inet_model.h5')
     if not os.path.exists(model_path):
@@ -103,37 +110,68 @@ def run_model_analysis(num_samples_to_visualize=10):
     
     time_axis_ms = np.arange(TIME_STEPS) * 0.01
 
-    for i in tqdm(range(num_samples_to_visualize), desc="Generating plots"):
+    # 用于存储所有样本的指标，以便最后计算平均值
+    all_ssim_scores = []
+    all_psnr_scores = []
+
+    for i in tqdm(range(num_samples_to_visualize), desc="Generating plots and metrics"):
         input_cwt, true_fft_label, pred_fft_label = features_to_visualize[i], labels_to_visualize[i], predictions[i]
         
         heatmap = get_grad_cam_heatmap(model, input_cwt, LAST_CONV_LAYER_NAME)
         true_zc_image = reconstruct_zc_from_fft_magnitude(true_fft_label)
         pred_zc_image = reconstruct_zc_from_fft_magnitude(pred_fft_label)
         
+        # ==============================================================================
+        # >>>>>>>>>> 代码修改区域：计算并打印新的评估指标 <<<<<<<<<<<
+        # ==============================================================================
+        # 定义Zc值的物理范围，这对于PSNR和SSIM的计算很重要
+        zc_data_range = 5.0 
+
+        # 计算SSIM。我们只在有意义的深度范围内进行比较
+        valid_depth = np.where(np.any(true_zc_image > 0, axis=1))[0][-1]
+        
+        ssim_score = ssim(
+            true_zc_image[:valid_depth, :], 
+            pred_zc_image[:valid_depth, :], 
+            data_range=zc_data_range
+        )
+        
+        # 计算PSNR
+        psnr_score = psnr(
+            true_zc_image[:valid_depth, :], 
+            pred_zc_image[:valid_depth, :], 
+            data_range=zc_data_range
+        )
+
+        all_ssim_scores.append(ssim_score)
+        all_psnr_scores.append(psnr_score)
+        
+        print(f"\n--- Metrics for Sample {i} ---")
+        print(f"  - Structural Similarity Index (SSIM): {ssim_score:.4f}")
+        print(f"  - Peak Signal-to-Noise Ratio (PSNR): {psnr_score:.2f} dB")
+        # ==============================================================================
+        # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+        # ==============================================================================
+        
         plot_extent = [time_axis_ms[0], time_axis_ms[-1], CWT_FREQUENCIES_KHZ[-1], CWT_FREQUENCIES_KHZ[0]]
         
-        # --- Figure 1: CWT 和 Grad-CAM (最终修正：灰度背景 + 彩色叠加) ---
         fig1, ax1 = plt.subplots(1, 1, figsize=(18, 8))
         fig1.suptitle(f'Input & Explanation - Sample {i}', fontsize=16)
         
-        # 1. 将底层的CWT图绘制为灰度图
         ax1.imshow(input_cwt[:, :, 0], aspect='auto', cmap='gray', extent=plot_extent)
-        
-        # 2. 直接在同一个ax1上，叠加绘制半透明的彩色热力图
         ax1.imshow(heatmap, cmap='jet', alpha=0.5, extent=plot_extent, aspect='auto')
-        
         ax1.set_title('Input CWT (Grayscale) & Grad-CAM Heatmap (Color Overlay)')
         ax1.set_xlabel('Time (ms)')
         ax1.set_ylabel('Frequency (kHz)')
-        
         fig1.tight_layout(rect=[0, 0, 1, 0.96])
         plot_path1 = os.path.join(output_plot_dir, f'sample_{i}_input_and_gradcam.png')
         plt.savefig(plot_path1, dpi=150)
         plt.close(fig1)
 
-        # --- Figure 2: 真值和预测结果对比 ---
         fig2, (ax3, ax4) = plt.subplots(1, 2, figsize=(12, 8))
-        fig2.suptitle(f'Ground Truth vs. Prediction - Sample {i}', fontsize=16)
+        
+        # --- 在标题中加入新的指标，实现可视化 ---
+        fig2.suptitle(f'Ground Truth vs. Prediction - Sample {i}\nSSIM: {ssim_score:.4f} | PSNR: {psnr_score:.2f} dB', fontsize=16)
 
         im3 = ax3.imshow(true_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)
         ax3.set_title('Ground Truth')
@@ -154,6 +192,13 @@ def run_model_analysis(num_samples_to_visualize=10):
         plot_path2 = os.path.join(output_plot_dir, f'sample_{i}_truth_vs_prediction.png')
         plt.savefig(plot_path2, dpi=150)
         plt.close(fig2)
+
+    # --- 计算并打印所有样本的平均指标 ---
+    print("\n" + "="*50)
+    print("--- Average Metrics Across All Visualized Samples ---")
+    print(f"  - Average SSIM: {np.mean(all_ssim_scores):.4f}")
+    print(f"  - Average PSNR: {np.mean(all_psnr_scores):.2f} dB")
+    print("="*50)
 
     print("\n--- Analysis and Visualization Complete! ---")
 

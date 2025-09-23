@@ -1,8 +1,11 @@
+# 文件路径: src/modeling/train.py
+
 import os
 import sys
 import tensorflow as tf
 from tensorflow.keras.callbacks import ModelCheckpoint, EarlyStopping, TensorBoard, ReduceLROnPlateau
 import math
+import numpy as np # 导入numpy用于创建权重
 
 #  添加项目根目录到系统路径
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
@@ -31,15 +34,53 @@ def gradient_difference_loss(y_true, y_pred):
     return tf.reduce_mean(grad_diff_dx) + tf.reduce_mean(grad_diff_dy)
 
 
+# ==============================================================================
+# >>>>>>>>>> 代码修改区域 V2.0：实现频率加权损失 <<<<<<<<<<<
+# ==============================================================================
+
+# --- 步骤1：定义频率权重 ---
+# 创建一个权重向量，其长度等于FFT系数的数量 (FFT_COEFFICIENTS)
+# 我们使用np.linspace来创建一个从1到100线性增加的权重。
+# 这意味着：
+# - 第0个FFT系数（代表平均值）的误差权重为1。
+# - 最后一个高频系数的误差权重为100。
+# 这样可以极大地放大模型在高频结构上所犯错误的惩罚。
+# 你可以根据实验效果调整这个范围，比如 np.linspace(1, 200, ...)
+frequency_weights = tf.constant(
+    np.linspace(1, 100, FFT_COEFFICIENTS), dtype=tf.float32
+)
+
+def weighted_mse_loss(y_true, y_pred):
+    """计算加权的均方误差"""
+    # 计算逐元素的平方误差
+    squared_error = tf.square(y_true - y_pred)
+    
+    # 将平方误差与我们的频率权重相乘
+    # frequency_weights 会被自动广播到 squared_error 的形状
+    weighted_squared_error = squared_error * frequency_weights
+    
+    # 返回加权误差的平均值
+    return tf.reduce_mean(weighted_squared_error)
+
 def hybrid_loss(y_true, y_pred, alpha=0.5):
-    mse_loss = tf.keras.losses.mean_squared_error(y_true, y_pred)
+    """
+    结合了加权MSE和梯度差异损失的新混合损失函数。
+    """
+    # --- 步骤2：使用新的加权MSE替换旧的MSE ---
+    w_mse_loss = weighted_mse_loss(y_true, y_pred)
     grad_loss = gradient_difference_loss(y_true, y_pred)
-    return (1 - alpha) * mse_loss + alpha * grad_loss
+    
+    # 保持混合权重不变，但现在MSE部分对结构的惩罚已经大大增强
+    return (1 - alpha) * w_mse_loss + alpha * grad_loss
+
+# ==============================================================================
+# <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+# ==============================================================================
 
 
 def train_translation_model():
     """主函数：训练 A²INet 模型"""
-    print("--- Starting Phase 3: Model Training for AVIP (Optimized) ---")
+    print("--- Starting Phase 3: Model Training for AVIP (with Frequency-Weighted Loss) ---")
     
     # --- 1. 准备数据 ---
     tfrecord_dir = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}', 'tfrecords')
@@ -50,31 +91,23 @@ def train_translation_model():
     
     dataset_size = sum(1 for _ in full_dataset)
     
-    # *** BUG FIX STARTS HERE: Intelligent Splitting for Debug Mode ***
-    # 确保在debug_mode下也能有验证集
     print(f"Total batches found: {dataset_size}")
     if dataset_size < 2:
-        # 如果总批次数少于2，无法分割，只能全部用于训练
         print("Dataset is too small to split. Training without validation.")
         train_dataset = full_dataset
         val_dataset = None
         train_size = dataset_size
         val_size = 0
     else:
-        # 如果批次数大于等于2，我们确保验证集至少有1个批次
         val_size = max(1, int(VALIDATION_SPLIT * dataset_size))
         train_size = dataset_size - val_size
-        
-        # 再次检查，防止train_size因为取整而变为0
         if train_size == 0:
             train_size = 1
             val_size = dataset_size - 1
-        
         train_dataset = full_dataset.take(train_size)
         val_dataset = full_dataset.skip(train_size)
     
     print(f"Dataset split: {train_size} training batches, {val_size} validation batches.")
-    # *** BUG FIX ENDS HERE ***
 
     # --- 2. 构建模型 ---
     print("Building A²INet model...")
@@ -85,8 +118,9 @@ def train_translation_model():
     )
     
     # --- 3. 编译模型 ---
-    print("Compiling model with hybrid loss and gradient clipping...")
+    print("Compiling model with NEW hybrid loss and gradient clipping...")
     optimizer = tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE, clipvalue=1.0)
+    # --- 关键改动：确保编译时使用的是我们新定义的 hybrid_loss ---
     model.compile(optimizer=optimizer, loss=hybrid_loss, metrics=['mae'])
     model.summary()
 
@@ -97,7 +131,6 @@ def train_translation_model():
     checkpoint_path = os.path.join(MODEL_DIR, 'best_a2inet_model.h5')
     callbacks = [TensorBoard(log_dir=LOG_DIR, histogram_freq=1)]
     
-    # 只有在有验证集时，才使用依赖验证集的回调
     if val_dataset:
         callbacks.extend([
             ModelCheckpoint(filepath=checkpoint_path, monitor='val_loss', save_best_only=True, mode='min', verbose=1),
@@ -110,12 +143,10 @@ def train_translation_model():
     history = model.fit(
         train_dataset,
         epochs=EPOCHS,
-        validation_data=val_dataset, # 如果val_dataset为None，Keras会自动处理
+        validation_data=val_dataset,
         callbacks=callbacks
     )
     
-    # 在训练结束后，手动保存最终的模型状态，确保总有一个模型文件
-    # 即使EarlyStopping在中间停止了训练
     print("Saving final model state...")
     model.save(checkpoint_path)
 
