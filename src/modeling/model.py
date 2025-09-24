@@ -1,10 +1,12 @@
+# 文件路径: src/modeling/model.py
+
 import os
 import sys
 import tensorflow as tf
 from tensorflow.keras.layers import (
     Input, Conv2D, MaxPooling2D, UpSampling2D, concatenate,
     BatchNormalization, Activation, Conv2DTranspose, Multiply, Add, Cropping2D,
-    Permute, Dense, Lambda
+    Permute, Dense, Lambda, LeakyReLU, Flatten, Dropout
 )
 from tensorflow.keras.models import Model
 
@@ -14,6 +16,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(
 from config import (
     INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, LAST_CONV_LAYER_NAME
 )
+
+# ==============================================================================
+# --- 生成器 (Generator) ---
+# 您原来的 A²INet 模型现在作为生成器。我们保持它不变。
+# ==============================================================================
 
 def attention_gate(g, x, inter_channels):
     """
@@ -31,9 +38,9 @@ def attention_gate(g, x, inter_channels):
     f = Multiply()([x, alpha])
     return f
 
-def build_attention_unet(input_shape, output_height, output_width, name="A2INet"):
+def build_attention_unet(input_shape, output_height, output_width, name="Generator_A2INet"):
     """
-    构建注意力增强型U-Net (A²INet)
+    构建注意力增强型U-Net (A²INet)，作为GAN的生成器。
     """
     inputs = Input(input_shape)
 
@@ -73,35 +80,60 @@ def build_attention_unet(input_shape, output_height, output_width, name="A2INet"
     merge5 = concatenate([attn1, up5], axis=3)
     conv5 = Conv2D(32, 3, padding='same', activation='relu')(merge5)
     conv5 = BatchNormalization()(conv5)
-    # *** 逻辑修正：为最后一个3x3卷积层命名，作为Grad-CAM的目标 ***
     conv5 = Conv2D(32, 3, padding='same', activation='relu', name='last_spatial_conv')(conv5)
     conv5 = BatchNormalization()(conv5)
 
-    # *** 最终的、优化的输出层 ***
-    # 使用一个1x1卷积，将32个特征通道，转换为目标图像的宽度（即FFT系数的数量）
     final_conv_head = Conv2D(output_width, (1, 1), activation='linear', padding='same')(conv5)
-    
     reshaped_for_dense = Permute((1, 3, 2))(final_conv_head)
-    
     dense_on_width = Dense(1, activation='linear')(reshaped_for_dense)
-    
     squeezed = Lambda(lambda x: tf.squeeze(x, axis=-1))(dense_on_width)
-
     permuted_for_height = Permute((2, 1))(squeezed)
-
     final_dense_height = Dense(output_height, activation='linear')(permuted_for_height)
-
     final_output = Permute((2, 1), name="final_output")(final_dense_height)
     
-    model = Model(inputs=inputs, outputs=final_output, name="A2INet_v4")
+    model = Model(inputs=inputs, outputs=final_output, name=name)
     return model
 
+# ==============================================================================
+# >>>>>>>>>> 新增代码：判别器 (Discriminator) <<<<<<<<<<<
+# ==============================================================================
+def build_discriminator(input_height, input_width, name="Discriminator"):
+    """
+    构建一个判别器模型 (PatchGAN a-like)。
+    它接收一个图像作为输入，并输出一个概率值，判断该图像是真实的还是伪造的。
+    """
+    # 输入层：FFT标签图像
+    inp = Input(shape=[input_height, input_width, 1])
+
+    # 下采样模块
+    down1 = Conv2D(64, 4, strides=2, padding='same')(inp)
+    down1 = LeakyReLU()(down1)
+
+    down2 = Conv2D(128, 4, strides=2, padding='same')(down1)
+    down2 = BatchNormalization()(down2)
+    down2 = LeakyReLU()(down2)
+
+    down3 = Conv2D(256, 4, strides=2, padding='same')(down2)
+    down3 = BatchNormalization()(down3)
+    down3 = LeakyReLU()(down3)
+
+    # 最后一个卷积层，输出一个单通道的概率图
+    last = Conv2D(1, 4, strides=1, padding='same')(down3)
+
+    return Model(inputs=inp, outputs=last, name=name)
 
 if __name__ == '__main__':
-    a2inet_model = build_attention_unet(
+    generator = build_attention_unet(
         input_shape=INPUT_SHAPE,
         output_height=MAX_PATH_DEPTH_POINTS,
         output_width=FFT_COEFFICIENTS
     )
-    a2inet_model.summary()
-    print(f"\nGrad-CAM will target this layer: '{LAST_CONV_LAYER_NAME}'")
+    print("--- Generator Summary ---")
+    generator.summary()
+
+    discriminator = build_discriminator(
+        input_height=MAX_PATH_DEPTH_POINTS,
+        input_width=FFT_COEFFICIENTS
+    )
+    print("\n--- Discriminator Summary ---")
+    discriminator.summary()
