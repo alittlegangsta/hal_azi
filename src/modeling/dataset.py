@@ -1,3 +1,5 @@
+# 文件路径: src/modeling/dataset.py
+
 import os
 import sys
 import tensorflow as tf
@@ -12,7 +14,7 @@ from config import (
 
 def _parse_translation_tfrecord_fn(example_proto):
     """
-    为图像翻译任务解析一个tf.train.Example。
+    为图像翻译/分割任务解析一个tf.train.Example。
     """
     # 定义特征描述
     feature_description = {
@@ -29,7 +31,16 @@ def _parse_translation_tfrecord_fn(example_proto):
     
     # 设置正确的形状
     feature_tensor = tf.reshape(feature_tensor, INPUT_SHAPE)
-    label_tensor = tf.reshape(label_tensor, [MAX_PATH_DEPTH_POINTS, FFT_COEFFICIENTS])
+
+    # ==============================================================================
+    # >>>>>>>>>> 代码修改区域 V5.1：修正标签形状 <<<<<<<<<<<
+    # ==============================================================================
+    # 这是唯一的、关键的修改。
+    # 我们告诉解析器，标签现在是一个三维张量，最后一个维度是2（双通道）。
+    label_tensor = tf.reshape(label_tensor, [MAX_PATH_DEPTH_POINTS, FFT_COEFFICIENTS, 2])
+    # ==============================================================================
+    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # ==============================================================================
     
     return feature_tensor, label_tensor
 
@@ -67,7 +78,7 @@ if __name__ == '__main__':
     # 假设的TFRecord路径，请替换为您的实际路径
     from config import PROCESSED_DATA_DIR, ARRAY_ID
     
-    print("--- Testing AVIP Dataset Pipeline ---")
+    print("--- Testing AVIP Dataset Pipeline (for Classification Task) ---")
     
     tfrecord_dir = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}', 'tfrecords')
     test_tfrecord_path = os.path.join(tfrecord_dir, 'translation_data.tfrecord')
@@ -82,7 +93,7 @@ if __name__ == '__main__':
         for features, labels in train_dataset.take(1):
             print("\n--- Batch Loaded Successfully ---")
             print(f"Features batch shape: {features.shape}")
-            print(f"Labels batch shape: {labels.shape}")
+            print(f"Labels batch shape: {labels.shape}") # 应该显示 (batch_size, 70, 30, 2)
             print(f"Features batch dtype: {features.dtype}")
             print(f"Labels batch dtype: {labels.dtype}")
             print("---------------------------------")

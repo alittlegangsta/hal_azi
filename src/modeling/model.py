@@ -17,15 +17,8 @@ from config import (
     INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, LAST_CONV_LAYER_NAME
 )
 
-# ==============================================================================
-# --- 生成器 (Generator) ---
-# 您原来的 A²INet 模型现在作为生成器。我们保持它不变。
-# ==============================================================================
 
 def attention_gate(g, x, inter_channels):
-    """
-    注意力门模块
-    """
     g = Conv2D(inter_channels, kernel_size=1, strides=1, padding='same')(g)
     g = BatchNormalization()(g)
     x = Conv2D(inter_channels, kernel_size=1, strides=1, padding='same')(x)
@@ -83,57 +76,45 @@ def build_attention_unet(input_shape, output_height, output_width, name="Generat
     conv5 = Conv2D(32, 3, padding='same', activation='relu', name='last_spatial_conv')(conv5)
     conv5 = BatchNormalization()(conv5)
 
-    final_conv_head = Conv2D(output_width, (1, 1), activation='linear', padding='same')(conv5)
-    reshaped_for_dense = Permute((1, 3, 2))(final_conv_head)
-    dense_on_width = Dense(1, activation='linear')(reshaped_for_dense)
-    squeezed = Lambda(lambda x: tf.squeeze(x, axis=-1))(dense_on_width)
-    permuted_for_height = Permute((2, 1))(squeezed)
-    final_dense_height = Dense(output_height, activation='linear')(permuted_for_height)
-    final_output = Permute((2, 1), name="final_output")(final_dense_height)
+    # ==============================================================================
+    # >>>>>>>>>> 代码修改区域 V5.3：修正并简化模型头部 <<<<<<<<<<<
+    # ==============================================================================
+    # 1. 使用1x1卷积将特征通道数减少到我们最终需要的通道数 (2)
+    x = Conv2D(2, (1, 1), activation='relu', padding='same')(conv5)
+    
+    # 2. 使用Lambda层包裹tf.image.resize，强制将空间维度调整到正确的 H x W
+    #    这是最稳健、最直接的方法，可以避免复杂的维度变换。
+    x = Lambda(
+        lambda t: tf.image.resize(t, [output_height, output_width])
+    )(x)
+    
+    # 3. 添加最终的激活函数。对于GAN的生成器，tanh通常比sigmoid更稳定。
+    #    tanh的输出范围是(-1, 1)，我们需要在训练脚本中相应地缩放标签。
+    final_output = Activation('tanh', name='final_output')(x)
+
+    # ==============================================================================
+    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修改区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # ==============================================================================
     
     model = Model(inputs=inputs, outputs=final_output, name=name)
     return model
 
-# ==============================================================================
-# >>>>>>>>>> 新增代码：判别器 (Discriminator) <<<<<<<<<<<
-# ==============================================================================
+
 def build_discriminator(input_height, input_width, name="Discriminator"):
     """
-    构建一个判别器模型 (PatchGAN a-like)。
-    它接收一个图像作为输入，并输出一个概率值，判断该图像是真实的还是伪造的。
+    构建判别器模型，包含Dropout以防止模式崩溃。
     """
-    # 输入层：FFT标签图像
     inp = Input(shape=[input_height, input_width, 1])
-
-    # 下采样模块
     down1 = Conv2D(64, 4, strides=2, padding='same')(inp)
     down1 = LeakyReLU()(down1)
-
+    down1 = Dropout(0.3)(down1)
     down2 = Conv2D(128, 4, strides=2, padding='same')(down1)
     down2 = BatchNormalization()(down2)
     down2 = LeakyReLU()(down2)
-
+    down2 = Dropout(0.3)(down2)
     down3 = Conv2D(256, 4, strides=2, padding='same')(down2)
     down3 = BatchNormalization()(down3)
     down3 = LeakyReLU()(down3)
-
-    # 最后一个卷积层，输出一个单通道的概率图
+    down3 = Dropout(0.3)(down3)
     last = Conv2D(1, 4, strides=1, padding='same')(down3)
-
     return Model(inputs=inp, outputs=last, name=name)
-
-if __name__ == '__main__':
-    generator = build_attention_unet(
-        input_shape=INPUT_SHAPE,
-        output_height=MAX_PATH_DEPTH_POINTS,
-        output_width=FFT_COEFFICIENTS
-    )
-    print("--- Generator Summary ---")
-    generator.summary()
-
-    discriminator = build_discriminator(
-        input_height=MAX_PATH_DEPTH_POINTS,
-        input_width=FFT_COEFFICIENTS
-    )
-    print("\n--- Discriminator Summary ---")
-    discriminator.summary()
