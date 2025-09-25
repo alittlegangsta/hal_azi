@@ -2,128 +2,99 @@
 
 import os
 import sys
-import time
 import tensorflow as tf
-import numpy as np
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-from src.modeling.model import build_attention_unet, build_discriminator
+
+from src.modeling.model import build_classifier
 from src.modeling.dataset import create_dataset
-from src.utils.file_io import create_dir
+from src.utils.file_io import create_dir, save_pickle
 from config import (
     ARRAY_ID, PROCESSED_DATA_DIR, MODEL_DIR, LOG_DIR,
-    INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS,
-    BATCH_SIZE, EPOCHS, LEARNING_RATE
+    INPUT_SHAPE, BATCH_SIZE, EPOCHS, LEARNING_RATE
 )
 
-# --- Hyperparameters ---
-LAMBDA = 100
-DISCRIMINATOR_LR_FACTOR = 0.5
+def _parse_classification_tfrecord_fn(example_proto):
+    feature_description = {
+        'feature': tf.io.FixedLenFeature([], tf.string),
+        'label': tf.io.FixedLenFeature([], tf.float32),
+    }
+    parsed_example = tf.io.parse_single_example(example_proto, feature_description)
+    feature_tensor = tf.io.parse_tensor(parsed_example['feature'], out_type=tf.float32)
+    feature_tensor = tf.reshape(feature_tensor, INPUT_SHAPE)
+    label_tensor = tf.reshape(parsed_example['label'], [1])
+    return feature_tensor, label_tensor
 
-# --- Loss Functions ---
-cross_entropy = tf.keras.losses.BinaryCrossentropy(from_logits=True)
+def train_classifier_model():
+    print("--- 开始为二元分类任务进行训练 ---")
 
-def discriminator_loss(real_output, fake_output):
-    real_loss = cross_entropy(tf.ones_like(real_output) * 0.9, real_output)
-    fake_loss = cross_entropy(tf.zeros_like(fake_output), fake_output)
-    return real_loss + fake_loss
-
-def generator_loss(discriminator_fake_output, generated_image, target_image):
-    gan_loss = cross_entropy(tf.ones_like(discriminator_fake_output), discriminator_fake_output)
-    l1_loss = tf.reduce_mean(tf.abs(target_image - generated_image))
-    total_gen_loss = gan_loss + (LAMBDA * l1_loss)
-    return total_gen_loss, gan_loss, l1_loss
-
-# ==============================================================================
-# >>>>>>>>>> 代码修正区域 V5.6：修正过拟合测试的执行逻辑 <<<<<<<<<<<
-# ==============================================================================
-
-def run_overfitting_test():
-    """
-    This function now contains the entire logic for the overfitting test.
-    """
-    print("--- Starting FINAL SANITY CHECK: Overfitting Test on a Single Sample ---")
-
-    # --- Data Pipeline ---
+    # --- 1. 准备数据 ---
     tfrecord_dir = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}', 'tfrecords')
-    tfrecord_path = os.path.join(tfrecord_dir, 'translation_data.tfrecord')
-    print(f"Loading dataset from: {tfrecord_path}")
+    tfrecord_path = os.path.join(tfrecord_dir, 'classification_data.tfrecord')
+    print(f"从以下路径加载数据集: {tfrecord_path}")
     
-    # Load just one batch to start
-    full_dataset = create_dataset(tfrecord_path, batch_size=BATCH_SIZE, is_training=False)
+    full_dataset = create_dataset(tfrecord_path, batch_size=BATCH_SIZE, is_training=True,
+                                  parse_fn=_parse_classification_tfrecord_fn)
+
+    dataset_size = sum(1 for _ in full_dataset)
+    if dataset_size == 0:
+        print("\n致命错误：数据集为空！请使用 '--force_run' 重新生成您的数据文件。")
+        return
+
+    val_size = max(1, int(0.2 * dataset_size))
+    train_size = dataset_size - val_size
     
-    # --- Failsafe: Check if the dataset is empty ---
-    try:
-        single_batch = next(iter(full_dataset))
-        print("Successfully loaded one batch of data for the test.")
-    except StopIteration:
-        print("\nFATAL ERROR: The dataset is empty. No data found in the TFRecord file.")
-        print("Please use '--force_run' in main.py to regenerate your data files correctly.")
-        return # Exit the function
+    full_dataset = create_dataset(tfrecord_path, batch_size=BATCH_SIZE, is_training=True,
+                                  parse_fn=_parse_classification_tfrecord_fn)
+    train_dataset = full_dataset.take(train_size)
+    val_dataset = full_dataset.skip(train_size)
+    print(f"数据集分割: {train_size} 个训练批次, {val_size} 个验证批次。")
 
-    # Create an infinitely repeating dataset from this single batch
-    overfit_dataset = tf.data.Dataset.from_tensors(single_batch).repeat()
-
-    # --- Build Models and Optimizers ---
-    print("Building Generator and Discriminator...")
-    generator = build_attention_unet(
-        input_shape=INPUT_SHAPE,
-        output_height=MAX_PATH_DEPTH_POINTS,
-        output_width=FFT_COEFFICIENTS
+    # --- 2. 构建模型 ---
+    print("构建分类器模型...")
+    model = build_classifier(input_shape=INPUT_SHAPE)
+    
+    # --- 3. 编译模型 ---
+    print("使用BinaryCrossentropy损失函数编译模型...")
+    # ==============================================================================
+    # >>>>>>>>>> 代码修正区域：将 from_logits 设置为 False <<<<<<<<<<<
+    # ==============================================================================
+    # 因为模型现在直接输出概率，我们需要告诉损失函数 from_logits=False
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
+        loss=tf.keras.losses.BinaryCrossentropy(from_logits=False),
+        metrics=['accuracy', tf.keras.metrics.AUC(name='auc')]
     )
-    discriminator = build_discriminator(
-        input_height=MAX_PATH_DEPTH_POINTS,
-        input_width=FFT_COEFFICIENTS
+    # ==============================================================================
+    # <<<<<<<<<<<<<<<<<<<<<<<<<< 修正区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+    # ==============================================================================
+    model.summary()
+
+    # --- 4. 设置回调函数 ---
+    create_dir(MODEL_DIR)
+    create_dir(LOG_DIR)
+    checkpoint_path = os.path.join(MODEL_DIR, 'best_classifier_model.h5')
+    callbacks = [
+        tf.keras.callbacks.TensorBoard(log_dir=LOG_DIR),
+        tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, monitor='val_auc', save_best_only=True, mode='max', verbose=1),
+        tf.keras.callbacks.EarlyStopping(monitor='val_auc', patience=15, mode='max', verbose=1, restore_best_weights=True),
+        tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=5, min_lr=1e-6, verbose=1)
+    ]
+
+    # --- 5. 开始训练 ---
+    print("\n--- 开始模型训练 ---")
+    history = model.fit(
+        train_dataset,
+        epochs=EPOCHS,
+        validation_data=val_dataset,
+        callbacks=callbacks
     )
     
-    generator_optimizer = tf.keras.optimizers.Adam(LEARNING_RATE, beta_1=0.5)
-    discriminator_optimizer = tf.keras.optimizers.Adam(LEARNING_RATE * DISCRIMINATOR_LR_FACTOR, beta_1=0.5)
-
-    @tf.function
-    def train_step(input_image, target):
-        target_channeling = target[..., 0:1]
-        target_good = target[..., 1:2]
-        with tf.GradientTape() as gen_tape, tf.GradientTape() as disc_tape:
-            generated_image = generator(input_image, training=True)
-            generated_channeling = generated_image[..., 0:1]
-            generated_good = generated_image[..., 1:2]
-            real_output_channeling = discriminator(target_channeling, training=True)
-            fake_output_channeling = discriminator(generated_channeling, training=True)
-            real_output_good = discriminator(target_good, training=True)
-            fake_output_good = discriminator(generated_good, training=True)
-            disc_loss_channeling = discriminator_loss(real_output_channeling, fake_output_channeling)
-            disc_loss_good = discriminator_loss(real_output_good, fake_output_good)
-            total_disc_loss = disc_loss_channeling + disc_loss_good
-            
-            gen_total_loss_channeling, _, _ = generator_loss(fake_output_channeling, generated_channeling, target_channeling)
-            gen_total_loss_good, _, _ = generator_loss(fake_output_good, generated_good, target_good)
-            total_gen_loss = gen_total_loss_channeling + gen_total_loss_good
-            
-        generator_gradients = gen_tape.gradient(total_gen_loss, generator.trainable_variables)
-        discriminator_gradients = disc_tape.gradient(total_disc_loss, discriminator.trainable_variables)
-        generator_optimizer.apply_gradients(zip(generator_gradients, generator.trainable_variables))
-        discriminator_optimizer.apply_gradients(zip(discriminator_gradients, discriminator.trainable_variables))
-        return total_disc_loss, total_gen_loss
-
-    # --- The Training Loop ---
-    print("\n--- Starting Overfitting Test Training Loop ---")
-    for step, (input_image, target) in enumerate(overfit_dataset):
-        if step >= 300: # Use >= for clarity
-            break
-        
-        start = time.time()
-        disc_loss, gen_loss = train_step(input_image, target)
-        
-        if (step + 1) % 10 == 0:
-            print(f"Step {step + 1}, Time: {time.time()-start:.2f} sec, Disc Loss: {disc_loss:.4f}, Gen Loss: {gen_loss:.4f}")
-
-    print("\n--- Overfitting Test Complete ---")
-
+    history_path = os.path.join(LOG_DIR, 'training_history.pkl')
+    save_pickle(history.history, history_path)
+    
+    print("\n--- 模型训练完成 ---")
+    print(f"最佳模型已保存至: {checkpoint_path}")
 
 if __name__ == '__main__':
-    # This ensures the test is run when the script is executed
-    run_overfitting_test()
-
-# ==============================================================================
-# <<<<<<<<<<<<<<<<<<<<<<<<<< 修正区域结束 <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-# ==============================================================================
+    train_classifier_model()
