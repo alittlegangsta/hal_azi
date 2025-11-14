@@ -1,4 +1,5 @@
 # 文件路径: src/modeling/train.py
+# (已修正：增加 CWT 伪影掩码)
 
 import os
 import sys
@@ -6,43 +7,30 @@ import tensorflow as tf
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-# --- 导入升级后的模型 ---
 from src.modeling.model import build_advanced_profile_regressor
 from src.modeling.dataset import create_dataset
 from src.utils.file_io import create_dir, save_pickle
 from config import (
     ARRAY_ID, PROCESSED_DATA_DIR, MODEL_DIR, LOG_DIR,
-    INPUT_SHAPE, MAX_PATH_DEPTH_POINTS, BATCH_SIZE, EPOCHS, LEARNING_RATE
+    INPUT_SHAPE, MAX_PATH_DEPTH_POINTS, BATCH_SIZE, EPOCHS, LEARNING_RATE,
+    TASK_TYPE, FFT_COEFFICIENTS
 )
-
-# ==============================================================================
-# >>>>>>>>>> 代码升级：引入数据增强与更优的损失函数 <<<<<<<<<<<
-# ==============================================================================
 
 def augment_cwt(image, label):
     """
-    对CWT图像进行简单的数据增强。
+    (函数保持不变)
     """
-    # 1. 添加高斯噪声
     noise = tf.random.normal(shape=tf.shape(image), mean=0.0, stddev=0.01, dtype=tf.float32)
     image = image + noise
-    
-    # 2. 频率遮挡 (Frequency Masking)
-    #    随机遮挡掉一部分频率通道
     freq_mask_size = tf.random.uniform(shape=[], minval=5, maxval=20, dtype=tf.int32)
     freq_mask_pos = tf.random.uniform(shape=[], minval=0, maxval=INPUT_SHAPE[0] - freq_mask_size, dtype=tf.int32)
-    
     mask_start = freq_mask_pos
     mask_end = freq_mask_pos + freq_mask_size
-    
-    # 创建一个遮挡用的张量
     mask_part1 = tf.ones([mask_start, INPUT_SHAPE[1], INPUT_SHAPE[2]], dtype=tf.float32)
     mask_part2 = tf.zeros([mask_end - mask_start, INPUT_SHAPE[1], INPUT_SHAPE[2]], dtype=tf.float32)
     mask_part3 = tf.ones([INPUT_SHAPE[0] - mask_end, INPUT_SHAPE[1], INPUT_SHAPE[2]], dtype=tf.float32)
-    
     freq_mask = tf.concat([mask_part1, mask_part2, mask_part3], axis=0)
     image = image * freq_mask
-
     return image, label
 
 def _parse_regression_tfrecord_fn(example_proto):
@@ -55,14 +43,41 @@ def _parse_regression_tfrecord_fn(example_proto):
     label_tensor = tf.io.parse_tensor(parsed_example['label'], out_type=tf.float32)
     
     feature_tensor = tf.reshape(feature_tensor, INPUT_SHAPE)
-    label_tensor = tf.reshape(label_tensor, [MAX_PATH_DEPTH_POINTS])
+    
+    # --- 核心修正：掩盖非物理的 CWT 边缘伪影 ---
+    # 0.01ms/step * 30 steps = 0.3ms
+    # 我们将前 30 个时间步（0.3ms）归零，因为这里没有物理信号
+    TIME_STEPS_TO_MASK = 30
+    # 检查以防 TIME_STEPS (400) 小于 30
+    if INPUT_SHAPE[1] > TIME_STEPS_TO_MASK:
+        mask_part1 = tf.zeros([INPUT_SHAPE[0], TIME_STEPS_TO_MASK, INPUT_SHAPE[2]], dtype=tf.float32)
+        mask_part2 = tf.ones([INPUT_SHAPE[0], INPUT_SHAPE[1] - TIME_STEPS_TO_MASK, INPUT_SHAPE[2]], dtype=tf.float32)
+        artifact_mask = tf.concat([mask_part1, mask_part2], axis=1)
+        feature_tensor = feature_tensor * artifact_mask
+    # --- 修正结束 ---
+
+    if TASK_TYPE == 'fft_regression':
+        label_shape = [MAX_PATH_DEPTH_POINTS, FFT_COEFFICIENTS]
+    else:
+        label_shape = [MAX_PATH_DEPTH_POINTS]
+    
+    label_tensor = tf.reshape(label_tensor, label_shape)
     return feature_tensor, label_tensor
 
 def train_regressor_model():
-    print("--- 开始为一维剖面图回归任务进行高级训练 ---")
-
     tfrecord_dir = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}', 'tfrecords')
-    tfrecord_path = os.path.join(tfrecord_dir, 'profile_regression_data.tfrecord')
+
+    if TASK_TYPE == 'fft_regression':
+        print("--- 开始为 FFT 回归任务进行高级训练 (已启用伪影掩码) ---")
+        tfrecord_path = os.path.join(tfrecord_dir, 'fft_regression_data.tfrecord')
+        checkpoint_path = os.path.join(MODEL_DIR, 'best_fft_regressor_model.h5')
+        history_path = os.path.join(LOG_DIR, 'training_history_fft.pkl')
+    else:
+        print("--- 开始为一维剖面图回归任务进行高级训练 ---")
+        tfrecord_path = os.path.join(tfrecord_dir, 'profile_regression_data.tfrecord')
+        checkpoint_path = os.path.join(MODEL_DIR, 'best_advanced_regressor_model.h5')
+        history_path = os.path.join(LOG_DIR, 'training_history_advanced.pkl')
+
     print(f"从以下路径加载数据集: {tfrecord_path}")
 
     full_dataset = create_dataset(tfrecord_path, batch_size=BATCH_SIZE, is_training=True,
@@ -70,18 +85,17 @@ def train_regressor_model():
     
     dataset_size = sum(1 for _ in full_dataset)
     if dataset_size == 0:
+        print(f"错误: 在 {tfrecord_path} 中未找到数据。请先运行 'create_tfrecords'。")
         return
 
     val_size = max(1, int(0.2 * dataset_size))
     train_size = dataset_size - val_size
     
-    # 重新加载数据集以进行分割和增强
     full_dataset = create_dataset(tfrecord_path, batch_size=BATCH_SIZE, is_training=True,
                                   parse_fn=_parse_regression_tfrecord_fn)
     train_dataset = full_dataset.take(train_size)
     val_dataset = full_dataset.skip(train_size)
     
-    # --- 在训练集上应用数据增强 ---
     AUTOTUNE = tf.data.experimental.AUTOTUNE
     train_dataset = train_dataset.map(augment_cwt, num_parallel_calls=AUTOTUNE)
 
@@ -93,17 +107,17 @@ def train_regressor_model():
     print("使用Huber损失函数编译模型...")
     model.compile(
         optimizer=tf.keras.optimizers.Adam(learning_rate=LEARNING_RATE),
-        loss=tf.keras.losses.Huber(), # 使用对异常值更鲁棒的Huber损失
+        loss=tf.keras.losses.Huber(),
         metrics=['mae']
     )
     model.summary()
 
     create_dir(MODEL_DIR); create_dir(LOG_DIR)
-    checkpoint_path = os.path.join(MODEL_DIR, 'best_advanced_regressor_model.h5') # 新的模型名
+    
     callbacks = [
         tf.keras.callbacks.TensorBoard(log_dir=LOG_DIR),
         tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, monitor='val_loss', save_best_only=True, mode='min', verbose=1),
-        tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1, restore_best_weights=True), # 增加一点耐心
+        tf.keras.callbacks.EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1, restore_best_weights=True),
         tf.keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=0.2, patience=7, min_lr=1e-6, verbose=1)
     ]
 
@@ -115,11 +129,11 @@ def train_regressor_model():
         callbacks=callbacks
     )
     
-    history_path = os.path.join(LOG_DIR, 'training_history_advanced.pkl')
     save_pickle(history.history, history_path)
     
     print("\n--- 模型训练完成 ---")
     print(f"最佳模型已保存至: {checkpoint_path}")
+    print(f"训练历史已保存至: {history_path}")
 
 if __name__ == '__main__':
     train_regressor_model()
