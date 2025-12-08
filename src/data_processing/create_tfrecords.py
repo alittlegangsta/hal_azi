@@ -9,7 +9,6 @@ import tensorflow as tf
 from tqdm import tqdm
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-# --- 核心修正：导入 save_pickle ---
 from src.utils.file_io import create_dir, load_pickle, save_pickle
 from config import (
     ARRAY_ID, PROCESSED_DATA_DIR, GROUND_TRUTH_DB_PATH, 
@@ -17,7 +16,6 @@ from config import (
     TASK_TYPE, FFT_COEFFICIENTS
 )
 
-# --- (函数 _bytes_feature, _process_zc_slice_to_1d_label, _process_zc_slice_to_fft_label, create_tfrecord_example 保持不变) ---
 def _bytes_feature(value):
     if isinstance(value, type(tf.constant(0))):
         value = value.numpy()
@@ -56,7 +54,6 @@ def create_tfrecord_example(cwt_image, profile_label):
         'label': _bytes_feature(tf.io.serialize_tensor(profile_label)),
     }
     return tf.train.Example(features=tf.train.Features(feature=feature))
-# --- (函数保持不变 结束) ---
 
 def create_tfrecords_for_regression():
     if TASK_TYPE == 'fft_regression':
@@ -84,7 +81,6 @@ def create_tfrecords_for_regression():
         num_samples = min(num_samples, DEBUG_SONIC_DEPTH_POINTS)
         sonic_depths = sonic_depths[:num_samples]
 
-    # --- 核心修正：创建列表以保存已处理的索引 ---
     processed_indices = []
 
     with h5py.File(cwt_h5_path, 'r') as cwt_hf, \
@@ -98,7 +94,6 @@ def create_tfrecords_for_regression():
             current_sonic_depth = sonic_depths[i]
             sonic_depth_key = str(current_sonic_depth).replace('.', '_')
             
-            # 这就是您的过滤器，导致了样本数量不匹配
             if sonic_depth_key in path_data_group:
                 cwt_image = cwt_dset[i].astype(np.float32)
                 zc_slice = path_data_group[sonic_depth_key][:]
@@ -108,13 +103,11 @@ def create_tfrecords_for_regression():
                 example = create_tfrecord_example(cwt_image, profile_label)
                 writer.write(example.SerializeToString())
                 
-                # --- 核心修正：记录这个成功的索引 ---
                 processed_indices.append(i)
 
     print("\n--- TFRecord生成完成 ---")
     print(f"TFRecord文件已保存至: {tfrecord_path}")
 
-    # --- 核心修正：保存包含已处理索引的辅助文件 ---
     processed_info = {'processed_indices': np.array(processed_indices)}
     info_path = f"{tfrecord_path}.idx.pkl"  # e.g., fft_regression_data.tfrecord.idx.pkl
     save_pickle(processed_info, info_path)

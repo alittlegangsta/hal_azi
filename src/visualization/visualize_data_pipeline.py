@@ -21,7 +21,7 @@ def visualize_label_generation(sample_index=150):
     
     print(f"\n--- Visualizing Label Generation for TASK_TYPE: {TASK_TYPE} (Sample Index: {sample_index}) ---")
 
-    # --- 1. 加载数据 (逻辑不变) ---
+    # --- 1. 加载数据 ---
     array_dir = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}')
     processed_waveforms_path = os.path.join(array_dir, 'processed_waveforms.pkl')
     ground_truth_db_path = os.path.join(array_dir, f'ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5')

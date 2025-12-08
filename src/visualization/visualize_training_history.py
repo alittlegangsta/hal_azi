@@ -40,7 +40,6 @@ def plot_training_history():
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
     fig.suptitle(f'Profile Regressor Model Training History {title_suffix}', fontsize=16)
 
-    # ... (绘图代码保持不变) ...
     ax1.plot(history['loss'], label='Training Loss')
     if 'val_loss' in history:
         ax1.plot(history['val_loss'], label='Validation Loss')
@@ -52,7 +51,6 @@ def plot_training_history():
             ax2.plot(history['val_mae'], label='Validation MAE')
         ax2.set_title('Training & Validation MAE')
         ax2.set_xlabel('Epoch'); ax2.set_ylabel('Mean Absolute Error (%)'); ax2.legend(); ax2.grid(True)
-    # ... (绘图代码结束) ...
 
     output_path = os.path.join(output_dir, f'05_training_history_{TASK_TYPE}.png')
     plt.savefig(output_path)

@@ -22,15 +22,6 @@ from config import (
     TASK_TYPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS
 )
 
-# --- (所有绘图函数和辅助函数保持不变) ---
-# ... (make_gradcam_heatmap_for_regression, _calculate_mean_severity, ...)
-# ... (classify_by_severity_profile, plot_overall_performance_scatter, ...)
-# ... (generate_waveform_and_gradcam_plots, plot_depth_log_comparison, ...)
-# ... (create_profile_FFT_spectrum_image) ...
-# (为简洁起见，我省略了这些未更改的函数，请保留您文件中的这些函数)
-# --- (所有绘图函数和辅助函数保持不变 结束) ---
-
-# --- (函数定义与之前相同，为简洁省略) ---
 def make_gradcam_heatmap_for_regression(img_array, model, last_conv_layer_name):
     try:
         last_conv_layer = model.get_layer(last_conv_layer_name)
@@ -170,8 +161,6 @@ def plot_depth_log_comparison(all_labels, all_predictions, sonic_depths, output_
         true_values.append(_calculate_mean_severity(all_labels[i]))
         pred_values.append(_calculate_mean_severity(all_predictions[i]))
 
-    # --- 错误发生点 ---
-    # true_values 的长度现在是 (2842)，sonic_depths 的长度现在也是 (2842)
     plt.figure(figsize=(10, 15))
     plt.plot(true_values, sonic_depths, label='Ground Truth Severity', color='blue', linewidth=1)
     plt.plot(pred_values, sonic_depths, label='Predicted Severity', color='red', alpha=0.7, linewidth=1)
@@ -259,7 +248,6 @@ def run_analysis_regressor():
 
     print(f"数据加载完成 (TFRecord 中有 {len(all_labels)} 个样本)。")
     
-    # --- 核心修正：加载索引文件并过滤数据 ---
     info_path = f"{tfrecord_path}.idx.pkl"
     if not os.path.exists(info_path):
         print(f"错误：找不到索引文件 '{info_path}'。")
@@ -279,7 +267,6 @@ def run_analysis_regressor():
         return
     else:
         print(f"数据过滤成功。样本数: {len(all_sonic_depths)}")
-    # --- 修正结束 ---
 
     print(f"应用 CWT 伪影掩码到 {len(all_cwts_original)} 个样本...")
     TIME_STEPS_TO_MASK = 30

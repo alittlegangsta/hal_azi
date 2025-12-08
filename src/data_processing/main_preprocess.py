@@ -12,7 +12,7 @@ from tqdm import tqdm
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.utils.file_io import create_dir, save_pickle
-# 注意：config 模块的导入需要根据您的项目结构进行调整
+# 注意：config 模块的导入需要根据项目结构进行调整
 from config import (
     RAW_DATA_DIR, PROCESSED_DATA_DIR, ARRAY_ID,
     TARGET_DEPTH_RANGE, SONIC_RECEIVER_OFFSET, SONIC_SOURCE_OFFSET, TIME_STEPS,

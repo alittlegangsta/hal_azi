@@ -10,7 +10,7 @@ import math
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from src.utils.file_io import load_pickle, create_dir
-# 注意：config 模块的导入需要根据您的项目结构进行调整
+# 注意：config 模块的导入需要根据项目结构进行调整
 from config import (
     ARRAY_ID, PROCESSED_DATA_DIR, CWT_SCALES, CWT_WAVELET,
     INPUT_SHAPE, DEBUG_MODE, DEBUG_SONIC_DEPTH_POINTS, CWT_CHUNK_SIZE
