@@ -1,0 +1,32 @@
+{
+  "python_compile_script": {
+    "cmd": [
+      "python3",
+      "-m",
+      "py_compile",
+      "scripts/reconstruct_thesis_evidence_inventory.py"
+    ],
+    "returncode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "json_files_valid": {
+    "code_method_inventory.json": true,
+    "experiment_inventory.json": true,
+    "generation_checks.json": true,
+    "git_branch_timeline.json": true,
+    "inventory_generation_summary.json": true,
+    "method_taxonomy.json": true,
+    "preflight.json": true,
+    "result_tree_inventory.json": true,
+    "text_evidence_extraction.json": true
+  },
+  "csv_files_present": {
+    "branch_experiment_mapping.csv": 3249,
+    "code_method_inventory.csv": 49023,
+    "experiment_inventory.csv": 39450,
+    "figure_candidates.csv": 50539,
+    "memo_experiment_claims.csv": 8920,
+    "result_file_inventory.csv": 592508
+  }
+}

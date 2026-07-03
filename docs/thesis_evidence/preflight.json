@@ -1,0 +1,78 @@
+{
+  "generated_at": "2026-07-03T17:35:03",
+  "repo_path": "/home/xiaoj/hal_azi",
+  "current_branch": "docs/thesis-evidence-inventory",
+  "current_commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+  "git_status_short": "## docs/thesis-evidence-inventory\n?? AGENTS.md\n?? docs/\n?? scripts/",
+  "python_version": {
+    "python": {
+      "cmd": [
+        "python",
+        "--version"
+      ],
+      "returncode": 127,
+      "stdout": "",
+      "stderr": "[Errno 2] No such file or directory: 'python'"
+    },
+    "python3": {
+      "cmd": [
+        "python3",
+        "--version"
+      ],
+      "returncode": 0,
+      "stdout": "Python 3.12.3",
+      "stderr": ""
+    },
+    "selected": "Python 3.12.3"
+  },
+  "git_branches": [
+    "* docs/thesis-evidence-inventory         1ee68a62763c091097683e326c3a187c991a85c3 标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化",
+    "  master                                 1ee68a62763c091097683e326c3a187c991a85c3 标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化",
+    "  remotes/origin/1D+percentage_Label     e9739c8c3fc4d53e1af63dafa84e29e00b42e9c4 分析脚本新增成像图功能",
+    "  remotes/origin/GaN                     c08d695779b3fbb666663a7439b16fbe00e1d61d GaN+2Dlabel",
+    "  remotes/origin/HEAD                    -> origin/master",
+    "  remotes/origin/frequency-weighted_loss 9899283c351712b791f9837b0be9a96b7003f96f 改进了run_analysis.py，加入指标；并且新增了FFT高频系数惩罚",
+    "  remotes/origin/log_scaling             1ee68a62763c091097683e326c3a187c991a85c3 标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化",
+    "  remotes/origin/master                  1ee68a62763c091097683e326c3a187c991a85c3 标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化",
+    "  remotes/origin/percentage_label+FFT    7ba021cfa6eacd148247258ee28b8527dbbc6c92 删除部分注释",
+    "  remotes/origin/test_relativity         5e59652a4259c59e1d22b069271e2a67d863dadd CNN+分类任务：证实CWT与Label存在对应关系"
+  ],
+  "git_remotes": [
+    "origin\thttps://github.com/alittlegangsta/HAL_EfficientNet (fetch)",
+    "origin\thttps://github.com/alittlegangsta/HAL_EfficientNet (push)"
+  ],
+  "git_tags": [],
+  "results_root": "/mnt/c/Users/Administrator/Desktop/Hal/results",
+  "results_readable": true,
+  "memo_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+  "memo_exists": true,
+  "results_file_count": 2439,
+  "results_total_size_bytes": 1583055459,
+  "results_total_size_human": "1.5GB",
+  "first_level_dirs": [
+    ".agents",
+    ".codex",
+    ".git",
+    "CSI+CNN",
+    "CSI+SE-ResNet",
+    "FFT_EfficientNet",
+    "FFT_EfficientNet_1",
+    "temp_result",
+    "双通道学习",
+    "预校正"
+  ],
+  "second_level_dirs": [
+    "CSI+SE-ResNet/outputs",
+    "FFT_EfficientNet/output",
+    "FFT_EfficientNet_1/output",
+    "temp_result/1D+percentage_Label",
+    "temp_result/GaN+2Dlabel",
+    "temp_result/baseline",
+    "temp_result/frequency-weighted_loss",
+    "temp_result/log_label",
+    "temp_result/test_relativity",
+    "双通道学习/array_03",
+    "预校正/array_03"
+  ],
+  "note": "Results directory was scanned read-only; generated files are under docs/thesis_evidence."
+}

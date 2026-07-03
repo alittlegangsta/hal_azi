@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-07-03T17:35:03",
+  "results_file_count": 2439,
+  "experiment_count": 13,
+  "figure_candidate_count": 110,
+  "code_inventory_count": 102,
+  "memo_claim_count": 7,
+  "current_branch": "docs/thesis-evidence-inventory",
+  "current_commit_before_commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+  "checks": {
+    "python_compile_script": {
+      "cmd": [
+        "python3",
+        "-m",
+        "py_compile",
+        "scripts/reconstruct_thesis_evidence_inventory.py"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "json_files_valid": {
+      "code_method_inventory.json": true,
+      "experiment_inventory.json": true,
+      "generation_checks.json": true,
+      "git_branch_timeline.json": true,
+      "inventory_generation_summary.json": true,
+      "method_taxonomy.json": true,
+      "preflight.json": true,
+      "result_tree_inventory.json": true,
+      "text_evidence_extraction.json": true
+    },
+    "csv_files_present": {
+      "branch_experiment_mapping.csv": 3249,
+      "code_method_inventory.csv": 49023,
+      "experiment_inventory.csv": 39450,
+      "figure_candidates.csv": 50539,
+      "memo_experiment_claims.csv": 8920,
+      "result_file_inventory.csv": 592508
+    }
+  }
+}

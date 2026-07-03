@@ -1,0 +1,1460 @@
+{
+  "files": [
+    {
+      "path": "config.py",
+      "source_ref": "working tree:config.py; read_status=utf-8-sig",
+      "role": "CWT transformation; TFRecord/HDF5 generation; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "main.py",
+      "source_ref": "working tree:main.py; read_status=utf-8-sig",
+      "role": "preprocessing script; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:config.py",
+      "source_ref": "git show origin/1D+percentage_Label:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:main.py",
+      "source_ref": "git show origin/1D+percentage_Label:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; label construction",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; label construction",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; artifact masking / binary mask",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_profile_regression"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; profile_regression_data.tfrecord",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; label construction; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/interpretation/run_analysis_regressor.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/interpretation/run_analysis_regressor.py",
+      "role": "TFRecord/HDF5 generation; label construction; severity transform; Grad-CAM analysis; result saving logic",
+      "key_functions_classes": [
+        "make_gradcam_heatmap_for_regression",
+        "classify_by_severity_profile",
+        "generate_waveform_and_gradcam_plots",
+        "create_profile_comparison_image",
+        "run_analysis_regressor"
+      ],
+      "input_output_files": "combo_sample_{i}.png; best_advanced_regressor_model.h5; profile_regression_data.tfrecord; cwt_images.h5; processed_waveforms.pkl; _virtual_log_comparison.png",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/modeling/dataset.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation; label construction",
+      "key_functions_classes": [
+        "create_dataset"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/modeling/model.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/modeling/model.py",
+      "role": "label construction; EfficientNetV2B0 model",
+      "key_functions_classes": [
+        "build_advanced_profile_regressor"
+      ],
+      "input_output_files": "https://storage.googleapis.com/tensorflow/keras-applications/efficientnet_v2/efficientnetv2-b0_notop.h5; efficientnetv2-b0_notop.h5",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/modeling/train.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; label construction; training logic; analysis/evaluation/metric computation; result saving logic; artifact masking / binary mask; train/test split logic",
+      "key_functions_classes": [
+        "augment_cwt",
+        "_parse_regression_tfrecord_fn",
+        "train_regressor_model"
+      ],
+      "input_output_files": "profile_regression_data.tfrecord; best_advanced_regressor_model.h5; training_history_advanced.pkl",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/visualization/visualize_data_pipeline.py",
+      "role": "TFRecord/HDF5 generation; label construction; result saving logic",
+      "key_functions_classes": [
+        "visualize_profile_label_generation"
+      ],
+      "input_output_files": "processed_waveforms.pkl; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; 06_profile_label_generation.png",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/1D+percentage_Label:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/1D+percentage_Label:src/visualization/visualize_training_history.py",
+      "role": "label construction; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history_advanced.pkl; training_history.pkl; 05_training_history_regression.png",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:config.py",
+      "source_ref": "git show origin/GaN:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:main.py",
+      "source_ref": "git show origin/GaN:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/GaN:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/GaN:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; dual-input/metadata model; artifact masking / binary mask",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_translation"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; translation_data.tfrecord",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/GaN:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/interpretation/run_analysis_classification.py",
+      "source_ref": "git show origin/GaN:src/interpretation/run_analysis_classification.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; analysis/evaluation/metric computation; result saving logic; artifact masking / binary mask; train/test split logic",
+      "key_functions_classes": [
+        "dice_coefficient",
+        "reconstruct_mask_from_fft",
+        "run_model_analysis"
+      ],
+      "input_output_files": "best_a2inet_model.h5; translation_data.tfrecord; sample_{i}_mask_comparison.png",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/modeling/dataset.py",
+      "source_ref": "git show origin/GaN:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; dual-input/metadata model; train/test split logic",
+      "key_functions_classes": [
+        "_parse_translation_tfrecord_fn",
+        "create_dataset"
+      ],
+      "input_output_files": "translation_data.tfrecord",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; model/training method; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/modeling/model.py",
+      "source_ref": "git show origin/GaN:src/modeling/model.py",
+      "role": "FFT label/script",
+      "key_functions_classes": [
+        "attention_gate",
+        "build_attention_unet",
+        "build_discriminator"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/modeling/train.py",
+      "source_ref": "git show origin/GaN:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; dual-input/metadata model; artifact masking / binary mask",
+      "key_functions_classes": [
+        "discriminator_loss",
+        "generator_loss",
+        "train_gan_model",
+        "train_step"
+      ],
+      "input_output_files": "translation_data.tfrecord; best_a2inet_model.h5",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "label construction and method rationale; model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/GaN:src/visualization/visualize_data_pipeline.py",
+      "role": "preprocessing script; CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic; artifact masking / binary mask",
+      "key_functions_classes": [
+        "visualize_single_sample"
+      ],
+      "input_output_files": "XSILMR{str(ARRAY_ID).zfill(2)}.mat; processed_waveforms.pkl; cwt_images.h5; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; {sample_index}_01_raw_waveform.png; {sample_index}_02_cwt_result.png; {sample_index}_03_label_generation.png; {sample_index}_04_final_label_image.png",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/GaN:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/GaN:src/visualization/visualize_training_history.py",
+      "role": "label construction; training logic; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history.pkl; 04_training_history.png",
+      "likely_experiment_group": "GAN/severity map",
+      "thesis_relevance": "label construction and method rationale; model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:config.py",
+      "source_ref": "git show origin/frequency-weighted_loss:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:main.py",
+      "source_ref": "git show origin/frequency-weighted_loss:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_translation"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; translation_data.tfrecord",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/interpretation/debug_data_visualization.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/interpretation/debug_data_visualization.py",
+      "role": "TFRecord/HDF5 generation; FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "debug_arrays"
+      ],
+      "input_output_files": "best_a2inet_model.h5; cwt_images.h5; debug_cwt_array.png; debug_heatmap_array.png",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/interpretation/grad_cam.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/interpretation/grad_cam.py",
+      "role": "Grad-CAM analysis",
+      "key_functions_classes": [
+        "make_gradcam_heatmap",
+        "superimpose_gradcam"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/interpretation/run_analysis.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/interpretation/run_analysis.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; Grad-CAM analysis; analysis/evaluation/metric computation; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "get_grad_cam_heatmap",
+        "reconstruct_zc_from_fft_magnitude",
+        "run_model_analysis"
+      ],
+      "input_output_files": "best_a2inet_model.h5; translation_data.tfrecord; sample_{i}_input_and_gradcam.png; sample_{i}_truth_vs_prediction.png",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/modeling/dataset.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; train/test split logic",
+      "key_functions_classes": [
+        "_parse_translation_tfrecord_fn",
+        "create_dataset"
+      ],
+      "input_output_files": "translation_data.tfrecord",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/modeling/model.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/modeling/model.py",
+      "role": "FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "attention_gate",
+        "build_attention_unet"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/modeling/train.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; FFT label/script; training logic; analysis/evaluation/metric computation; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "gradient_difference_loss",
+        "weighted_mse_loss",
+        "hybrid_loss",
+        "train_translation_model"
+      ],
+      "input_output_files": "translation_data.tfrecord; best_a2inet_model.h5; training_history.pkl",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/visualization/visualize_data_pipeline.py",
+      "role": "preprocessing script; CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "visualize_data_processing_steps"
+      ],
+      "input_output_files": "XSILMR{str(ARRAY_ID).zfill(2)}.mat; processed_waveforms.pkl; cwt_images.h5; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; 01_filtering_effect.png; Saved plot: 01_filtering_effect.png; 02_cwt_result.png; Saved plot: 02_cwt_result.png; 03_label_generation.png; Saved plot: 03_label_generation.png",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/frequency-weighted_loss:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/frequency-weighted_loss:src/visualization/visualize_training_history.py",
+      "role": "label construction; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history.pkl; 04_training_history.png; Saved plot: 04_training_history.png",
+      "likely_experiment_group": "FFT high-frequency weighted loss",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:config.py",
+      "source_ref": "git show origin/log_scaling:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:main.py",
+      "source_ref": "git show origin/log_scaling:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/log_scaling:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/log_scaling:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_translation"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; translation_data.tfrecord",
+      "likely_experiment_group": "FFT log label",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/log_scaling:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/interpretation/debug_data_visualization.py",
+      "source_ref": "git show origin/log_scaling:src/interpretation/debug_data_visualization.py",
+      "role": "TFRecord/HDF5 generation; FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "debug_arrays"
+      ],
+      "input_output_files": "best_a2inet_model.h5; cwt_images.h5; debug_cwt_array.png; debug_heatmap_array.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/interpretation/grad_cam.py",
+      "source_ref": "git show origin/log_scaling:src/interpretation/grad_cam.py",
+      "role": "Grad-CAM analysis",
+      "key_functions_classes": [
+        "make_gradcam_heatmap",
+        "superimpose_gradcam"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/interpretation/run_analysis.py",
+      "source_ref": "git show origin/log_scaling:src/interpretation/run_analysis.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; Grad-CAM analysis; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "get_grad_cam_heatmap",
+        "reconstruct_zc_from_fft_magnitude",
+        "run_model_analysis"
+      ],
+      "input_output_files": "best_a2inet_model.h5; translation_data.tfrecord; sample_{i}_input_and_gradcam.png; sample_{i}_truth_vs_prediction.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/modeling/dataset.py",
+      "source_ref": "git show origin/log_scaling:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; train/test split logic",
+      "key_functions_classes": [
+        "_parse_translation_tfrecord_fn",
+        "create_dataset"
+      ],
+      "input_output_files": "translation_data.tfrecord",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/modeling/model.py",
+      "source_ref": "git show origin/log_scaling:src/modeling/model.py",
+      "role": "FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "attention_gate",
+        "build_attention_unet"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/modeling/train.py",
+      "source_ref": "git show origin/log_scaling:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; FFT label/script; training logic; analysis/evaluation/metric computation; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "gradient_difference_loss",
+        "hybrid_loss",
+        "train_translation_model"
+      ],
+      "input_output_files": "translation_data.tfrecord; best_a2inet_model.h5; training_history.pkl",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/log_scaling:src/visualization/visualize_data_pipeline.py",
+      "role": "preprocessing script; CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "visualize_data_processing_steps"
+      ],
+      "input_output_files": "XSILMR{str(ARRAY_ID).zfill(2)}.mat; processed_waveforms.pkl; cwt_images.h5; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; 01_filtering_effect.png; Saved plot: 01_filtering_effect.png; 02_cwt_result.png; Saved plot: 02_cwt_result.png; 03_label_generation.png; Saved plot: 03_label_generation.png",
+      "likely_experiment_group": "FFT log label",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/log_scaling:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/log_scaling:src/visualization/visualize_training_history.py",
+      "role": "label construction; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history.pkl; 04_training_history.png; Saved plot: 04_training_history.png",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:config.py",
+      "source_ref": "git show origin/master:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:main.py",
+      "source_ref": "git show origin/master:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/master:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/master:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_translation"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; translation_data.tfrecord",
+      "likely_experiment_group": "FFT log label",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/master:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/interpretation/debug_data_visualization.py",
+      "source_ref": "git show origin/master:src/interpretation/debug_data_visualization.py",
+      "role": "TFRecord/HDF5 generation; FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "debug_arrays"
+      ],
+      "input_output_files": "best_a2inet_model.h5; cwt_images.h5; debug_cwt_array.png; debug_heatmap_array.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/interpretation/grad_cam.py",
+      "source_ref": "git show origin/master:src/interpretation/grad_cam.py",
+      "role": "Grad-CAM analysis",
+      "key_functions_classes": [
+        "make_gradcam_heatmap",
+        "superimpose_gradcam"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/interpretation/run_analysis.py",
+      "source_ref": "git show origin/master:src/interpretation/run_analysis.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; Grad-CAM analysis; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "get_grad_cam_heatmap",
+        "reconstruct_zc_from_fft_magnitude",
+        "run_model_analysis"
+      ],
+      "input_output_files": "best_a2inet_model.h5; translation_data.tfrecord; sample_{i}_input_and_gradcam.png; sample_{i}_truth_vs_prediction.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/modeling/dataset.py",
+      "source_ref": "git show origin/master:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; train/test split logic",
+      "key_functions_classes": [
+        "_parse_translation_tfrecord_fn",
+        "create_dataset"
+      ],
+      "input_output_files": "translation_data.tfrecord",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/modeling/model.py",
+      "source_ref": "git show origin/master:src/modeling/model.py",
+      "role": "FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "attention_gate",
+        "build_attention_unet"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/modeling/train.py",
+      "source_ref": "git show origin/master:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; FFT label/script; training logic; analysis/evaluation/metric computation; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "gradient_difference_loss",
+        "hybrid_loss",
+        "train_translation_model"
+      ],
+      "input_output_files": "translation_data.tfrecord; best_a2inet_model.h5; training_history.pkl",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/master:src/visualization/visualize_data_pipeline.py",
+      "role": "preprocessing script; CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "visualize_data_processing_steps"
+      ],
+      "input_output_files": "XSILMR{str(ARRAY_ID).zfill(2)}.mat; processed_waveforms.pkl; cwt_images.h5; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; 01_filtering_effect.png; Saved plot: 01_filtering_effect.png; 02_cwt_result.png; Saved plot: 02_cwt_result.png; 03_label_generation.png; Saved plot: 03_label_generation.png",
+      "likely_experiment_group": "FFT log label",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/master:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/master:src/visualization/visualize_training_history.py",
+      "role": "label construction; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history.pkl; 04_training_history.png; Saved plot: 04_training_history.png",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:config.py",
+      "source_ref": "git show origin/percentage_label+FFT:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:main.py",
+      "source_ref": "git show origin/percentage_label+FFT:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; fft_regression_data.tfrecord; profile_regression_data.tfrecord",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; severity transform; result saving logic; artifact masking / binary mask",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "_process_zc_slice_to_1d_label",
+        "_process_zc_slice_to_fft_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_regression"
+      ],
+      "input_output_files": "fft_regression_data.tfrecord; profile_regression_data.tfrecord; cwt_images.h5; processed_waveforms.pkl; {tfrecord_path}.idx.pkl",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/interpretation/run_analysis_regressor.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/interpretation/run_analysis_regressor.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; severity transform; Grad-CAM analysis; result saving logic; artifact masking / binary mask",
+      "key_functions_classes": [
+        "make_gradcam_heatmap_for_regression",
+        "_calculate_mean_severity",
+        "classify_by_severity_profile",
+        "plot_overall_performance_scatter",
+        "generate_waveform_and_gradcam_plots",
+        "plot_depth_log_comparison",
+        "create_profile_FFT_spectrum_image",
+        "run_analysis_regressor",
+        "_parse_label_only"
+      ],
+      "input_output_files": "combo_sample_{i}.png; best_fft_regressor_model.h5; fft_regression_data.tfrecord; best_advanced_regressor_model.h5; profile_regression_data.tfrecord; cwt_images.h5; processed_waveforms.pkl; {tfrecord_path}.idx.pkl; _overall_performance_scatter.png; _depth_log_comparison.png; _fft_spectrum_image_comparison.png",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/modeling/dataset.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "create_dataset"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/modeling/model.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/modeling/model.py",
+      "role": "label construction; FFT label/script; EfficientNetV2B0 model",
+      "key_functions_classes": [
+        "build_advanced_profile_regressor"
+      ],
+      "input_output_files": "https://storage.googleapis.com/tensorflow/keras-applications/efficientnet_v2/efficientnetv2-b0_notop.h5; efficientnetv2-b0_notop.h5",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/modeling/train.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; training logic; analysis/evaluation/metric computation; result saving logic; artifact masking / binary mask; train/test split logic",
+      "key_functions_classes": [
+        "augment_cwt",
+        "_parse_regression_tfrecord_fn",
+        "train_regressor_model"
+      ],
+      "input_output_files": "fft_regression_data.tfrecord; best_fft_regressor_model.h5; training_history_fft.pkl; profile_regression_data.tfrecord; best_advanced_regressor_model.h5; training_history_advanced.pkl",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/visualization/visualize_data_pipeline.py",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "visualize_label_generation"
+      ],
+      "input_output_files": "processed_waveforms.pkl; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; 06_label_generation_{TASK_TYPE}.png",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/percentage_label+FFT:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/percentage_label+FFT:src/visualization/visualize_training_history.py",
+      "role": "label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history_fft.pkl; training_history_advanced.pkl; training_history.pkl; 05_training_history_{TASK_TYPE}.png",
+      "likely_experiment_group": "1D percentage label / EfficientNet",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:config.py",
+      "source_ref": "git show origin/test_relativity:config.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation; FFT label/script; train/test split logic",
+      "key_functions_classes": [],
+      "input_output_files": "ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:main.py",
+      "source_ref": "git show origin/test_relativity:main.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "check_output_exists",
+        "run_step",
+        "main"
+      ],
+      "input_output_files": "cwt_images.h5; translation_data.tfrecord; processed_waveforms.pkl",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "git show origin/test_relativity:src/cwt_transformation/main_transform_translation.py",
+      "role": "CWT transformation; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/data_processing/create_tfrecords.py",
+      "source_ref": "git show origin/test_relativity:src/data_processing/create_tfrecords.py",
+      "role": "TFRecord/HDF5 generation; label construction; artifact masking / binary mask",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "_float_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_classification"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; classification_data.tfrecord",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/data_processing/main_preprocess.py",
+      "source_ref": "git show origin/test_relativity:src/data_processing/main_preprocess.py",
+      "role": "preprocessing script; TFRecord/HDF5 generation; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/interpretation/run_analysis_classification.py",
+      "source_ref": "git show origin/test_relativity:src/interpretation/run_analysis_classification.py",
+      "role": "TFRecord/HDF5 generation; label construction; Grad-CAM analysis; result saving logic",
+      "key_functions_classes": [
+        "make_gradcam_heatmap",
+        "run_classification_analysis"
+      ],
+      "input_output_files": "best_classifier_model.h5; cwt_images.h5; classification_data.tfrecord; gradcam_sample_{i}.png",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/modeling/dataset.py",
+      "source_ref": "git show origin/test_relativity:src/modeling/dataset.py",
+      "role": "TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "create_dataset"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "background",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/modeling/model.py",
+      "source_ref": "git show origin/test_relativity:src/modeling/model.py",
+      "role": "unknown",
+      "key_functions_classes": [
+        "build_classifier"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "unknown",
+      "confidence": "weak",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/modeling/train.py",
+      "source_ref": "git show origin/test_relativity:src/modeling/train.py",
+      "role": "TFRecord/HDF5 generation; label construction; training logic; analysis/evaluation/metric computation; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "_parse_classification_tfrecord_fn",
+        "train_classifier_model"
+      ],
+      "input_output_files": "classification_data.tfrecord; best_classifier_model.h5; training_history.pkl",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/visualization/visualize_data_pipeline.py",
+      "source_ref": "git show origin/test_relativity:src/visualization/visualize_data_pipeline.py",
+      "role": "preprocessing script; CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic; artifact masking / binary mask",
+      "key_functions_classes": [
+        "visualize_single_sample"
+      ],
+      "input_output_files": "XSILMR{str(ARRAY_ID).zfill(2)}.mat; processed_waveforms.pkl; cwt_images.h5; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; {sample_index}_01_raw_waveform.png; {sample_index}_02_cwt_result.png; {sample_index}_03_label_generation.png; {sample_index}_04_final_label_image.png",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "origin/test_relativity:src/visualization/visualize_training_history.py",
+      "source_ref": "git show origin/test_relativity:src/visualization/visualize_training_history.py",
+      "role": "label construction; training logic; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history.pkl; 04_training_history.png",
+      "likely_experiment_group": "CWT-label binary classification",
+      "thesis_relevance": "label construction and method rationale; model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/cwt_transformation/main_transform_translation.py",
+      "source_ref": "working tree:src/cwt_transformation/main_transform_translation.py; read_status=utf-8-sig",
+      "role": "CWT transformation; TFRecord/HDF5 generation",
+      "key_functions_classes": [
+        "batch_cwt_transformer",
+        "transform_waveforms_to_cwt_images"
+      ],
+      "input_output_files": "processed_waveforms.pkl; cwt_images.h5",
+      "likely_experiment_group": "CWT preprocessing",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/data_processing/create_tfrecords.py",
+      "source_ref": "working tree:src/data_processing/create_tfrecords.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script",
+      "key_functions_classes": [
+        "_bytes_feature",
+        "process_zc_slice_to_label",
+        "create_tfrecord_example",
+        "create_tfrecords_for_translation"
+      ],
+      "input_output_files": "cwt_images.h5; processed_waveforms.pkl; translation_data.tfrecord",
+      "likely_experiment_group": "FFT log label",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/data_processing/main_preprocess.py",
+      "source_ref": "working tree:src/data_processing/main_preprocess.py; read_status=utf-8-sig",
+      "role": "preprocessing script; TFRecord/HDF5 generation; result saving logic",
+      "key_functions_classes": [
+        "apply_high_pass_filter",
+        "load_and_prepare_data",
+        "create_unified_depth_grid",
+        "interpolate_to_grid",
+        "build_and_save_outputs",
+        "main"
+      ],
+      "input_output_files": "CAST.mat; XSILMR{str(array_id).zfill(2)}.mat; ground_truth_db_array_{str(array_id).zfill(2)}.h5; processed_waveforms.pkl",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/debug_data_visualization.py",
+      "source_ref": "working tree:src/interpretation/debug_data_visualization.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "debug_arrays"
+      ],
+      "input_output_files": "best_a2inet_model.h5; cwt_images.h5; debug_cwt_array.png; debug_heatmap_array.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/generate_analysis_candidates.py",
+      "source_ref": "working tree:src/interpretation/generate_analysis_candidates.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; label construction; Grad-CAM analysis; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "generate_candidates"
+      ],
+      "input_output_files": "candidate_{quality_level}_index_{idx}_comparison.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/grad_cam.py",
+      "source_ref": "working tree:src/interpretation/grad_cam.py; read_status=utf-8-sig",
+      "role": "Grad-CAM analysis",
+      "key_functions_classes": [
+        "make_gradcam_heatmap",
+        "superimpose_gradcam"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/plot_manual_analysis.py",
+      "source_ref": "working tree:src/interpretation/plot_manual_analysis.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; label construction; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "plot_manual_targets"
+      ],
+      "input_output_files": "{name}.png",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/run_analysis.py",
+      "source_ref": "working tree:src/interpretation/run_analysis.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; Grad-CAM analysis; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "get_grad_cam_heatmap",
+        "reconstruct_zc_from_fft_magnitude",
+        "run_model_analysis"
+      ],
+      "input_output_files": "best_a2inet_model.h5; translation_data.tfrecord; sample_{i}_input_and_gradcam.png; sample_{i}_truth_vs_prediction.png",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/s.py",
+      "source_ref": "working tree:src/interpretation/s.py; read_status=utf-8-sig",
+      "role": "unknown",
+      "key_functions_classes": [],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "unknown",
+      "confidence": "weak",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/interpretation/visualize_model.py",
+      "source_ref": "working tree:src/interpretation/visualize_model.py; read_status=utf-8-sig",
+      "role": "SE-ResNet model",
+      "key_functions_classes": [
+        "visualize_model_architecture"
+      ],
+      "input_output_files": "model_architecture_array_{array_id}.png",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "model/training method",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/modeling/dataset.py",
+      "source_ref": "working tree:src/modeling/dataset.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; label construction; FFT label/script; train/test split logic",
+      "key_functions_classes": [
+        "_parse_translation_tfrecord_fn",
+        "create_dataset"
+      ],
+      "input_output_files": "translation_data.tfrecord",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/modeling/model.py",
+      "source_ref": "working tree:src/modeling/model.py; read_status=utf-8-sig",
+      "role": "FFT label/script; Grad-CAM analysis",
+      "key_functions_classes": [
+        "attention_gate",
+        "build_attention_unet"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/modeling/train.py",
+      "source_ref": "working tree:src/modeling/train.py; read_status=utf-8-sig",
+      "role": "TFRecord/HDF5 generation; FFT label/script; training logic; analysis/evaluation/metric computation; result saving logic; train/test split logic",
+      "key_functions_classes": [
+        "gradient_difference_loss",
+        "hybrid_loss",
+        "train_translation_model"
+      ],
+      "input_output_files": "translation_data.tfrecord; best_a2inet_model.h5; training_history.pkl",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale; model/training method; evaluation and interpretability; data leakage risk review",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/utils/file_io.py",
+      "source_ref": "working tree:src/utils/file_io.py; read_status=utf-8-sig",
+      "role": "result saving logic",
+      "key_functions_classes": [
+        "load_pickle",
+        "save_pickle",
+        "create_dir"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "background",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/utils/plotting.py",
+      "source_ref": "working tree:src/utils/plotting.py; read_status=utf-8-sig",
+      "role": "label construction; severity transform; Grad-CAM analysis; result saving logic",
+      "key_functions_classes": [
+        "plot_csi_distribution",
+        "plot_grad_cam"
+      ],
+      "input_output_files": "unknown",
+      "likely_experiment_group": "Grad-CAM interpretability",
+      "thesis_relevance": "label construction and method rationale; evaluation and interpretability",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/visualization/visualize_data_pipeline.py",
+      "source_ref": "working tree:src/visualization/visualize_data_pipeline.py; read_status=utf-8-sig",
+      "role": "preprocessing script; CWT transformation; TFRecord/HDF5 generation; label construction; FFT label/script; result saving logic",
+      "key_functions_classes": [
+        "visualize_data_processing_steps"
+      ],
+      "input_output_files": "XSILMR{str(ARRAY_ID).zfill(2)}.mat; processed_waveforms.pkl; cwt_images.h5; ground_truth_db_array_{str(ARRAY_ID).zfill(2)}.h5; 01_filtering_effect.png; Saved plot: 01_filtering_effect.png; 02_cwt_result.png; Saved plot: 02_cwt_result.png; 03_label_generation.png; Saved plot: 03_label_generation.png",
+      "likely_experiment_group": "FFT log label",
+      "thesis_relevance": "label construction and method rationale; data pipeline",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    },
+    {
+      "path": "src/visualization/visualize_training_history.py",
+      "source_ref": "working tree:src/visualization/visualize_training_history.py; read_status=utf-8-sig",
+      "role": "label construction; result saving logic",
+      "key_functions_classes": [
+        "plot_training_history"
+      ],
+      "input_output_files": "training_history.pkl; 04_training_history.png; Saved plot: 04_training_history.png",
+      "likely_experiment_group": "unknown",
+      "thesis_relevance": "label construction and method rationale",
+      "confidence": "strong",
+      "evidence_note": "Repository code or tracked branch snapshot; no training executed."
+    }
+  ]
+}

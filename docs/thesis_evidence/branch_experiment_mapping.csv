@@ -1,0 +1,16 @@
+﻿branch,latest_commit,latest_date,latest_subject,likely_experiment_group,mapping_reason,confidence
+docs/thesis-evidence-inventory,1ee68a62763c091097683e326c3a187c991a85c3,2025-09-18T16:23:47+08:00,标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化,unknown,No direct mapping from local branch name/message,weak
+master,1ee68a62763c091097683e326c3a187c991a85c3,2025-09-18T16:23:47+08:00,标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化,FFT log label,local master points at log_scaling commit,medium
+origin/1D+percentage_Label,e9739c8c3fc4d53e1af63dafa84e29e00b42e9c4,2025-11-10T10:36:08+08:00,分析脚本新增成像图功能,1D percentage label,EfficientNetV2B0 profile regressor,strong
+origin/GaN,c08d695779b3fbb666663a7439b16fbe00e1d61d,2025-09-26T14:27:11+08:00,GaN+2Dlabel,GAN/severity map,GaN+2Dlabel and GAN training attempt,medium
+origin,1ee68a62763c091097683e326c3a187c991a85c3,2025-09-18T16:23:47+08:00,标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化,unknown,No direct mapping from local branch name/message,weak
+origin/frequency-weighted_loss,9899283c351712b791f9837b0be9a96b7003f96f,2025-09-23T16:03:42+08:00,改进了run_analysis.py，加入指标；并且新增了FFT高频系数惩罚,FFT high-frequency weighted loss,Weighted loss for higher FFT coefficients,strong
+origin/log_scaling,1ee68a62763c091097683e326c3a187c991a85c3,2025-09-18T16:23:47+08:00,标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化,FFT log label,log(1+magnitude) FFT label route,strong
+origin/master,1ee68a62763c091097683e326c3a187c991a85c3,2025-09-18T16:23:47+08:00,标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化,FFT log label,master points at log_scaling commit,medium
+origin/percentage_label+FFT,7ba021cfa6eacd148247258ee28b8527dbbc6c92,2025-12-08T17:05:29+08:00,删除部分注释,FFT regression,Severity transform plus FFT magnitude/log label,strong
+origin/test_relativity,5e59652a4259c59e1d22b069271e2a67d863dadd,2025-09-25T17:07:26+08:00,CNN+分类任务：证实CWT与Label存在对应关系,CWT-label binary classification,CNN classifier validates CWT-label relation,strong
+needs_remote_server_or_github_fetch,unknown,unknown,unknown,baseline,No conclusive local branch mapping; verify remote server/GitHub if thesis needs exact order.,unknown
+needs_remote_server_or_github_fetch,unknown,unknown,unknown,dual-channel,No conclusive local branch mapping; verify remote server/GitHub if thesis needs exact order.,unknown
+needs_remote_server_or_github_fetch,unknown,unknown,unknown,pre-correction,No conclusive local branch mapping; verify remote server/GitHub if thesis needs exact order.,unknown
+needs_remote_server_or_github_fetch,unknown,unknown,unknown,CSI+SE-ResNet,No conclusive local branch mapping; verify remote server/GitHub if thesis needs exact order.,unknown
+"partial: present in repo files and multiple branches, not a standalone branch",unknown,unknown,unknown,Grad-CAM,No conclusive local branch mapping; verify remote server/GitHub if thesis needs exact order.,unknown

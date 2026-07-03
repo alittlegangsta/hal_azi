@@ -1,0 +1,338 @@
+{
+  "branches": [
+    {
+      "branch": "docs/thesis-evidence-inventory",
+      "commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+      "date": "2025-09-18T16:23:47+08:00",
+      "subject": "标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化"
+    },
+    {
+      "branch": "master",
+      "commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+      "date": "2025-09-18T16:23:47+08:00",
+      "subject": "标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化"
+    },
+    {
+      "branch": "origin/1D+percentage_Label",
+      "commit": "e9739c8c3fc4d53e1af63dafa84e29e00b42e9c4",
+      "date": "2025-11-10T10:36:08+08:00",
+      "subject": "分析脚本新增成像图功能"
+    },
+    {
+      "branch": "origin/GaN",
+      "commit": "c08d695779b3fbb666663a7439b16fbe00e1d61d",
+      "date": "2025-09-26T14:27:11+08:00",
+      "subject": "GaN+2Dlabel"
+    },
+    {
+      "branch": "origin",
+      "commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+      "date": "2025-09-18T16:23:47+08:00",
+      "subject": "标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化"
+    },
+    {
+      "branch": "origin/frequency-weighted_loss",
+      "commit": "9899283c351712b791f9837b0be9a96b7003f96f",
+      "date": "2025-09-23T16:03:42+08:00",
+      "subject": "改进了run_analysis.py，加入指标；并且新增了FFT高频系数惩罚"
+    },
+    {
+      "branch": "origin/log_scaling",
+      "commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+      "date": "2025-09-18T16:23:47+08:00",
+      "subject": "标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化"
+    },
+    {
+      "branch": "origin/master",
+      "commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+      "date": "2025-09-18T16:23:47+08:00",
+      "subject": "标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化"
+    },
+    {
+      "branch": "origin/percentage_label+FFT",
+      "commit": "7ba021cfa6eacd148247258ee28b8527dbbc6c92",
+      "date": "2025-12-08T17:05:29+08:00",
+      "subject": "删除部分注释"
+    },
+    {
+      "branch": "origin/test_relativity",
+      "commit": "5e59652a4259c59e1d22b069271e2a67d863dadd",
+      "date": "2025-09-25T17:07:26+08:00",
+      "subject": "CNN+分类任务：证实CWT与Label存在对应关系"
+    }
+  ],
+  "tags": [],
+  "commits": [
+    {
+      "commit": "7ba021cfa6eacd148247258ee28b8527dbbc6c92",
+      "date": "2025-12-08T17:05:29+08:00",
+      "refs": "origin/percentage_label+FFT",
+      "subject": "删除部分注释",
+      "changed_files": [
+        "src/cwt_transformation/main_transform_translation.py",
+        "src/data_processing/create_tfrecords.py",
+        "src/data_processing/main_preprocess.py",
+        "src/interpretation/run_analysis_regressor.py",
+        "src/visualization/visualize_data_pipeline.py",
+        "src/visualization/visualize_training_history.py"
+      ]
+    },
+    {
+      "commit": "a6892bdd45cc77a3663f2e2a37d08c1568a6dd7f",
+      "date": "2025-11-18T08:51:41+08:00",
+      "refs": "",
+      "subject": "最终更新",
+      "changed_files": [
+        "src/data_processing/create_tfrecords.py",
+        "src/interpretation/run_analysis_regressor.py"
+      ]
+    },
+    {
+      "commit": "349f5a221e6c6ff18867d25b0e76005c1d1dfab6",
+      "date": "2025-11-14T19:56:37+08:00",
+      "refs": "",
+      "subject": "FFT大功告成，但是还需要整一下深度成像图以及如何展示出FFT的效果",
+      "changed_files": [
+        "config.py",
+        "main.py",
+        "src/data_processing/create_tfrecords.py",
+        "src/interpretation/run_analysis_regressor.py",
+        "src/modeling/model.py",
+        "src/modeling/train.py",
+        "src/visualization/visualize_data_pipeline.py",
+        "src/visualization/visualize_training_history.py"
+      ]
+    },
+    {
+      "commit": "e9739c8c3fc4d53e1af63dafa84e29e00b42e9c4",
+      "date": "2025-11-10T10:36:08+08:00",
+      "refs": "origin/1D+percentage_Label",
+      "subject": "分析脚本新增成像图功能",
+      "changed_files": [
+        "src/interpretation/run_analysis_regressor.py"
+      ]
+    },
+    {
+      "commit": "78170ef4e833653e870f526d686c9447b4217ea9",
+      "date": "2025-09-29T10:48:26+08:00",
+      "refs": "",
+      "subject": "删掉了无用的s.py",
+      "changed_files": [
+        "src/interpretation/s.py"
+      ]
+    },
+    {
+      "commit": "3ab1e7365d3257fe790d955cded3888033c3afac",
+      "date": "2025-09-28T17:19:40+08:00",
+      "refs": "",
+      "subject": "一维窜槽百分比剖面图作为标签输入，采用预训练模型EfficientNetV2B0作为模型主干。目前存在窜槽程度越严重，模型预判误差越大模型性能越差，需要改进",
+      "changed_files": [
+        "src/data_processing/create_tfrecords.py",
+        "src/interpretation/run_analysis_classification.py",
+        "src/interpretation/run_analysis_regressor.py",
+        "src/interpretation/s.py",
+        "src/modeling/model.py",
+        "src/modeling/train.py",
+        "src/visualization/visualize_data_pipeline.py",
+        "src/visualization/visualize_training_history.py"
+      ]
+    },
+    {
+      "commit": "c08d695779b3fbb666663a7439b16fbe00e1d61d",
+      "date": "2025-09-26T14:27:11+08:00",
+      "refs": "origin/GaN",
+      "subject": "GaN+2Dlabel",
+      "changed_files": [
+        "src/modeling/train.py"
+      ]
+    },
+    {
+      "commit": "5e59652a4259c59e1d22b069271e2a67d863dadd",
+      "date": "2025-09-25T17:07:26+08:00",
+      "refs": "origin/test_relativity",
+      "subject": "CNN+分类任务：证实CWT与Label存在对应关系",
+      "changed_files": [
+        "src/data_processing/create_tfrecords.py",
+        "src/interpretation/run_analysis_classification.py",
+        "src/modeling/dataset.py",
+        "src/modeling/model.py",
+        "src/modeling/train.py"
+      ]
+    },
+    {
+      "commit": "3b1eeccf3511bc7ec10d742212a09dcd167d7c28",
+      "date": "2025-09-25T10:12:49+08:00",
+      "refs": "",
+      "subject": "模型崩溃，以单样本循环多次训练证实目前模型无法学习到任何有帮助的特征。目前标签进行了二值化二通道输入",
+      "changed_files": [
+        "src/data_processing/create_tfrecords.py",
+        "src/interpretation/debug_data_visualization.py",
+        "src/interpretation/generate_analysis_candidates.py",
+        "src/interpretation/grad_cam.py",
+        "src/interpretation/plot_manual_analysis.py",
+        "src/interpretation/run_analysis.py",
+        "src/interpretation/run_analysis_classification.py",
+        "src/interpretation/s.py",
+        "src/interpretation/visualize_model.py",
+        "src/modeling/dataset.py",
+        "src/modeling/model.py",
+        "src/modeling/train.py",
+        "src/visualization/visualize_data_pipeline.py",
+        "src/visualization/visualize_training_history.py"
+      ]
+    },
+    {
+      "commit": "92d670d102dada5d4c3f63f88f424c8325a0ece7",
+      "date": "2025-09-24T09:57:27+08:00",
+      "refs": "",
+      "subject": "目前是模式崩溃",
+      "changed_files": [
+        "src/modeling/model.py",
+        "src/modeling/train.py"
+      ]
+    },
+    {
+      "commit": "9899283c351712b791f9837b0be9a96b7003f96f",
+      "date": "2025-09-23T16:03:42+08:00",
+      "refs": "origin/frequency-weighted_loss",
+      "subject": "改进了run_analysis.py，加入指标；并且新增了FFT高频系数惩罚",
+      "changed_files": [
+        "src/interpretation/run_analysis.py",
+        "src/modeling/train.py"
+      ]
+    },
+    {
+      "commit": "1ee68a62763c091097683e326c3a187c991a85c3",
+      "date": "2025-09-18T16:23:47+08:00",
+      "refs": "HEAD -> docs/thesis-evidence-inventory, origin/master, origin/log_scaling, origin/HEAD, master",
+      "subject": "标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化",
+      "changed_files": [
+        "src/data_processing/create_tfrecords.py",
+        "src/interpretation/run_analysis.py",
+        "src/visualization/visualize_data_pipeline.py"
+      ]
+    },
+    {
+      "commit": "fc88e778d94b0b28143d5a5667dcd7b1562887f3",
+      "date": "2025-09-15T17:07:30+08:00",
+      "refs": "",
+      "subject": "grad-cam画图问题解决",
+      "changed_files": [
+        "src/interpretation/debug_data_visualization.py",
+        "src/interpretation/run_analysis.py"
+      ]
+    },
+    {
+      "commit": "31516b2036ae608bf03224ed4bc20ae827a432ca",
+      "date": "2025-09-12T14:42:35+08:00",
+      "refs": "",
+      "subject": "问题依旧",
+      "changed_files": [
+        "config.py",
+        "src/interpretation/run_analysis.py",
+        "src/modeling/model.py"
+      ]
+    },
+    {
+      "commit": "94e350de61ff998d3e4a832de4cada587c564504",
+      "date": "2025-09-12T11:53:23+08:00",
+      "refs": "",
+      "subject": "目前画图问题中第二幅图grad-cam热力图似乎有问题，有点窄，其他暂时 没问题，准备完整训练",
+      "changed_files": [
+        "config.py",
+        "src/interpretation/run_analysis.py",
+        "src/modeling/model.py"
+      ]
+    },
+    {
+      "commit": "991d843b657faa8edf8bf9b3d8a3e96cb464fd27",
+      "date": "2025-09-11T17:29:02+08:00",
+      "refs": "",
+      "subject": "新增可视化数据处理结果，目前grad-cam解释画图结果不行，需修改",
+      "changed_files": [
+        "config.py",
+        "src/data_processing/main_preprocess.py",
+        "src/interpretation/run_analysis.py",
+        "src/visualization/__init__.py",
+        "src/visualization/visualize_data_pipeline.py",
+        "src/visualization/visualize_training_history.py"
+      ]
+    },
+    {
+      "commit": "54b0182df24bdb8d0e28b9d136d1dbf450b3d9c4",
+      "date": "2025-09-11T16:31:33+08:00",
+      "refs": "",
+      "subject": "Initial commit: Add project source code and gitignore",
+      "changed_files": [
+        ".gitignore",
+        "config.py",
+        "main.py",
+        "src/__init__.py",
+        "src/cwt_transformation/__init__.py",
+        "src/cwt_transformation/main_transform_translation.py",
+        "src/data_processing/__init__.py",
+        "src/data_processing/create_tfrecords.py",
+        "src/data_processing/main_preprocess.py",
+        "src/interpretation/__init__.py",
+        "src/interpretation/debug_data_visualization.py",
+        "src/interpretation/generate_analysis_candidates.py",
+        "src/interpretation/grad_cam.py",
+        "src/interpretation/plot_manual_analysis.py",
+        "src/interpretation/run_analysis.py",
+        "src/interpretation/s.py",
+        "src/interpretation/visualize_model.py",
+        "src/modeling/__init__.py",
+        "src/modeling/dataset.py",
+        "src/modeling/model.py",
+        "src/modeling/train.py",
+        "src/utils/__init__.py",
+        "src/utils/file_io.py",
+        "src/utils/plotting.py"
+      ]
+    }
+  ],
+  "graph_summary": "* 7ba021c (origin/percentage_label+FFT) 删除部分注释\n* a6892bd 最终更新\n* 349f5a2 FFT大功告成，但是还需要整一下深度成像图以及如何展示出FFT的效果\n* e9739c8 (origin/1D+percentage_Label) 分析脚本新增成像图功能\n* 78170ef 删掉了无用的s.py\n* 3ab1e73 一维窜槽百分比剖面图作为标签输入，采用预训练模型EfficientNetV2B0作为模型主干。目前存在窜槽程度越严重，模型预判误差越大模型性能越差，需要改进\n* 5e59652 (origin/test_relativity) CNN+分类任务：证实CWT与Label存在对应关系\n| * c08d695 (origin/GaN) GaN+2Dlabel\n|/  \n* 3b1eecc 模型崩溃，以单样本循环多次训练证实目前模型无法学习到任何有帮助的特征。目前标签进行了二值化二通道输入\n* 92d670d 目前是模式崩溃\n* 9899283 (origin/frequency-weighted_loss) 改进了run_analysis.py，加入指标；并且新增了FFT高频系数惩罚\n* 1ee68a6 (HEAD -> docs/thesis-evidence-inventory, origin/master, origin/log_scaling, origin/HEAD, master) 标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化\n* fc88e77 grad-cam画图问题解决\n* 31516b2 问题依旧\n* 94e350d 目前画图问题中第二幅图grad-cam热力图似乎有问题，有点窄，其他暂时 没问题，准备完整训练\n* 991d843 新增可视化数据处理结果，目前grad-cam解释画图结果不行，需修改\n* 54b0182 Initial commit: Add project source code and gitignore",
+  "selected_branch_diffs_vs_origin_master": [
+    {
+      "base": "origin/master",
+      "compare": "origin/master",
+      "diff_stat": ""
+    },
+    {
+      "base": "origin/master",
+      "compare": "origin/log_scaling",
+      "diff_stat": ""
+    },
+    {
+      "base": "origin/master",
+      "compare": "origin/frequency-weighted_loss",
+      "diff_stat": "src/interpretation/run_analysis.py | 85 +++++++++++++++++++++++++++++---------\n src/modeling/train.py              | 63 +++++++++++++++++++++-------\n 2 files changed, 112 insertions(+), 36 deletions(-)"
+    },
+    {
+      "base": "origin/master",
+      "compare": "origin/GaN",
+      "diff_stat": "src/data_processing/create_tfrecords.py            |  87 +++-----\n src/interpretation/debug_data_visualization.py     |  65 ------\n src/interpretation/generate_analysis_candidates.py | 145 --------------\n src/interpretation/grad_cam.py                     |  50 -----\n src/interpretation/plot_manual_analysis.py         | 142 -------------\n src/interpretation/run_analysis.py                 | 161 ---------------\n src/interpretation/run_analysis_classification.py  | 132 ++++++++++++\n src/interpretation/s.py                            |  68 -------\n src/interpretation/visualize_model.py              |  77 -------\n src/modeling/dataset.py                            |  19 +-\n src/modeling/model.py                              |  69 ++++---\n src/modeling/train.py                              | 222 ++++++++++++---------\n src/visualization/visualize_data_pipeline.py       | 180 ++++++++++-------\n src/visualization/visualize_training_history.py    |  54 +++--\n 14 files changed, 474 insertions(+), 997 deletions(-)"
+    },
+    {
+      "base": "origin/master",
+      "compare": "origin/test_relativity",
+      "diff_stat": "src/data_processing/create_tfrecords.py            | 124 ++++++--------\n src/interpretation/debug_data_visualization.py     |  65 --------\n src/interpretation/generate_analysis_candidates.py | 145 -----------------\n src/interpretation/grad_cam.py                     |  50 ------\n src/interpretation/plot_manual_analysis.py         | 142 ----------------\n src/interpretation/run_analysis.py                 | 161 ------------------\n src/interpretation/run_analysis_classification.py  | 125 ++++++++++++++\n src/interpretation/s.py                            |  68 --------\n src/interpretation/visualize_model.py              |  77 ---------\n src/modeling/dataset.py                            |  83 ++--------\n src/modeling/model.py                              | 127 +++++----------\n src/modeling/train.py                              | 149 +++++++----------\n src/visualization/visualize_data_pipeline.py       | 180 ++++++++++++---------\n src/visualization/visualize_training_history.py    |  54 +++----\n 14 files changed, 416 insertions(+), 1134 deletions(-)"
+    },
+    {
+      "base": "origin/master",
+      "compare": "origin/1D+percentage_Label",
+      "diff_stat": "src/data_processing/create_tfrecords.py            | 104 +++-------\n src/interpretation/debug_data_visualization.py     |  65 ------\n src/interpretation/generate_analysis_candidates.py | 145 -------------\n src/interpretation/grad_cam.py                     |  50 -----\n src/interpretation/plot_manual_analysis.py         | 142 -------------\n src/interpretation/run_analysis.py                 | 161 ---------------\n src/interpretation/run_analysis_regressor.py       | 227 +++++++++++++++++++++\n src/interpretation/s.py                            |  68 ------\n src/interpretation/visualize_model.py              |  77 -------\n src/modeling/dataset.py                            |  83 +-------\n src/modeling/model.py                              | 137 +++++--------\n src/modeling/train.py                              | 182 ++++++++---------\n src/visualization/visualize_data_pipeline.py       | 146 +++++--------\n src/visualization/visualize_training_history.py    |  61 +++---\n 14 files changed, 493 insertions(+), 1155 deletions(-)"
+    },
+    {
+      "base": "origin/master",
+      "compare": "origin/percentage_label+FFT",
+      "diff_stat": "config.py                                          |  39 ++-\n main.py                                            |  38 +--\n .../main_transform_translation.py                  |   2 +-\n src/data_processing/create_tfrecords.py            | 136 ++++------\n src/data_processing/main_preprocess.py             |   2 +-\n src/interpretation/debug_data_visualization.py     |  65 -----\n src/interpretation/generate_analysis_candidates.py | 145 ----------\n src/interpretation/grad_cam.py                     |  50 ----\n src/interpretation/plot_manual_analysis.py         | 142 ----------\n src/interpretation/run_analysis.py                 | 161 -----------\n src/interpretation/run_analysis_regressor.py       | 299 +++++++++++++++++++++\n src/interpretation/s.py                            |  68 -----\n src/interpretation/visualize_model.py              |  77 ------\n src/modeling/dataset.py                            |  83 +-----\n src/modeling/model.py                              | 137 ++++------\n src/modeling/train.py                              | 196 +++++++-------\n src/visualization/visualize_data_pipeline.py       | 164 +++++------\n src/visualization/visualize_training_history.py    |  78 +++---\n 18 files changed, 663 insertions(+), 1219 deletions(-)"
+    }
+  ],
+  "needs_remote_server_or_github_fetch": [
+    "No local branch/commit conclusively maps CSI+SE-ResNet result directory to code.",
+    "No local branch/commit conclusively maps 双通道学习 result directory to code.",
+    "No local branch/commit conclusively maps 预校正 result directory to code.",
+    "Remote server `/home/xiaoj/hal_azi` may contain unpushed branch state and conda environment `hall`."
+  ]
+}

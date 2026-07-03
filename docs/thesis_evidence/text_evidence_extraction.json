@@ -1,0 +1,2873 @@
+{
+  "summary": {
+    "result_text_file_count": 5,
+    "repo_text_file_count": 27,
+    "memo_status": "utf-8-sig",
+    "memo_claim_count": 7,
+    "snippet_count": 249
+  },
+  "text_files": [
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt",
+      "relative_path": "temp_result/1D+percentage_Label/result.txt",
+      "size_bytes": 656,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "severity"
+      ],
+      "line_count": 16
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt",
+      "relative_path": "temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt",
+      "size_bytes": 12,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 1
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/GaN+2Dlabel/result.txt.txt",
+      "relative_path": "temp_result/GaN+2Dlabel/result.txt.txt",
+      "size_bytes": 1298,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 33
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt",
+      "relative_path": "temp_result/test_relativity/result.txt.txt",
+      "size_bytes": 769,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "AUC"
+      ],
+      "line_count": 11
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "size_bytes": 9233,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "Grad-CAM",
+        "EfficientNetV2B0",
+        "dual-channel",
+        "eccentricity/pre-correction",
+        "log label",
+        "severity",
+        "1D percentage",
+        "AUC",
+        "SSIM/PSNR",
+        "GAN/GaN"
+      ],
+      "line_count": 155
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/AGENTS.md",
+      "relative_path": "AGENTS.md",
+      "size_bytes": 1352,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 34
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "size_bytes": 3939,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "log label"
+      ],
+      "line_count": 89
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/main.py",
+      "relative_path": "main.py",
+      "size_bytes": 4062,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "CWT"
+      ],
+      "line_count": 108
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/__init__.py",
+      "relative_path": "src/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/__init__.py",
+      "relative_path": "src/cwt_transformation/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "size_bytes": 3848,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "CWT"
+      ],
+      "line_count": 99
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/__init__.py",
+      "relative_path": "src/data_processing/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "size_bytes": 5578,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "log label"
+      ],
+      "line_count": 139
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "size_bytes": 7648,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "log label"
+      ],
+      "line_count": 191
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/__init__.py",
+      "relative_path": "src/interpretation/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "size_bytes": 2430,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "Grad-CAM"
+      ],
+      "line_count": 65
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "size_bytes": 6797,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "CWT",
+        "Grad-CAM"
+      ],
+      "line_count": 145
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/grad_cam.py",
+      "relative_path": "src/interpretation/grad_cam.py",
+      "size_bytes": 2115,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "Grad-CAM"
+      ],
+      "line_count": 50
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/plot_manual_analysis.py",
+      "relative_path": "src/interpretation/plot_manual_analysis.py",
+      "size_bytes": 5955,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 142
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "size_bytes": 7530,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "Grad-CAM",
+        "log label"
+      ],
+      "line_count": 161
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/s.py",
+      "relative_path": "src/interpretation/s.py",
+      "size_bytes": 2811,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 68
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "size_bytes": 2847,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "SE-ResNet"
+      ],
+      "line_count": 77
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/__init__.py",
+      "relative_path": "src/modeling/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/dataset.py",
+      "relative_path": "src/modeling/dataset.py",
+      "size_bytes": 3512,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT"
+      ],
+      "line_count": 93
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/model.py",
+      "relative_path": "src/modeling/model.py",
+      "size_bytes": 4358,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "Grad-CAM"
+      ],
+      "line_count": 107
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "size_bytes": 5046,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "log label"
+      ],
+      "line_count": 131
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/__init__.py",
+      "relative_path": "src/utils/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/file_io.py",
+      "relative_path": "src/utils/file_io.py",
+      "size_bytes": 490,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 23
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "size_bytes": 1950,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "CWT",
+        "Grad-CAM",
+        "log label",
+        "severity"
+      ],
+      "line_count": 59
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/__init__.py",
+      "relative_path": "src/visualization/__init__.py",
+      "size_bytes": 0,
+      "read_status": "utf-8-sig",
+      "keywords": [],
+      "line_count": 0
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "size_bytes": 5089,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "log label",
+        "1D percentage"
+      ],
+      "line_count": 122
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_training_history.py",
+      "relative_path": "src/visualization/visualize_training_history.py",
+      "size_bytes": 1985,
+      "read_status": "utf-8-sig",
+      "keywords": [
+        "log label"
+      ],
+      "line_count": 61
+    }
+  ],
+  "snippets": [
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt",
+      "relative_path": "temp_result/test_relativity/result.txt.txt",
+      "line": 5,
+      "snippet": "验证集上的AUC（val_auc），达到了0.95361的峰值",
+      "keywords": [
+        "AUC"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt",
+      "relative_path": "temp_result/test_relativity/result.txt.txt",
+      "line": 7,
+      "snippet": "训练准确率（accuracy）和验证准确率（val_accuracy）也都达到了约85%",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt",
+      "relative_path": "temp_result/test_relativity/result.txt.txt",
+      "line": 9,
+      "snippet": "损失函数（loss和val_loss）在持续下降，而性能指标（auc和accuracy）在持续上升，这是一个非常健康的学习曲线。",
+      "keywords": [
+        "AUC"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt",
+      "relative_path": "temp_result/test_relativity/result.txt.txt",
+      "line": 11,
+      "snippet": "训练在第72个epoch时提前停止（early stopping），这也是一个好现象。这意味着模型在第57个epoch时在验证集上达到了最佳性能（val_auc: 0.95361），并在那之后自动保存了最佳模型。这有效地防止了模型在后续训练中发生过拟合，确保了得到的是泛化能力最强的模型。",
+      "keywords": [
+        "AUC"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 1,
+      "snippet": "# Baseline",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 3,
+      "snippet": "## 超声方位FFT+8通道CWT+UNet+Grad-CAM:",
+      "keywords": [
+        "FFT",
+        "CWT",
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 5,
+      "snippet": "* 目前是采用混合损失函数，但是并未增加FFT系数高频的惩罚力度",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 9,
+      "snippet": "* 目前**grad-cam**热力图效果很差，热力点分布分散，很难看出集中特征，且很多热力点分布并不合理",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 11,
+      "snippet": "* **Predction**结果很差，只能预测\"整体平均\"的结构，基本上只对FFT第0个系数学习到了。且分布是**垂直条带**",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 15,
+      "snippet": "# 1. 对数变换标签",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 17,
+      "snippet": "* 同样未增加FFT系数高频的惩罚力度",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 19,
+      "snippet": "* 对FFT系数进行对数变换，在生成标签时，不要直接使用FFT的幅度 `magnitude`，而是使用 `log(1 + magnitude)`。",
+      "keywords": [
+        "FFT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 23,
+      "snippet": "* 目前**grad-cam**热力图效果变好，热力点分布集中，目前注意力主要集中在**0.5-0.7ms，25-30kHz处**。",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 25,
+      "snippet": "* **Predction**结果目前不太好，都是**水平条带**分布。下一步预计**增加FFT系数高频的惩罚力度**",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 29,
+      "snippet": "# 2. FFT系数高频损失惩罚",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 31,
+      "snippet": "* 增加了FFT系数高频的惩罚",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 33,
+      "snippet": "* 改进了run_analysis.py代码，增加了新指标，如SSIM,PSNR",
+      "keywords": [
+        "SSIM/PSNR"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 37,
+      "snippet": "* 目前**grad-cam**热力图没啥大变化，但是更加集中了，目前注意力主要集中在**0.75ms-0.85ms和25-28kHz处**",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 39,
+      "snippet": "* **Predction**结果依旧很差，即使增加了FFT系数高频的惩罚，模型依旧只学习拟合FFT低系数，下一步引入GaN。",
+      "keywords": [
+        "FFT",
+        "GAN/GaN"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 43,
+      "snippet": "# 3. GaN+“窜槽严重性”变换",
+      "keywords": [
+        "severity",
+        "GAN/GaN"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 45,
+      "snippet": "- **创建“窜槽严重性图”**：我们将原始的 `zc_slice` 变换为一个新的矩阵。对于矩阵中的每一个像素点，其新值为 `max(0, 2.5 - zc_slice)`。",
+      "keywords": [
+        "severity"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 47,
+      "snippet": "- **如果 Zc = 1.0 (严重窜槽)**，新值为 `2.5 - 1.0 = 1.5` (一个较大的正数)。",
+      "keywords": [
+        "severity"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 49,
+      "snippet": "- **如果 Zc = 2.4 (临界窜槽)**，新值为 `2.5 - 2.4 = 0.1` (一个小的正数)。",
+      "keywords": [
+        "severity"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 51,
+      "snippet": "- **如果 Zc = 6.0 (胶结良好)**，新值为 `2.5 - 6.0 = -3.5`，经过 `max(0, ...)` 处理后，最终值为 **0**。",
+      "keywords": [
+        "severity"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 53,
+      "snippet": "- **对“严重性图”进行FFT**：接下来，我们对这个全新的、只包含窜槽信息的“严重性图”进行FFT、取幅度、对数变换等后续操作。",
+      "keywords": [
+        "FFT",
+        "log label",
+        "severity"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 57,
+      "snippet": "* 模型崩塌",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 61,
+      "snippet": "# 4. GaN+\"双通道二元标签\"+焦点损失函数+过拟合测试",
+      "keywords": [
+        "dual-channel",
+        "GAN/GaN"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 63,
+      "snippet": "* **双通道二元标签 (Two-Channel Binary Label)**：我们不再生成单一的“严重性图”，而是为每个样本创建两个独立的、非0即1的“掩码”图：",
+      "keywords": [
+        "dual-channel",
+        "severity"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 65,
+      "snippet": "* **窜槽掩码 (Channeling Mask)**：一个矩阵，其中`Zc < 2.5`的位置为1，其他位置为0。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 67,
+      "snippet": "* **良好掩码 (Good Bonding Mask)**：一个矩阵，其中`Zc >= 2.5`的位置为1，其他位置为0。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 68,
+      "snippet": "我们将这两个掩码**堆叠**起来，形成一个双通道的标签。这样，我们就把原始的Zc值，转换成了一个清晰的、非黑即白的分类问题。",
+      "keywords": [
+        "dual-channel"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 70,
+      "snippet": "* 我们将强制让模型只在一个**极小的、只有1个样本**的数据集上进行训练。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 72,
+      "snippet": "- **如果模型能够成功地在这个单一样本上过拟合**（即Generator Loss显著下降，最终能够完美地生成这个样本对应的标签图像），那么这就**证明**：",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 74,
+      "snippet": "1. 您的模型架构（U-Net）有足够的能力来完成这个任务。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 76,
+      "snippet": "2. 您的训练代码（包括GAN的博弈、梯度更新等）是**正确无误**的。",
+      "keywords": [
+        "GAN/GaN"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 78,
+      "snippet": "3. 输入和标签之间**确实存在可以被学会的对应关系**！",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 79,
+      "snippet": "在这种情况下，训练在完整数据集上的失败，就说明问题在于**泛化能力**，即模型难以从2846个样本中归纳出普适的规律，这可能需要更强大的模型或更多的训练技巧。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 81,
+      "snippet": "- **如果模型连这一个样本都学不会**（Generator Loss依然无法下降），那么这就**强烈地暗示**：",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 83,
+      "snippet": "1. 问题可能出在模型架构本身（例如梯度无法有效传播）。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 85,
+      "snippet": "2. 或者，正如您所担心的，**输入和标签之间的关系确实极其微弱，甚至在CWT这个特征空间中是不存在的**。",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 89,
+      "snippet": "* 模型崩塌",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 93,
+      "snippet": "# 5. CNN+分类任务（验证CWT与标签之间是否存在对应关系）",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 95,
+      "snippet": "* 如果样本对应的 Zc 切片中有超过 1% 的像素低于阈值 2.5，则该样本被标记为 1（存在通道效应）。该阈值是一个合理的起始值，之后可以根据需要进行调整。",
+      "keywords": []
+    },
+    {
+      "source_type": "results",
+      "path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "relative_path": "temp_result/改进memo.md",
+      "line": 99,
+      "snippet": "- **模型确实学会了！**",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 31,
+      "snippet": "LOG_DIR = os.path.join(OUTPUT_DIR, 'logs')",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 47,
+      "snippet": "FFT_COEFFICIENTS = 30",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 51,
+      "snippet": "# --- CWT和模型参数 (CWT & Model Parameters) ---",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 53,
+      "snippet": "# --- CWT变换参数 ---",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 55,
+      "snippet": "CWT_WAVELET = 'cmor1.5-1.0'",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 58,
+      "snippet": "CWT_CHUNK_SIZE = 2048",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 60,
+      "snippet": "# *** 逻辑修正：根据目标频率范围 (1-30kHz) 计算CWT尺度 ***",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 69,
+      "snippet": "CENTRAL_FREQ = pywt.central_frequency(CWT_WAVELET)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 73,
+      "snippet": "# 使用对数间隔生成尺度数组，以在低频获得更好分辨率，符合原始方案建议",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 74,
+      "snippet": "CWT_SCALES = np.geomspace(MIN_SCALE, MAX_SCALE, N_SCALES)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 76,
+      "snippet": "# 预计算CWT尺度对应的频率轴 (单位: kHz)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 77,
+      "snippet": "FREQUENCIES_HZ = pywt.scale2frequency(CWT_WAVELET, CWT_SCALES) / SAMPLING_PERIOD",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 78,
+      "snippet": "CWT_FREQUENCIES_KHZ = FREQUENCIES_HZ / 1000",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 81,
+      "snippet": "# --- 模型参数 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/config.py",
+      "relative_path": "config.py",
+      "line": 85,
+      "snippet": "# --- 训练参数 (针对A100优化) ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/main.py",
+      "relative_path": "main.py",
+      "line": 23,
+      "snippet": "cwt_h5_path = os.path.join(PROCESSED_DATA_DIR, f'array_{str(ARRAY_ID).zfill(2)}', 'cwt_images.h5')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/main.py",
+      "relative_path": "main.py",
+      "line": 31,
+      "snippet": "return os.path.exists(cwt_h5_path)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/main.py",
+      "relative_path": "main.py",
+      "line": 85,
+      "snippet": "'transform': 'src/cwt_transformation/main_transform_translation.py',",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 15,
+      "snippet": "ARRAY_ID, PROCESSED_DATA_DIR, CWT_SCALES, CWT_WAVELET,",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 16,
+      "snippet": "INPUT_SHAPE, DEBUG_MODE, DEBUG_SONIC_DEPTH_POINTS, CWT_CHUNK_SIZE",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 19,
+      "snippet": "def batch_cwt_transformer(waveforms, scales, wavelet):",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 21,
+      "snippet": "对一个批次的8通道波形并行执行CWT。",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 23,
+      "snippet": "输出 cwt_images: (batch_size, n_scales, time_steps, 8)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 29,
+      "snippet": "cwt_images = np.zeros((batch_size, n_scales, time_steps, n_channels), dtype=np.float32)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 35,
+      "snippet": "coeffs, _ = pywt.cwt(waveforms[i, j, :], scales, wavelet)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 39,
+      "snippet": "cwt_images[i, :, :, :] = np.stack(all_coeffs, axis=-1)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 41,
+      "snippet": "return cwt_images",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 43,
+      "snippet": "def transform_waveforms_to_cwt_images():",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 45,
+      "snippet": "主函数：读取处理后的波形，分块执行CWT，并将结果保存到HDF5文件。",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 47,
+      "snippet": "print(\"--- Starting AVIP Phase 2a: Chunked CWT Transformation ---\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 52,
+      "snippet": "output_h5_path = os.path.join(array_dir, 'cwt_images.h5')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 67,
+      "snippet": "num_chunks = math.ceil(num_samples / CWT_CHUNK_SIZE)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 68,
+      "snippet": "print(f\"Total samples: {num_samples}, Chunk size: {CWT_CHUNK_SIZE}, Number of chunks: {num_chunks}\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 72,
+      "snippet": "# 创建一个可调整大小的数据集来存储所有CWT图像",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 74,
+      "snippet": "'cwt_images',",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 83,
+      "snippet": "start_idx = i * CWT_CHUNK_SIZE",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 84,
+      "snippet": "end_idx = min((i + 1) * CWT_CHUNK_SIZE, num_samples)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 89,
+      "snippet": "# 对当前块执行CWT变换",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 90,
+      "snippet": "cwt_images_chunk = batch_cwt_transformer(waveforms_chunk, CWT_SCALES, CWT_WAVELET)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 93,
+      "snippet": "dset[start_idx:end_idx] = cwt_images_chunk",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 95,
+      "snippet": "print(\"\\n--- Chunked CWT Transformation Complete ---\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 96,
+      "snippet": "print(f\"All CWT images saved to: {output_h5_path}\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/cwt_transformation/main_transform_translation.py",
+      "relative_path": "src/cwt_transformation/main_transform_translation.py",
+      "line": 99,
+      "snippet": "transform_waveforms_to_cwt_images()",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 17,
+      "snippet": "ARRAY_ID, PROCESSED_DATA_DIR, GROUND_TRUTH_DB_PATH, FFT_COEFFICIENTS,",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 18,
+      "snippet": "MAX_PATH_DEPTH_POINTS, DEBUG_MODE, DEBUG_SONIC_DEPTH_POINTS, CWT_CHUNK_SIZE",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 27,
+      "snippet": "def process_zc_slice_to_label(zc_slice, n_fft_coeffs, max_len):",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 29,
+      "snippet": "将Zc切片处理成固定大小的FFT幅度图像标签。",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 31,
+      "snippet": "# 1. 沿方位角轴（180个点）执行FFT",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 32,
+      "snippet": "fft_coeffs = np.fft.fft(zc_slice, axis=1)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 35,
+      "snippet": "fft_magnitudes_raw = np.abs(fft_coeffs)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 40,
+      "snippet": "# 使用对数变换 log(1 + x) 来压缩数值范围，提升高频（结构）信号的权重。",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 42,
+      "snippet": "fft_magnitudes = np.log1p(fft_magnitudes_raw).astype(np.float32)",
+      "keywords": [
+        "FFT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 48,
+      "snippet": "label_image = fft_magnitudes[:, :n_fft_coeffs]",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 52,
+      "snippet": "padded_label = np.zeros((max_len, n_fft_coeffs), dtype=np.float32)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 64,
+      "snippet": "def create_tfrecord_example(cwt_image, fft_label):",
+      "keywords": [
+        "FFT",
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 69,
+      "snippet": "'feature': _bytes_feature(tf.io.serialize_tensor(cwt_image)),",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 70,
+      "snippet": "'label': _bytes_feature(tf.io.serialize_tensor(fft_label)),",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 76,
+      "snippet": "主函数：读取CWT图像和Zc真值，创建用于图像翻译的TFRecord文件。",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 78,
+      "snippet": "print(\"--- Starting AVIP Phase 2b: TFRecord Generation (with Log Scaling) ---\")",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 82,
+      "snippet": "cwt_h5_path = os.path.join(array_dir, 'cwt_images.h5')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 90,
+      "snippet": "print(f\"Loading CWT images from: {cwt_h5_path}\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 105,
+      "snippet": "with h5py.File(cwt_h5_path, 'r') as cwt_hf, \\",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 109,
+      "snippet": "cwt_dset = cwt_hf['cwt_images']",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 117,
+      "snippet": "# --- 1. 读取预先计算好的CWT图像 ---",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 118,
+      "snippet": "cwt_image = cwt_dset[i]",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 120,
+      "snippet": "# --- 2. 读取Zc真值切片并生成标签 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 123,
+      "snippet": "zc_slice = path_data_group[sonic_depth_key][:]",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 125,
+      "snippet": "fft_label = process_zc_slice_to_label(",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 126,
+      "snippet": "zc_slice, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/create_tfrecords.py",
+      "relative_path": "src/data_processing/create_tfrecords.py",
+      "line": 130,
+      "snippet": "example = create_tfrecord_example(cwt_image, fft_label)",
+      "keywords": [
+        "FFT",
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 32,
+      "snippet": "b, a = butter(order, normal_cutoff, btype='high', analog=False)",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 46,
+      "snippet": "zc_data = cast_data['Zc']",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 64,
+      "snippet": "return df_cast, zc_data, df_sonic, waveforms_dict",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 80,
+      "snippet": "def interpolate_to_grid(df, zc_data, unified_depth):",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 82,
+      "snippet": "将Zc数据插值到统一的深度网格上。",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 84,
+      "snippet": "print(\"Interpolating Zc data to the unified grid...\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 87,
+      "snippet": "original_zc = zc_data[:, sort_indices]",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 89,
+      "snippet": "interp_func = interp1d(original_depths, original_zc, kind='linear', bounds_error=False, fill_value='extrapolate')",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 90,
+      "snippet": "interpolated_zc = interp_func(unified_depth)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 91,
+      "snippet": "interpolated_zc = interpolated_zc.T",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 93,
+      "snippet": "print(f\"Zc data interpolated to shape: {interpolated_zc.shape}\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 94,
+      "snippet": "return interpolated_zc",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 97,
+      "snippet": "def build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_depth, config):",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 148,
+      "snippet": "hf.create_dataset('interpolated_zc_full', data=interpolated_zc)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 164,
+      "snippet": "zc_slice = interpolated_zc[path_indices, :]",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 166,
+      "snippet": "path_data_group.create_dataset(sonic_depth_key, data=zc_slice)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 184,
+      "snippet": "df_cast, zc_data, df_sonic, waveforms_dict = load_and_prepare_data(config_dict['RAW_DATA_DIR'], config_dict['ARRAY_ID'])",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 186,
+      "snippet": "interpolated_zc = interpolate_to_grid(df_cast, zc_data, unified_depth)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/data_processing/main_preprocess.py",
+      "relative_path": "src/data_processing/main_preprocess.py",
+      "line": 187,
+      "snippet": "build_and_save_outputs(df_sonic, waveforms_dict, interpolated_zc, unified_depth, config_dict)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 14,
+      "snippet": "INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS,",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 21,
+      "snippet": "加载单个样本，生成CWT和Heatmap的数组，并将其直接保存为图片以供检查。",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 31,
+      "snippet": "output_width=FFT_COEFFICIENTS",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 36,
+      "snippet": "cwt_h5_path = os.path.join(array_dir, 'cwt_images.h5')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 38,
+      "snippet": "with h5py.File(cwt_h5_path, 'r') as hf:",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 39,
+      "snippet": "input_cwt = hf['cwt_images'][sample_index]",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 42,
+      "snippet": "print(\"Generating Grad-CAM heatmap...\")",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 43,
+      "snippet": "heatmap = get_grad_cam_heatmap(model, input_cwt, LAST_CONV_LAYER_NAME)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 46,
+      "snippet": "print(f\"\\nShape of Input CWT (channel A): {input_cwt[:, :, 0].shape}\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 54,
+      "snippet": "# 保存CWT图",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/debug_data_visualization.py",
+      "relative_path": "src/interpretation/debug_data_visualization.py",
+      "line": 55,
+      "snippet": "plt.imsave(os.path.join(output_dir, 'debug_cwt_array.png'), input_cwt[:, :, 0], cmap='jet')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 19,
+      "snippet": "from src.interpretation.run_analysis import _calculate_cwt_frequencies_khz",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 20,
+      "snippet": "from src.interpretation.grad_cam import make_gradcam_heatmap, superimpose_gradcam",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 36,
+      "snippet": "print(\"正在加载模型和数据...\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 75,
+      "snippet": "freqs_khz = _calculate_cwt_frequencies_khz(config)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 97,
+      "snippet": "heatmap = make_gradcam_heatmap(img_array, model, last_conv_layer_name).astype(np.float32)",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 98,
+      "snippet": "superimposed_img = superimpose_gradcam(x_val[idx], heatmap)",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/generate_analysis_candidates.py",
+      "relative_path": "src/interpretation/generate_analysis_candidates.py",
+      "line": 134,
+      "snippet": "parser = argparse.ArgumentParser(description=\"为指定接收器阵列生成模型分析的候选样本，包含热力图和波形图。\")",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/grad_cam.py",
+      "relative_path": "src/interpretation/grad_cam.py",
+      "line": 8,
+      "snippet": "def make_gradcam_heatmap(img_array, model, last_conv_layer_name):",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/grad_cam.py",
+      "relative_path": "src/interpretation/grad_cam.py",
+      "line": 10,
+      "snippet": "为给定的图像和模型生成Grad-CAM热力图。",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/grad_cam.py",
+      "relative_path": "src/interpretation/grad_cam.py",
+      "line": 31,
+      "snippet": "def superimpose_gradcam(img, heatmap, alpha=0.5):",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 21,
+      "snippet": "INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, BATCH_SIZE,",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 22,
+      "snippet": "CWT_FREQUENCIES_KHZ, TIME_STEPS,",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 51,
+      "snippet": "def reconstruct_zc_from_fft_magnitude(fft_mag_image):",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 55,
+      "snippet": "# 因为模型预测的是 log(1 + magnitude)，我们需要先进行逆变换 exp(x) - 1",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 56,
+      "snippet": "# 才能得到真实的 magnitude，然后再进行iFFT。",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 59,
+      "snippet": "fft_mag_image_restored = np.maximum(0, np.expm1(fft_mag_image))",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 64,
+      "snippet": "n_depths, n_coeffs = fft_mag_image_restored.shape",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 65,
+      "snippet": "full_fft_coeffs = np.zeros((n_depths, 180), dtype=np.complex64)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 66,
+      "snippet": "full_fft_coeffs[:, :n_coeffs] = fft_mag_image_restored",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 67,
+      "snippet": "reconstructed_zc = np.fft.ifft(full_fft_coeffs, axis=1)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 68,
+      "snippet": "return np.real(reconstructed_zc)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 79,
+      "snippet": "input_shape=INPUT_SHAPE, output_height=MAX_PATH_DEPTH_POINTS, output_width=FFT_COEFFICIENTS",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 88,
+      "snippet": "print(f\"Running predictions and Grad-CAM on {num_samples_to_visualize} samples...\")",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 100,
+      "snippet": "output_plot_dir = os.path.join(RESULTS_DIR, 'analysis_plots_with_gradcam')",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 107,
+      "snippet": "input_cwt, true_fft_label, pred_fft_label = features_to_visualize[i], labels_to_visualize[i], predictions[i]",
+      "keywords": [
+        "FFT",
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 109,
+      "snippet": "heatmap = get_grad_cam_heatmap(model, input_cwt, LAST_CONV_LAYER_NAME)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 110,
+      "snippet": "true_zc_image = reconstruct_zc_from_fft_magnitude(true_fft_label)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 111,
+      "snippet": "pred_zc_image = reconstruct_zc_from_fft_magnitude(pred_fft_label)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 113,
+      "snippet": "plot_extent = [time_axis_ms[0], time_axis_ms[-1], CWT_FREQUENCIES_KHZ[-1], CWT_FREQUENCIES_KHZ[0]]",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 115,
+      "snippet": "# --- Figure 1: CWT 和 Grad-CAM (最终修正：灰度背景 + 彩色叠加) ---",
+      "keywords": [
+        "CWT",
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 119,
+      "snippet": "# 1. 将底层的CWT图绘制为灰度图",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 120,
+      "snippet": "ax1.imshow(input_cwt[:, :, 0], aspect='auto', cmap='gray', extent=plot_extent)",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 125,
+      "snippet": "ax1.set_title('Input CWT (Grayscale) & Grad-CAM Heatmap (Color Overlay)')",
+      "keywords": [
+        "CWT",
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 130,
+      "snippet": "plot_path1 = os.path.join(output_plot_dir, f'sample_{i}_input_and_gradcam.png')",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 138,
+      "snippet": "im3 = ax3.imshow(true_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 144,
+      "snippet": "fig2.colorbar(im3, cax=cax3, label='Acoustic Impedance (Zc)')",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 146,
+      "snippet": "im4 = ax4.imshow(pred_zc_image, aspect='auto', cmap='viridis', vmin=0, vmax=5)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/run_analysis.py",
+      "relative_path": "src/interpretation/run_analysis.py",
+      "line": 151,
+      "snippet": "fig2.colorbar(im4, cax=cax4, label='Acoustic Impedance (Zc)')",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 17,
+      "snippet": "构建模型并将其架构图保存为图片。",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 23,
+      "snippet": "print(f\"--- [开始为阵列 {array_id} 可视化模型架构] ---\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 25,
+      "snippet": "# 1. 从配置中获取模型参数和输出路径",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 29,
+      "snippet": "# 2. 构建模型实例",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 30,
+      "snippet": "# 我们不需要训练好的模型，只需要其结构，所以直接构建即可",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 31,
+      "snippet": "print(\"正在构建 SE-ResNet 模型...\")",
+      "keywords": [
+        "SE-ResNet"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 34,
+      "snippet": "# 打印模型的文本摘要",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 39,
+      "snippet": "print(f\"\\n模型架构图将被保存至: {output_path}\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 49,
+      "snippet": "expand_nested=True,        # 展开嵌套的模型（对我们的残差块很重要）",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 52,
+      "snippet": "print(\"\\n--- [模型可视化成功！] ---\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 55,
+      "snippet": "print(\"生成模型图失败。这通常是因为缺少必要的绘图库。\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/interpretation/visualize_model.py",
+      "relative_path": "src/interpretation/visualize_model.py",
+      "line": 64,
+      "snippet": "parser = argparse.ArgumentParser(description=\"为当前项目模型生成并保存一个可视化的架构图。\")",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/dataset.py",
+      "relative_path": "src/modeling/dataset.py",
+      "line": 10,
+      "snippet": "INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, BATCH_SIZE",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/dataset.py",
+      "relative_path": "src/modeling/dataset.py",
+      "line": 32,
+      "snippet": "label_tensor = tf.reshape(label_tensor, [MAX_PATH_DEPTH_POINTS, FFT_COEFFICIENTS])",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/model.py",
+      "relative_path": "src/modeling/model.py",
+      "line": 15,
+      "snippet": "INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, LAST_CONV_LAYER_NAME",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/model.py",
+      "relative_path": "src/modeling/model.py",
+      "line": 76,
+      "snippet": "# *** 逻辑修正：为最后一个3x3卷积层命名，作为Grad-CAM的目标 ***",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/model.py",
+      "relative_path": "src/modeling/model.py",
+      "line": 81,
+      "snippet": "# 使用一个1x1卷积，将32个特征通道，转换为目标图像的宽度（即FFT系数的数量）",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/model.py",
+      "relative_path": "src/modeling/model.py",
+      "line": 104,
+      "snippet": "output_width=FFT_COEFFICIENTS",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/model.py",
+      "relative_path": "src/modeling/model.py",
+      "line": 107,
+      "snippet": "print(f\"\\nGrad-CAM will target this layer: '{LAST_CONV_LAYER_NAME}'\")",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 14,
+      "snippet": "ARRAY_ID, PROCESSED_DATA_DIR, MODEL_DIR, LOG_DIR,",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 15,
+      "snippet": "INPUT_SHAPE, FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS,",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 41,
+      "snippet": "\"\"\"主函数：训练 A²INet 模型\"\"\"",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 57,
+      "snippet": "# 如果总批次数少于2，无法分割，只能全部用于训练",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 79,
+      "snippet": "# --- 2. 构建模型 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 84,
+      "snippet": "output_width=FFT_COEFFICIENTS",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 87,
+      "snippet": "# --- 3. 编译模型 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 95,
+      "snippet": "create_dir(LOG_DIR)",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 98,
+      "snippet": "callbacks = [TensorBoard(log_dir=LOG_DIR, histogram_freq=1)]",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 108,
+      "snippet": "# --- 5. 开始训练 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 117,
+      "snippet": "# 在训练结束后，手动保存最终的模型状态，确保总有一个模型文件",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 118,
+      "snippet": "# 即使EarlyStopping在中间停止了训练",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 122,
+      "snippet": "# --- 6. 保存训练历史 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/modeling/train.py",
+      "relative_path": "src/modeling/train.py",
+      "line": 123,
+      "snippet": "history_path = os.path.join(LOG_DIR, 'training_history.pkl')",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "line": 25,
+      "snippet": "def plot_grad_cam(scalogram, heatmap, time_axis, freq_axis, title, save_path=None):",
+      "keywords": [
+        "CWT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "line": 27,
+      "snippet": "将Grad-CAM热力图叠加在原始尺度图上进行可视化。",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "line": 30,
+      "snippet": "scalogram (np.ndarray): 2D尺度图。",
+      "keywords": [
+        "CWT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "line": 31,
+      "snippet": "heatmap (np.ndarray): 2D Grad-CAM热力图。",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "line": 40,
+      "snippet": "im = ax.imshow(scalogram, aspect='auto', cmap='viridis',",
+      "keywords": [
+        "CWT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/utils/plotting.py",
+      "relative_path": "src/utils/plotting.py",
+      "line": 58,
+      "snippet": "print(f\"Grad-CAM plot saved to {save_path}\")",
+      "keywords": [
+        "Grad-CAM"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 17,
+      "snippet": "ARRAY_ID, PROCESSED_DATA_DIR, RAW_DATA_DIR, CWT_SCALES, CWT_WAVELET,",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 18,
+      "snippet": "FFT_COEFFICIENTS, MAX_PATH_DEPTH_POINTS, ROOT_DIR,",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 19,
+      "snippet": "CWT_FREQUENCIES_KHZ, TIME_STEPS # 导入新变量",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 40,
+      "snippet": "cwt_h5_path = os.path.join(array_dir, 'cwt_images.h5')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 47,
+      "snippet": "with h5py.File(cwt_h5_path, 'r') as hf:",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 48,
+      "snippet": "cwt_image = hf['cwt_images'][sample_index]",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 52,
+      "snippet": "zc_slice = hf['path_data'][sonic_depth_key][:]",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 75,
+      "snippet": "# --- 3. 可视化CWT结果 ---",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 78,
+      "snippet": "plt.imshow(cwt_image[:, :, 0], aspect='auto', cmap='jet',",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 79,
+      "snippet": "extent=[time_axis_ms[0], time_axis_ms[-1], CWT_FREQUENCIES_KHZ[-1], CWT_FREQUENCIES_KHZ[0]])",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 80,
+      "snippet": "plt.title('Step 2: CWT Result (A-channel)')",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 84,
+      "snippet": "plt.savefig(os.path.join(output_dir, '02_cwt_result.png'))",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 86,
+      "snippet": "print(\"Saved plot: 02_cwt_result.png\")",
+      "keywords": [
+        "CWT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 88,
+      "snippet": "# --- 4. 可视化标签生成过程 ---",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 89,
+      "snippet": "avg_zc_profile = np.mean(zc_slice, axis=0)",
+      "keywords": [
+        "1D percentage"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 94,
+      "snippet": "# 同样应用对数变换，以确保可视化结果与模型训练时使用的标签一致",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 95,
+      "snippet": "fft_magnitudes_raw = np.abs(np.fft.fft(avg_zc_profile))",
+      "keywords": [
+        "FFT",
+        "1D percentage"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 96,
+      "snippet": "fft_magnitudes = np.log1p(fft_magnitudes_raw)[:FFT_COEFFICIENTS]",
+      "keywords": [
+        "FFT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 102,
+      "snippet": "plt.suptitle('Step 3: Label Generation Process (with Log Scaling)', fontsize=16)",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 104,
+      "snippet": "plt.imshow(zc_slice, aspect='auto', cmap='viridis', vmin=0, vmax=5)",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 105,
+      "snippet": "plt.title('Original Zc Slice (Ground Truth)')",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 109,
+      "snippet": "plt.plot(fft_magnitudes)",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 110,
+      "snippet": "plt.title(f'Final Label: Log-Scaled FFT Magnitudes (First {FFT_COEFFICIENTS} coeffs)')",
+      "keywords": [
+        "FFT",
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 111,
+      "snippet": "plt.xlabel('FFT Coefficient Index')",
+      "keywords": [
+        "FFT"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_data_pipeline.py",
+      "relative_path": "src/visualization/visualize_data_pipeline.py",
+      "line": 112,
+      "snippet": "plt.ylabel('Log(1 + Magnitude)')",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_training_history.py",
+      "relative_path": "src/visualization/visualize_training_history.py",
+      "line": 9,
+      "snippet": "from config import LOG_DIR, ROOT_DIR",
+      "keywords": [
+        "log label"
+      ]
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_training_history.py",
+      "relative_path": "src/visualization/visualize_training_history.py",
+      "line": 13,
+      "snippet": "加载并绘制模型的训练和验证历史曲线。",
+      "keywords": []
+    },
+    {
+      "source_type": "repo",
+      "path": "/home/xiaoj/hal_azi/src/visualization/visualize_training_history.py",
+      "relative_path": "src/visualization/visualize_training_history.py",
+      "line": 18,
+      "snippet": "history_path = os.path.join(LOG_DIR, 'training_history.pkl')",
+      "keywords": [
+        "log label"
+      ]
+    }
+  ],
+  "memo_claims": [
+    {
+      "claim_id": "memo-01",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "Baseline",
+      "experiment_name": "Baseline",
+      "method": "FFT; CWT; Grad-CAM",
+      "model": "Attention U-Net / A2INet",
+      "input_feature": "8-channel CWT time-frequency image",
+      "target_label": "FFT magnitude label",
+      "training_strategy": "frequency-weighted loss; hybrid MSE + gradient loss",
+      "evaluation_metrics": "unknown",
+      "result_conclusion": "## Results: 目前**grad-cam**热力图效果很差，热力点分布分散，很难看出集中特征，且很多热力点分布并不合理 Predction**结果很差，只能预测\"整体平均\"的结构，基本上只对FFT第0个系数学习到了。且分布是**垂直条带",
+      "failure_or_limitation": "目前**grad-cam**热力图效果很差，热力点分布分散，很难看出集中特征，且很多热力点分布并不合理 Predction**结果很差，只能预测\"整体平均\"的结构，基本上只对FFT第0个系数学习到了。且分布是**垂直条带",
+      "possible_result_dir": "temp_result/baseline",
+      "possible_code_file": "src/data_processing/create_tfrecords.py; src/modeling/model.py; src/interpretation/run_analysis.py",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    },
+    {
+      "claim_id": "memo-02",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "1. 对数变换标签",
+      "experiment_name": "1. 对数变换标签",
+      "method": "FFT; Grad-CAM; log label",
+      "model": "unknown",
+      "input_feature": "unknown",
+      "target_label": "FFT magnitude label",
+      "training_strategy": "frequency-weighted loss",
+      "evaluation_metrics": "unknown",
+      "result_conclusion": "## Results: 目前**grad-cam**热力图效果变好，热力点分布集中，目前注意力主要集中在**0.5-0.7ms，25-30kHz处**。",
+      "failure_or_limitation": "unknown",
+      "possible_result_dir": "temp_result/log_label",
+      "possible_code_file": "src/data_processing/create_tfrecords.py; src/modeling/model.py; src/interpretation/run_analysis.py",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    },
+    {
+      "claim_id": "memo-03",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "2. FFT系数高频损失惩罚",
+      "experiment_name": "2. FFT系数高频损失惩罚",
+      "method": "FFT; Grad-CAM; SSIM/PSNR; GAN/GaN",
+      "model": "GAN",
+      "input_feature": "unknown",
+      "target_label": "FFT magnitude label",
+      "training_strategy": "frequency-weighted loss",
+      "evaluation_metrics": "ssim; psnr",
+      "result_conclusion": "## Results: 目前**grad-cam**热力图没啥大变化，但是更加集中了，目前注意力主要集中在**0.75ms-0.85ms和25-28kHz处",
+      "failure_or_limitation": "Predction**结果依旧很差，即使增加了FFT系数高频的惩罚，模型依旧只学习拟合FFT低系数，下一步引入GaN。",
+      "possible_result_dir": "temp_result/frequency-weighted_loss",
+      "possible_code_file": "origin/frequency-weighted_loss:src/modeling/train.py; origin/frequency-weighted_loss:src/interpretation/run_analysis.py",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    },
+    {
+      "claim_id": "memo-04",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "3. GaN+“窜槽严重性”变换",
+      "experiment_name": "3. GaN+“窜槽严重性”变换",
+      "method": "FFT; log label; severity; GAN/GaN",
+      "model": "GAN",
+      "input_feature": "unknown",
+      "target_label": "FFT magnitude label; severity transform max(0, 2.5 - Zc); CAST Zc slice",
+      "training_strategy": "unknown",
+      "evaluation_metrics": "unknown",
+      "result_conclusion": "## Results: 模型崩塌",
+      "failure_or_limitation": "模型崩塌",
+      "possible_result_dir": "temp_result/GaN+2Dlabel",
+      "possible_code_file": "src/data_processing/create_tfrecords.py; src/modeling/model.py; src/interpretation/run_analysis.py",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    },
+    {
+      "claim_id": "memo-05",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "4. GaN+\"双通道二元标签\"+焦点损失函数+过拟合测试",
+      "experiment_name": "4. GaN+\"双通道二元标签\"+焦点损失函数+过拟合测试",
+      "method": "CWT; dual-channel; severity; GAN/GaN",
+      "model": "Attention U-Net / A2INet",
+      "input_feature": "8-channel CWT time-frequency image",
+      "target_label": "binary channeling label/mask; severity transform max(0, 2.5 - Zc); CAST Zc slice",
+      "training_strategy": "focal loss; single-sample overfit test",
+      "evaluation_metrics": "loss",
+      "result_conclusion": "## Results: 模型崩塌",
+      "failure_or_limitation": "在这种情况下，训练在完整数据集上的失败，就说明问题在于**泛化能力**，即模型难以从2846个样本中归纳出普适的规律，这可能需要更强大的模型或更多的训练技巧。 模型崩塌",
+      "possible_result_dir": "temp_result/GaN+2Dlabel",
+      "possible_code_file": "unknown",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    },
+    {
+      "claim_id": "memo-06",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "5. CNN+分类任务（验证CWT与标签之间是否存在对应关系）",
+      "experiment_name": "5. CNN+分类任务（验证CWT与标签之间是否存在对应关系）",
+      "method": "CWT; AUC",
+      "model": "CNN classifier",
+      "input_feature": "8-channel CWT time-frequency image; sonic waveform",
+      "target_label": "binary channeling label/mask; CAST Zc slice",
+      "training_strategy": "early stopping; single-sample overfit test",
+      "evaluation_metrics": "auc; accuracy; val_auc; val_accuracy; loss; val_loss; accuracy≈85%; AUC=0.95361",
+      "result_conclusion": "## Results: 最关键的指标是验证集上的AUC（`val_auc`），它达到了**0.95361**的峰值。AUC是衡量二元分类模型性能的黄金标准，0.5代表随机猜测，1.0代表完美分类。0.95以上是一个**非常出色**的结果，它无可辩驳地证明了：**您的模型已经成功地学会了如何从CWT时频图中，区分出“有窜槽”和“无窜槽”的样本**。 训练准确率（`accuracy`）和验证准确率（`val_accuracy`）也都达到了约**85%**，这同样是一个非常积极的信号。 损失函数（`loss`和`val_loss`）在持续下降，而性能指标（`auc`和`accuracy`）在持续上升，这是一个非常健康的学习曲线。 训练在第72个epoch时**提前停止（early stopping）**，这也是一个好现象。这意味着模型在第57个epoch时在验证集上达到了最佳性能（`val_auc: 0.95361`），并在那之后自动保存了最佳模型。这有效地防止了模型在后续训练中发生过拟合，确保了我们得到的是泛化能力最强的模型。 目前的项目是一个判断有无窜槽的模型，但这并不是我最终想要的，目前这一阶段达成了验证”CWT时频图与水泥窜槽的存在与否之间，确实存在着强烈的、可以被机器学习模型稳定捕捉到的内在联系“这一结论。我的想法是，超声所测量的Zc声阻抗值和声波信号的数据的对应关系既然在方位上已经不匹配了，但是超声在每个深度点所测量的Zc值，取声波的收发路径为深度范围，该深度点的声波信号和超声在这一深度范围的数据是匹配的。那么，超声所反映的在深度方向上的窜槽信息，如结构窜槽分布（集中式缺陷或者分布式），窜槽严重程度等等，可以和声波的信号很好的对应起来。所以我希望的是这个模型最终能够通过声波信号最终尽可能预测中深度方向上的胶结情况（结构分布，严重程度等）。所以我一开始的想法也是做图像生成，因为图像携带的信息就包括了结构分布等信息",
+      "failure_or_limitation": "unknown",
+      "possible_result_dir": "temp_result/test_relativity",
+      "possible_code_file": "origin/test_relativity:src/modeling/model.py; origin/test_relativity:src/data_processing/create_tfrecords.py",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    },
+    {
+      "claim_id": "memo-07",
+      "evidence_path": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/改进memo.md",
+      "section": "6. 一维百分比窜槽比例标签",
+      "experiment_name": "6. 一维百分比窜槽比例标签",
+      "method": "FFT; CWT; EfficientNetV2B0; eccentricity/pre-correction; 1D percentage",
+      "model": "EfficientNetV2B0",
+      "input_feature": "8-channel CWT time-frequency image; metadata/inclination/eccentricity features",
+      "target_label": "1D channeling percentage profile; FFT magnitude label; CAST Zc slice",
+      "training_strategy": "frequency-weighted loss",
+      "evaluation_metrics": "unknown",
+      "result_conclusion": "## Results: 不足之处：模型在定量预测窜槽的严重程度时，表现出一种与严重程度相关的、持续增强的低估倾向。真实窜槽越严重，模型的预测结果就越偏离真实值（越保守）。 FFT：阐述原理，数据处理，展示标签，展示输入输出。讲清楚为什么要这么做？FFT把角度对齐变成相移，取绝对值，**时域的时移相当于频率域相移，于是只取幅值，忽略相位信息，可以使数据匹配**。解释为什么效果不好：展示效果，角度上只有8个接收器，但我们想要区分的情况集中在低频，频率分辨率不足以区分这两种情况，一般来说，一个深度处不会出现多个不连续的窜槽。",
+      "failure_or_limitation": "对超声数据在方位上进行FFT所得来的标签并不理想，模型根本学不到东西 不足之处：模型在定量预测窜槽的严重程度时，表现出一种与严重程度相关的、持续增强的低估倾向。真实窜槽越严重，模型的预测结果就越偏离真实值（越保守）。 FFT：阐述原理，数据处理，展示标签，展示输入输出。讲清楚为什么要这么做？FFT把角度对齐变成相移，取绝对值，**时域的时移相当于频率域相移，于是只取幅值，忽略相位信息，可以使数据匹配**。解释为什么效果不好：展示效果，角度上只有8个接收器，但我们想要区分的情况集中在低频，频率分辨率不足以区分这两种情况，一般来说，一个深度处不会出现多个不连续的窜槽。",
+      "possible_result_dir": "temp_result/1D+percentage_Label; FFT_EfficientNet; FFT_EfficientNet_1",
+      "possible_code_file": "origin/1D+percentage_Label:src/modeling/model.py",
+      "confidence": "strong",
+      "notes": "Extracted from memo section; claims require source path citation in thesis."
+    }
+  ]
+}

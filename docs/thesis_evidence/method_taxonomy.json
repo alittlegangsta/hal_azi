@@ -1,0 +1,52 @@
+{
+  "research_problem": [
+    {
+      "claim": "XSI acoustic waveform and CAST Zc image have azimuth mismatch in vertical wells.",
+      "evidence": "memo PPT section in results/temp_result/改进memo.md; explicitly thesis framing",
+      "status": "supported_by_memo"
+    },
+    {
+      "claim": "Relative Bearing is unreliable for direct point-to-point azimuth supervision.",
+      "evidence": "memo PPT section and user task framing",
+      "status": "supported_by_memo_plus_inference"
+    },
+    {
+      "claim": "Direct azimuth-resolved point supervision is not the strongest thesis route with current evidence.",
+      "evidence": "FFT baseline/log/weighted-loss failures in memo and result plots",
+      "status": "supported_by_memo"
+    }
+  ],
+  "data_construction": [
+    "XSI waveform -> CWT scalogram/time-frequency image (repo config.py and src/cwt_transformation/main_transform_translation.py)",
+    "CAST Zc slices from ground_truth_db HDF5 (repo config.py and create_tfrecords.py)",
+    "Severity transform max(0, 2.5 - Zc) appears in memo and origin/percentage_label+FFT create_tfrecords.py",
+    "Depth window/path label uses MAX_PATH_DEPTH_POINTS=70 and target depth range in config.py"
+  ],
+  "label_routes": [
+    "1D percentage label: mean(Zc < 2.5) over azimuth for each depth, from origin/1D+percentage_Label create_tfrecords.py.",
+    "FFT magnitude label: apply FFT along azimuth axis and take magnitude, from current create_tfrecords.py and memo.",
+    "Log transform: log(1 + magnitude), from memo and current code.",
+    "Phase discarded for rotation/azimuth invariance: memo PPT section; use as rationale, not as proven performance claim."
+  ],
+  "model_routes": [
+    "SE-ResNet route has result artifacts but code mapping is missing locally.",
+    "EfficientNetV2B0 route is present in origin/1D+percentage_Label model.py.",
+    "Dual-channel metadata fusion has result artifacts but code/metrics need verification.",
+    "Correction/pre-correction model has result artifacts but code/metrics need verification."
+  ],
+  "interpretability": [
+    "Grad-CAM plots and memo identify sensitive time-frequency regions, especially high-frequency bands around 22-30 kHz and sub-ms to ~1.3 ms windows.",
+    "Use Grad-CAM as qualitative interpretability unless batch statistics are regenerated from existing artifacts or verified."
+  ],
+  "failed_routes": [
+    "Azimuth matching mismatch and FFT image translation collapse: supported by memo and baseline/log/weighted-loss result artifacts.",
+    "Eccentricity correction poor: explicitly marked inference from user task framing plus result directory existence; needs code/metric verification.",
+    "Dual-channel failed: explicitly marked inference from user task framing plus result directory existence; needs code/metric verification.",
+    "High-severity prediction poor for 1D percentage regression: supported by memo."
+  ],
+  "recommended_mainline": [
+    "Use severity + FFT magnitude/log label with CWT + EfficientNet as the intended angle-mismatch-aware thesis mainline, but mark quantitative performance as needs_verification until metrics/split are recovered.",
+    "Use 1D percentage EfficientNet as the strongest confirmed learnability/severity evidence and a practical fallback main result.",
+    "Use artifact masking and Grad-CAM interpretability as explanation/supporting evidence only when tied to specific result files."
+  ]
+}

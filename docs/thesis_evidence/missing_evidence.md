@@ -1,0 +1,12 @@
+# Missing Evidence
+
+| priority | item | reason | minimal_action |
+| --- | --- | --- | --- |
+| A 必须补 | 防止数据泄漏的 split 说明或 depth-blocked 验证 | 现有代码多处使用 VALIDATION_SPLIT + dataset take/skip，未证明同一井深邻近窗口不会跨 train/val。 | 不训练；先从 TFRecord/索引/脚本恢复样本深度顺序，写出 split 说明。如需补，运行轻量 depth-blocked 评估脚本。 |
+| A 必须补 | baseline 对比 | 论文主线需要明确比 baseline 好；现有 baseline 多为定性失败说明。 | 从现有 results 和日志提取可比指标；缺失则标为 missing，不重训。 |
+| A 必须补 | 消融实验 | log、frequency weighted、severity/FFT、1D percentage 已有路线，但指标不统一。 | 整理已有图和日志，统一表述为路线对比；只在必要时做轻量评估，不做训练。 |
+| A 必须补 | Grad-CAM 批量统计 | 现有 Grad-CAM 多为样本图/定性 memo，论文需要稳定性证据。 | 优先使用现有 comprehensive_gradcam_statistics.png 和 attention plots；若缺统计脚本，写读取已保存热图/图像的轻量汇总。 |
+| A 必须补 | 严重度分组误差分析 | memo 提到严重窜槽预测偏保守，但缺统一误差表。 | 从现有 prediction/result artifacts 中寻找已保存数组/CSV；缺失则列 missing。 |
+| A 必须补 | 旧实验顺序验证 | memo、结果目录、Git 分支能形成大体顺序，但 CSI+SE-ResNet、双通道、预校正缺本地分支映射。 | 检查远程服务器 `/home/xiaoj/hal_azi` 和 GitHub 分支，不训练。 |
+| B 可选补 | 更多模型/超参数/多井/高级信号处理 | 可提高论文完整度，但不是最短毕业路线。 | 仅作为后续工作，不进入当前主线。 |
+| C 不建议补 | 大规模重训、新版本复杂弱标签、STC/APES、多目标人工审核 | 会扩大风险并偏离旧项目证据重建目标。 | 明确不做，除非导师要求并单独批准。 |
