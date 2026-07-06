@@ -179,3 +179,25 @@ config.py                                          |  39 ++-
 - `No local branch/commit conclusively maps 双通道学习 result directory to code.`
 - `No local branch/commit conclusively maps 预校正 result directory to code.`
 - `Remote server `/home/xiaoj/hal_azi` may contain unpushed branch state and conda environment `hall`.`
+
+## Remote Server Verification Attempt
+
+Date: `2026-07-06`
+
+Remote target: `cement-server:/home/xiaoj/hal_azi`
+
+Result: `needs_verification`
+
+No remote Git history could be collected because SSH authentication failed before remote commands executed.
+
+```text
+ssh cement-server pwd
+-> Permission denied (publickey,password); password prompt also reported missing /usr/bin/ssh-askpass.
+
+ssh -o BatchMode=yes cement-server 'cd /home/xiaoj/hal_azi && pwd && git status -sb'
+-> Permission denied (publickey,password).
+```
+
+Consequence: the local Git timeline above remains the only verified Git evidence in this repository. Remote-only branches, reflog entries, uncommitted files, and the `hall` conda environment remain `needs_verification`.
+
+Decision: `manual_review_required`.

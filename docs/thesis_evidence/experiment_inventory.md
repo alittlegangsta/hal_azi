@@ -21,3 +21,21 @@ One row is one reconstructed experiment or method version. Unknown fields are in
 | EXP-013 | Grad-CAM interpretability across routes | cross-cutting | Grad-CAM interpretability | CNN, A2INet, EfficientNet/SE-ResNet depending on route | route-specific | Grad-CAM plots/statistics and memo attention-frequency claims | Memo and result plots repeatedly locate sensitive regions in high-frequency CWT bands around roughly 22-30 kHz and 0.5-1.3 ms, depending on route. | main_result | strong |
 
 Full path-level evidence is in `experiment_inventory.csv` and `experiment_inventory.json`.
+
+## Remote Verification Update
+
+Date: `2026-07-06`
+
+Remote target `cement-server:/home/xiaoj/hal_azi` could not be read because SSH authentication failed with `Permission denied (publickey,password)`. Therefore, no remote code, branch, reflog, uncommitted-file, or `hall` environment evidence was added.
+
+Impact on experiment mapping:
+
+| Experiment | Remote verification status | Impact |
+| --- | --- | --- |
+| EXP-001 baseline | needs_verification | Exact baseline branch/order remains unresolved. |
+| EXP-010 CSI + SE-ResNet | needs_verification | Still lacks conclusive code/branch mapping. |
+| EXP-011 dual-channel metadata fusion | needs_verification | Still lacks conclusive code/branch mapping. |
+| EXP-012 eccentricity pre-correction | needs_verification | Still lacks conclusive code/branch mapping. |
+| all other locally mapped experiments | no new remote evidence | Existing local evidence strength unchanged. |
+
+Migration decision: `manual_review_required`. Do not rsync or migrate remote code until SSH authentication is restored and the read-only command list is collected.
