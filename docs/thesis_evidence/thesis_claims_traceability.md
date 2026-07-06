@@ -12,3 +12,15 @@ Every claim below is tied to at least one result path, code path, git branch/com
 | C-006 | GAN/two-channel image-generation routes collapsed. | EXP-004; EXP-005; memo sections 3-4; result.txt losses | supported for GAN, two-channel implementation mapping needs verification |
 | C-007 | Dual-channel and pre-correction failed/poor. | result directories 双通道学习 and 预校正; user task framing | explicitly_marked_inference_needs_verification |
 | C-008 | Sensitive CWT region is concentrated in high-frequency bands roughly 22-30 kHz and 0.5-1.3 ms depending on route. | memo sections 1/2/6; temp_result/test_relativity/result.txt.txt; Grad-CAM result files | supported qualitatively; batch statistics recommended |
+<!-- METRIC_EXTRACTION_AUTO_START -->
+## Metric-Based Claim Traceability Update (2026-07-06)
+
+| claim | evidence | source | status |
+| --- | --- | --- | --- |
+| CNN binary baseline learned CWT/channeling correspondence | EXP-006 val_auc 0.95361; val_accuracy max 0.885366 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt and training_history.pkl | usable with caveat split_unknown/leakage_risk_unknown |
+| 1D percentage label errors increase with severity | MAE grows from 0.010 Negligible to 6.555 High Severity; RMSE from 0.150 to 9.597 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt | usable as all-samples severity analysis, not verified held-out test |
+| FFT magnitude regression is best-supported mainline candidate | val_loss min 0.011499 and val_mae min 0.043332 in FFT regression history; FFT scatter/depth figures exist | /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl and image analysis folders | usable as training/validation evidence; final thesis metric needs split verification |
+| sample weights + asymmetric loss is failed attempt | weighted history exists; result.txt says 结果很差; remote commit message says effect was very poor | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt; remote branch commit b0825f3e from remote verification docs | appendix/failed_attempt only |
+| CSI+CNN, CSI+SE-ResNet, dual-channel and pre-correction metrics are not directly extractable numerically | performance summary PNGs found but no text/PKL numeric metrics | /mnt/c/Users/Administrator/Desktop/Hal/results/CSI+CNN; CSI+SE-ResNet; 双通道学习; 预校正 | image_only_needs_manual_read |
+<!-- METRIC_EXTRACTION_AUTO_END -->
+

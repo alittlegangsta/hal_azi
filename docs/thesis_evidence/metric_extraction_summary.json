@@ -1,0 +1,104 @@
+{
+  "generated": "2026-07-06",
+  "results_root": "/mnt/c/Users/Administrator/Desktop/Hal/results",
+  "metric_rows_total": 256,
+  "traceability_rows_total": 144,
+  "pkl_files": 15,
+  "tensorboard_event_files_unparsed": 72,
+  "image_only_rows": 45,
+  "unknown_split_experiments": [
+    "EXP-001",
+    "EXP-002",
+    "EXP-003",
+    "EXP-004",
+    "EXP-005",
+    "EXP-006",
+    "EXP-007",
+    "EXP-008",
+    "EXP-009",
+    "EXP-010",
+    "EXP-011",
+    "EXP-012",
+    "EXP-013",
+    "EXP-014",
+    "unknown"
+  ],
+  "leakage_risk_unknown_experiments": [
+    "EXP-001",
+    "EXP-002",
+    "EXP-003",
+    "EXP-004",
+    "EXP-005",
+    "EXP-006",
+    "EXP-007",
+    "EXP-008",
+    "EXP-009",
+    "EXP-010",
+    "EXP-011",
+    "EXP-012",
+    "EXP-013",
+    "EXP-014",
+    "unknown"
+  ],
+  "duplicate_training_history_groups": [
+    {
+      "hash_prefix": "5e7990a1ce089f30",
+      "count": 2,
+      "example_paths": "FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl; FFT_EfficientNet_1/output/fft_regression/array_03/logs/training_history_fft.pkl"
+    },
+    {
+      "hash_prefix": "673fb5e8b058b415",
+      "count": 6,
+      "example_paths": "FFT_EfficientNet/output/image_translation/array_03/logs/training_history.pkl; FFT_EfficientNet_1/output/image_translation/array_03/logs/training_history.pkl; temp_result/1D+percentage_Label/output/image_translation/array_03/logs/training_history.pkl; temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/logs/training_history.pkl; temp_result/GaN+2Dlabel/output/image_translation/array_03/logs/training_history.pkl"
+    },
+    {
+      "hash_prefix": "cc58fc273535b8e2",
+      "count": 4,
+      "example_paths": "FFT_EfficientNet/output/image_translation/array_03/logs/training_history_advanced.pkl; FFT_EfficientNet_1/output/image_translation/array_03/logs/training_history_advanced.pkl; temp_result/1D+percentage_Label/output/image_translation/array_03/logs/training_history_advanced.pkl; temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/logs/training_history_advanced.pkl"
+    }
+  ],
+  "mainline_summary": [
+    {
+      "category": "mainline_candidate",
+      "experiment_id": "EXP-008",
+      "available_metrics": "FFT regression history: val_loss min 0.011499; val_mae min 0.043332; final val_mae 0.051927; image scatter/depth/FFT maps need manual read",
+      "source": "/mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl",
+      "caveat": "split_unknown; leakage_risk_unknown; target unit normalized/FFT-label units; duplicate FFT_EfficientNet_1 copy exists"
+    },
+    {
+      "category": "fallback_mainline",
+      "experiment_id": "EXP-007",
+      "available_metrics": "1D severity-group MAE/RMSE from result.txt; val_auc/val_accuracy history files also exist but appear duplicated with binary-classification history",
+      "source": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt",
+      "caveat": "all-samples severity table, not verified independent test split; high severity MAE/RMSE is worst"
+    },
+    {
+      "category": "baseline",
+      "experiment_id": "EXP-006",
+      "available_metrics": "CNN binary baseline val_auc 0.95361; pkl val_auc max 0.953608; val_accuracy max 0.885366; early stop epoch 72, best epoch 57",
+      "source": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt",
+      "caveat": "classification baseline only; split_unknown and leakage_risk_unknown"
+    },
+    {
+      "category": "ablation",
+      "experiment_id": "EXP-002/EXP-003",
+      "available_metrics": "log label and frequency-weighted loss histories contain loss/MAE/val_loss/val_mae; memo conclusions are qualitative",
+      "source": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/log_label/.../training_history.pkl; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/frequency-weighted_loss/.../training_history.pkl",
+      "caveat": "metric units depend on label transform; no verified test split"
+    },
+    {
+      "category": "failed_attempt",
+      "experiment_id": "EXP-004/EXP-005/EXP-011/EXP-012/EXP-014",
+      "available_metrics": "GAN generator/discriminator losses; sample-weight pkl history; qualitative very poor result; dual-channel/pre-correction image-only summaries",
+      "source": "/mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/GaN+2Dlabel/result.txt.txt; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt",
+      "caveat": "retain as failed attempts or appendix, not mainline recommendation"
+    },
+    {
+      "category": "appendix",
+      "experiment_id": "EXP-009/EXP-010/EXP-013",
+      "available_metrics": "CSI+CNN, CSI+SE-ResNet and Grad-CAM mostly image-only analysis artifacts",
+      "source": "/mnt/c/Users/Administrator/Desktop/Hal/results/CSI+CNN; /mnt/c/Users/Administrator/Desktop/Hal/results/CSI+SE-ResNet; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/.../classification_gradcam_plots",
+      "caveat": "numeric metrics require manual reading/redraw from images or locating original logs"
+    }
+  ]
+}

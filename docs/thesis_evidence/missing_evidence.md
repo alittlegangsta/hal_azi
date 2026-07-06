@@ -10,3 +10,24 @@
 | A 必须补 | 旧实验顺序验证 | memo、结果目录、Git 分支能形成大体顺序，但 CSI+SE-ResNet、双通道、预校正缺本地分支映射。 | 检查远程服务器 `/home/xiaoj/hal_azi` 和 GitHub 分支，不训练。 |
 | B 可选补 | 更多模型/超参数/多井/高级信号处理 | 可提高论文完整度，但不是最短毕业路线。 | 仅作为后续工作，不进入当前主线。 |
 | C 不建议补 | 大规模重训、新版本复杂弱标签、STC/APES、多目标人工审核 | 会扩大风险并偏离旧项目证据重建目标。 | 明确不做，除非导师要求并单独批准。 |
+<!-- METRIC_EXTRACTION_AUTO_START -->
+## Metric Extraction Missing Evidence Update (2026-07-06)
+
+- Must still verify split construction and adjacent-depth leakage risk before claiming thesis final performance.
+- Must manually read/redraw image-only metric figures if CSI+CNN, CSI+SE-ResNet, dual-channel, pre-correction, Grad-CAM, scatter plots, or depth curves are cited quantitatively.
+- TensorBoard event scalars were not parsed locally because TensorBoard is unavailable; PKL histories were sufficient for many training/validation summaries.
+- Duplicate `training_history*.pkl` hashes mean repeated folders should not be counted as independent runs without commit/run provenance verification.
+- Failed attempts retained: GAN/two-channel binary FFT label, dual-channel metadata fusion, eccentricity pre-correction, and sample weights + asymmetric loss. Do not use as mainline recommendations.
+
+### Experiments Still Missing Direct Numeric Metrics
+
+| experiment_id | experiment_name | status | missing_or_manual_work |
+| --- | --- | --- | --- |
+| EXP-001 | Baseline FFT magnitude image translation | image_only_metrics | failed/baseline evidence should not be mainline unless thesis frames it as negative result; split_unknown; leakage_risk_unknown |
+| EXP-009 | CSI + CNN visual/Grad-CAM analysis | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-010 | CSI + SE-ResNet azimuth matching / classification | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-011 | Dual-channel metadata fusion | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-012 | Eccentricity pre-correction | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-013 | Grad-CAM interpretability across routes | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+<!-- METRIC_EXTRACTION_AUTO_END -->
+

@@ -100,3 +100,32 @@ Supplemental remote-only experiment candidate:
 | EXP-014 | 1D percentage label + sample weighting + asymmetric loss | 1D percentage label | EfficientNetV2B0 regressor | depth-wise channeling percentage profile | Remote commit message states sample weighting + asymmetric loss produced very poor results; code adds `asymmetric_huber_loss`, dynamic `sample_weight`, weighted MAE, scatter/boxplot/representative Grad-CAM analysis. | failed_attempt / appendix | strong for code provenance, weak for numeric metric |
 
 Updated migration decision: `fetch_missing_branches_only`. Fetching the missing branch would complete local Git evidence for EXP-014; do not rsync raw/output files.
+<!-- METRIC_EXTRACTION_AUTO_START -->
+## Metric Extraction Update (2026-07-06)
+
+- Unified metric rows generated: `256` in `docs/thesis_evidence/unified_metrics_table.csv`.
+- All extracted rows preserve `source_path`; all rows remain `split_unknown` and `leakage_risk_unknown` unless future verification proves otherwise.
+- `EXP-008` remains the mainline candidate because FFT regression history and analysis figures exist, but thesis-grade final performance still needs split/leakage verification.
+- `EXP-007` remains fallback mainline because `result.txt` contains direct severity-group MAE/RMSE evidence, with high severity error worst.
+- `EXP-014` is a supplemental failed-attempt entry for `样本权重+非对称损失`; remote branch `1D+percentage_Label+Sample_weights+loss` commit `b0825f3e` plus local `result.txt` support appendix/negative-result use.
+
+### Metric Availability By Experiment
+
+| experiment_id | status | available_metric_names | missing_or_manual_work |
+| --- | --- | --- | --- |
+| EXP-001 | image_only_metrics | image_only_needs_manual_read | failed/baseline evidence should not be mainline unless thesis frames it as negative result; split_unknown; leakage_risk_unknown |
+| EXP-002 | numeric_or_text_metrics_available | epoch_count, loss, loss_final, mae, mae_final, val_loss, val_loss_final, val_mae, val_mae_final | split_unknown; leakage_risk_unknown |
+| EXP-003 | numeric_or_text_metrics_available | epoch_count, loss, loss_final, mae, mae_final, val_loss, val_loss_final, val_mae, val_mae_final | split_unknown; leakage_risk_unknown |
+| EXP-004 | numeric_or_text_metrics_available | discriminator_loss, epoch_time, generator_loss | failed/baseline evidence should not be mainline unless thesis frames it as negative result; split_unknown; leakage_risk_unknown |
+| EXP-005 | numeric_or_text_metrics_available | accuracy, accuracy_final, auc, auc_final, epoch_count, loss, loss_final, val_accuracy, val_accuracy_final, val_auc, val_auc_final, val_loss, val_loss_final | failed/baseline evidence should not be mainline unless thesis frames it as negative result; split_unknown; leakage_risk_unknown |
+| EXP-006 | numeric_or_text_metrics_available | accuracy, accuracy_approx, accuracy_final, auc, auc_final, best_epoch_val_auc, early_stop_epoch, epoch_count, loss, loss_final, val_accuracy, val_accuracy_approx, val_accuracy_final, val_auc, val_auc_final, val_loss, val_loss_final | split_unknown; leakage_risk_unknown |
+| EXP-007 | numeric_or_text_metrics_available | MAE, R2, RMSE, accuracy, accuracy_final, auc, auc_final, epoch_count, loss, loss_final, mae, mae_final, sample_count, val_accuracy, val_accuracy_final, val_auc, val_auc_final, val_loss, val_loss_final, val_mae | split_unknown; leakage_risk_unknown |
+| EXP-008 | numeric_or_text_metrics_available | epoch_count, loss, loss_final, mae, mae_final, val_loss, val_loss_final, val_mae, val_mae_final | split_unknown; leakage_risk_unknown |
+| EXP-009 | image_only_metrics | image_only_needs_manual_read | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-010 | image_only_metrics | image_only_needs_manual_read | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-011 | image_only_metrics | image_only_needs_manual_read | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-012 | image_only_metrics | image_only_needs_manual_read | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-013 | image_only_metrics | image_only_needs_manual_read | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
+| EXP-014 | numeric_or_text_metrics_available | accuracy, accuracy_final, auc, auc_final, epoch_count, loss, loss_final, mae, mae_final, qualitative_result, val_accuracy, val_accuracy_final, val_auc, val_auc_final, val_loss, val_loss_final, val_mae, val_mae_final, val_weighted_mae, val_weighted_mae_final | failed/baseline evidence should not be mainline unless thesis frames it as negative result; split_unknown; leakage_risk_unknown |
+<!-- METRIC_EXTRACTION_AUTO_END -->
+
