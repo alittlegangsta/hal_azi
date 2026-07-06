@@ -69,3 +69,34 @@ ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
 No remote experiment-code evidence was collected in this retry. The following mappings remain `needs_verification`: EXP-001 exact baseline branch/order, EXP-010 CSI+SE-ResNet code provenance, EXP-011 dual-channel metadata fusion code provenance, and EXP-012 eccentricity pre-correction code provenance.
 
 Migration decision remains: `manual_review_required`.
+
+## Remote Verification Retry 3
+
+Date: `2026-07-06`
+
+Required SSH probe succeeded:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+-> remote_ssh_ok
+```
+
+Remote evidence update:
+
+| Experiment / method | Remote evidence | Updated status |
+| --- | --- | --- |
+| EXP-007 1D percentage label | remote `1D+percentage_Label` confirms existing local mapping | unchanged strong |
+| supplemental failed route | remote-only branch `1D+percentage_Label+Sample_weights+loss` at `b0825f3...`; modifies `src/modeling/train.py` and `src/interpretation/run_analysis_regressor.py`; commit says sample weights + asymmetric loss were very poor | add as failed attempt / appendix evidence |
+| EXP-008 FFT severity regression | remote `percentage_label+FFT` confirms current checkout and chronology | mapping strengthened |
+| EXP-005 two-channel binary label | remote `GaN` branch confirms dual-channel binary FFT label code | mapping strengthened |
+| EXP-010 CSI + SE-ResNet | only weak early `SE-ResNet` visualization-script evidence; no conclusive code/result mapping | still needs_verification |
+| EXP-011 dual-channel metadata fusion | no conclusive metadata-fusion code found across remote branches | still needs_verification |
+| EXP-012 eccentricity pre-correction | no conclusive eccentricity/pre-correction code found across remote branches | still needs_verification |
+
+Supplemental remote-only experiment candidate:
+
+| experiment_id | experiment_name | method_family | model | target_label | main_result_summary | thesis_use | evidence_strength |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| EXP-014 | 1D percentage label + sample weighting + asymmetric loss | 1D percentage label | EfficientNetV2B0 regressor | depth-wise channeling percentage profile | Remote commit message states sample weighting + asymmetric loss produced very poor results; code adds `asymmetric_huber_loss`, dynamic `sample_weight`, weighted MAE, scatter/boxplot/representative Grad-CAM analysis. | failed_attempt / appendix | strong for code provenance, weak for numeric metric |
+
+Updated migration decision: `fetch_missing_branches_only`. Fetching the missing branch would complete local Git evidence for EXP-014; do not rsync raw/output files.

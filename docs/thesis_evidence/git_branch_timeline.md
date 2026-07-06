@@ -241,3 +241,57 @@ xiaoj@121.48.161.238: Permission denied (publickey,password).
 No Stage 1 Git commands were run after the failed probe. Remote branch list, tags, reflog, per-branch latest commits, uncommitted status, and remote-only Git history remain `needs_verification`.
 
 Decision: `manual_review_required`.
+
+## Remote Server Verification Retry 3
+
+Date: `2026-07-06`
+
+Required probe:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+```
+
+Result:
+
+```text
+remote_ssh_ok
+```
+
+Remote Git evidence was collected read-only from `cement-server:/home/xiaoj/hal_azi`.
+
+### Remote Branches
+
+| Branch | Commit | Date | Message |
+| --- | --- | --- | --- |
+| `1D+percentage_Label` | `e9739c8c3fc4d53e1af63dafa84e29e00b42e9c4` | `2025-11-10T10:36:08+08:00` | 分析脚本新增成像图功能 |
+| `1D+percentage_Label+Sample_weights+loss` | `b0825f3e274ea363fbb57814900139ff4de7df4a` | `2025-10-09T16:41:50+08:00` | 采用了样本权重+非对称损失后结果非常差 |
+| `GaN` | `c08d695779b3fbb666663a7439b16fbe00e1d61d` | `2025-09-26T14:27:11+08:00` | GaN+2Dlabel |
+| `frequency-weighted_loss` | `9899283c351712b791f9837b0be9a96b7003f96f` | `2025-09-23T16:03:42+08:00` | 改进了run_analysis.py，加入指标；并且新增了FFT高频系数惩罚 |
+| `master` | `1ee68a62763c091097683e326c3a187c991a85c3` | `2025-09-18T16:23:47+08:00` | 标签改为log变换，效果提升显著，但是预测结果不太好，需要补充结构优化 |
+| `percentage_label+FFT` | `7ba021cfa6eacd148247258ee28b8527dbbc6c92` | `2025-12-08T17:05:29+08:00` | 删除部分注释 |
+| `test_relativity` | `5e59652a4259c59e1d22b069271e2a67d863dadd` | `2025-09-25T17:07:26+08:00` | CNN+分类任务：证实CWT与Label存在对应关系 |
+
+### Remote-Only Branch
+
+Local clone does not contain commit `b0825f3e274ea363fbb57814900139ff4de7df4a`.
+
+```text
+git cat-file -t b0825f3e274ea363fbb57814900139ff4de7df4a
+-> fatal: git cat-file: could not get object info
+```
+
+Remote branch `1D+percentage_Label+Sample_weights+loss` changes only:
+
+```text
+src/interpretation/run_analysis_regressor.py
+src/modeling/train.py
+```
+
+Commit message states the sample-weight/asymmetric-loss route performed very poorly. Treat this as a failed attempt unless additional metric artifacts are later found.
+
+### Updated Decision
+
+Decision: `fetch_missing_branches_only`.
+
+No push, rsync, training, or remote write was performed.
