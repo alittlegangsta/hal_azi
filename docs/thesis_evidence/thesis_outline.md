@@ -66,3 +66,37 @@
 | FIG-038 | Grad-CAM heatmap | /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/image_translation/array_03/results/final_analysis_plots/gradcam_sample_314.png | 第6章 可解释性分析 | medium | no |
 | FIG-039 | ablation | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/log_label/output/visualization_plots/01_filtering_effect.png | 第5章 消融实验 | medium | maybe |
 | FIG-040 | ablation | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/log_label/output/visualization_plots/03_label_generation.png | 第5章 消融实验 | medium | maybe |
+<!-- FIGURE_SHORTLIST_START -->
+## Figure Shortlist Arrangement Update (2026-07-06)
+
+- 本轮从 110 个 figure candidates 中筛选 34 张论文候选图。
+- EXP-008/EXP-007/EXP-006 相关结果图在图注中统一标注 `exploratory_only` 或 `random_split_depth_leakage_risk`，不用于最终泛化性能声明。
+- 候选集中未找到 EfficientNet 主线架构图，需根据代码另画。
+
+### Chapter Figure Plan
+
+| chapter | shortlisted_figures | must_use | note |
+| --- | --- | --- | --- |
+| 第2章 数据与问题定义 | FIG-106, FIG-104, FIG-105, FIG-074, FIG-075 | FIG-106, FIG-104, FIG-074 | 方法/数据图为主 |
+| 第2章 数据构建 | FIG-001, FIG-009, FIG-007 | FIG-001 | 方法/数据图为主 |
+| 第3章 标签构造 | FIG-049, FIG-011, FIG-092 | FIG-049, FIG-011 | 方法/数据图为主 |
+| 第4章 模型方法 | FIG-084 | none | 方法/数据图为主 |
+| 第5章 实验结果 | FIG-046, FIG-085, FIG-048, FIG-089, FIG-057 | FIG-085, FIG-089, FIG-057 | 结果图必须标注 exploratory/random split 风险 |
+| 第5章 对比实验 | FIG-045 | none | 结果图必须标注 exploratory/random split 风险 |
+| 第5章 消融实验 | FIG-041, FIG-055 | none | 结果图必须标注 exploratory/random split 风险 |
+| 第6章 可解释性分析 | FIG-027, FIG-028, FIG-035, FIG-036, FIG-029, FIG-030 | FIG-027, FIG-035 | 方法/数据图为主 |
+| 第7章 讨论 | FIG-060, FIG-061, FIG-062, FIG-072, FIG-090, FIG-059, FIG-076, FIG-052 | none | 失败路线和 split 风险讨论 |
+
+### Table Plan
+
+| table_id | table_name_cn | thesis_chapter | source | must_use | notes |
+| --- | --- | --- | --- | --- | --- |
+| TAB-S01 | 实验路线与证据强度总表 | 第5章 实验设计与结果 | docs/thesis_evidence/experiment_inventory.csv | yes | 按 EXP-001–EXP-014 汇总方法、标签、结果用途和证据强度。 |
+| TAB-S02 | 统一指标表（仅探索性/随机划分） | 第5章 实验结果 | docs/thesis_evidence/unified_metrics_table.csv | yes | 只报告可追踪指标，明确 random_split_depth_leakage_risk；不能写最终泛化。 |
+| TAB-S03 | split forensic 与泄漏风险表 | 第7章 讨论与限制 | docs/thesis_evidence/split_forensic_audit.csv; leakage_risk_report.md | yes | 解释 EXP-008/007/006 为什么需要 depth-blocked split。 |
+| TAB-S04 | 标签构造路线对比表 | 第3章 标签构造 | docs/thesis_evidence/method_taxonomy.md; code_method_inventory.csv | yes | 比较 1D percentage、FFT magnitude、log transform、frequency weighting。 |
+| TAB-S05 | 图件短名单与重画计划表 | 写作管理/附录 | docs/thesis_evidence/figure_shortlist_for_thesis.csv; figure_redraw_plan.md | yes | 保证论文图件均有 source_path 和风险标签。 |
+| TAB-S06 | 失败路线汇总表 | 第7章 讨论 | experiment_inventory.csv; memo_experiment_claims.csv; metric_source_traceability.csv | yes | GAN、双通道、预校正、样本权重等只作 failed_attempt/appendix。 |
+| TAB-S07 | Git 分支与实验映射表 | 附录：复现与证据链 | docs/thesis_evidence/branch_experiment_mapping.csv; git_branch_timeline.md | useful | 用于证明旧项目版本来源，正文可简化。 |
+| TAB-S08 | 缺失证据与最小补充计划表 | 第7章 讨论与后续工作 | docs/thesis_evidence/missing_evidence.md; minimal_supplement_plan.md | yes | 明确必须补 depth-blocked split/TensorBoard dependency/图件重画。 |
+<!-- FIGURE_SHORTLIST_END -->
