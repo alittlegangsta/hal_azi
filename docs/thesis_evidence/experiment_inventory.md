@@ -54,3 +54,18 @@ ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
 No remote experiment-code evidence was collected in the retry. The following mappings remain `needs_verification`: EXP-001 exact baseline branch/order, EXP-010 CSI+SE-ResNet code provenance, EXP-011 dual-channel metadata fusion code provenance, and EXP-012 eccentricity pre-correction code provenance.
 
 Migration decision remains: `manual_review_required`.
+
+## Remote Verification Retry 2
+
+Date: `2026-07-06`
+
+Required SSH probe failed again:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+-> Permission denied (publickey,password).
+```
+
+No remote experiment-code evidence was collected in this retry. The following mappings remain `needs_verification`: EXP-001 exact baseline branch/order, EXP-010 CSI+SE-ResNet code provenance, EXP-011 dual-channel metadata fusion code provenance, and EXP-012 eccentricity pre-correction code provenance.
+
+Migration decision remains: `manual_review_required`.

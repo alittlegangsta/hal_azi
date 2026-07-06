@@ -68,3 +68,16 @@ ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
 ```
 
 Because the probe failed, no remote/local comparison data was collected in the retry. The comparison status remains `needs_verification`, and the migration decision remains `manual_review_required`.
+
+## Retry Attempt 2
+
+Retry date: `2026-07-06`
+
+The required probe command failed again:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+-> Permission denied (publickey,password).
+```
+
+Because this probe failed, no remote/local comparison data was collected in this retry. The comparison status remains `needs_verification`, and the migration decision remains `manual_review_required`.
