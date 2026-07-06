@@ -30,4 +30,11 @@
 | EXP-012 | Eccentricity pre-correction | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
 | EXP-013 | Grad-CAM interpretability across routes | image_only_metrics | numeric metrics not found in text/pkl; use images only after manual read/redraw; split_unknown; leakage_risk_unknown |
 <!-- METRIC_EXTRACTION_AUTO_END -->
+<!-- TENSORBOARD_SPLIT_AUDIT_START -->
+## TensorBoard And Split Audit Missing Evidence Update (2026-07-06)
 
+- TensorBoard metrics remain missing locally: `needs_tensorboard_dependency`; no scalar values were guessed.
+- EXP-008, EXP-007, EXP-006, EXP-002, EXP-003, and EXP-014 now have confirmed `random_split_depth_leakage_risk`, not merely unknown split.
+- Minimum required supplement before final performance claims: construct deterministic depth-blocked/depth-heldout split and rerun only necessary evaluation/training if explicitly approved. If training is not approved, present old metrics as exploratory and list this as limitation.
+- Still missing: train/val/test depth ranges, split index artifacts, TensorBoard scalar extraction, and split mapping for image-only CSI/dual-channel/pre-correction routes.
+<!-- TENSORBOARD_SPLIT_AUDIT_END -->

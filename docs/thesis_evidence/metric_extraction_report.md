@@ -27,9 +27,9 @@ Generated: 2026-07-06.
 
 | category | experiment_id | available_metrics | source | caveat |
 | --- | --- | --- | --- | --- |
-| mainline_candidate | EXP-008 | FFT regression history: val_loss min 0.011499; val_mae min 0.043332; final val_mae 0.051927; image scatter/depth/FFT maps need manual read | /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl | split_unknown; leakage_risk_unknown; target unit normalized/FFT-label units; duplicate FFT_EfficientNet_1 copy exists |
-| fallback_mainline | EXP-007 | 1D severity-group MAE/RMSE from result.txt; val_auc/val_accuracy history files also exist but appear duplicated with binary-classification history | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt | all-samples severity table, not verified independent test split; high severity MAE/RMSE is worst |
-| baseline | EXP-006 | CNN binary baseline val_auc 0.95361; pkl val_auc max 0.953608; val_accuracy max 0.885366; early stop epoch 72, best epoch 57 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt | classification baseline only; split_unknown and leakage_risk_unknown |
+| mainline_candidate | EXP-008 | FFT regression history: val_loss min 0.011499; val_mae min 0.043332; final val_mae 0.051927; image scatter/depth/FFT maps need manual read | /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl | random_split_depth_leakage_risk; target unit normalized/FFT-label units; duplicate FFT_EfficientNet_1 copy exists |
+| fallback_mainline | EXP-007 | 1D severity-group MAE/RMSE from result.txt; val_auc/val_accuracy history files also exist but appear duplicated with binary-classification history | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt | random_split_depth_leakage_risk for training-history metrics; all-samples severity table is not an independent test split; high severity MAE/RMSE is worst |
+| baseline | EXP-006 | CNN binary baseline val_auc 0.95361; pkl val_auc max 0.953608; val_accuracy max 0.885366; early stop epoch 72, best epoch 57 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt | classification baseline only; random_split_depth_leakage_risk, not depth-heldout generalization |
 | ablation | EXP-002/EXP-003 | log label and frequency-weighted loss histories contain loss/MAE/val_loss/val_mae; memo conclusions are qualitative | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/log_label/.../training_history.pkl; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/frequency-weighted_loss/.../training_history.pkl | metric units depend on label transform; no verified test split |
 | failed_attempt | EXP-004/EXP-005/EXP-011/EXP-012/EXP-014 | GAN generator/discriminator losses; sample-weight pkl history; qualitative very poor result; dual-channel/pre-correction image-only summaries | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/GaN+2Dlabel/result.txt.txt; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt | retain as failed attempts or appendix, not mainline recommendation |
 | appendix | EXP-009/EXP-010/EXP-013 | CSI+CNN, CSI+SE-ResNet and Grad-CAM mostly image-only analysis artifacts | /mnt/c/Users/Administrator/Desktop/Hal/results/CSI+CNN; /mnt/c/Users/Administrator/Desktop/Hal/results/CSI+SE-ResNet; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/.../classification_gradcam_plots | numeric metrics require manual reading/redraw from images or locating original logs |
@@ -38,8 +38,8 @@ Generated: 2026-07-06.
 
 | experiment_id | claim | metrics | source | limits |
 | --- | --- | --- | --- | --- |
-| EXP-006 | CNN binary baseline can distinguish channeling/non-channeling in validation evidence | val_auc 0.95361 from text; pkl val_auc max 0.9536079; val_accuracy max 0.8853658 | temp_result/test_relativity/result.txt.txt; temp_result/test_relativity/.../training_history.pkl | split_unknown; leakage_risk_unknown |
-| EXP-007 | 1D percentage model error increases with severity | MAE/RMSE: Negligible 0.010/0.150; Low 2.895/3.839; Medium 4.782/6.035; High 6.555/9.597 | temp_result/1D+percentage_Label/result.txt | source says all samples; split_unknown |
+| EXP-006 | CNN binary baseline can distinguish channeling/non-channeling in validation evidence | val_auc 0.95361 from text; pkl val_auc max 0.9536079; val_accuracy max 0.8853658 | temp_result/test_relativity/result.txt.txt; temp_result/test_relativity/.../training_history.pkl | random_split_depth_leakage_risk |
+| EXP-007 | 1D percentage model error increases with severity | MAE/RMSE: Negligible 0.010/0.150; Low 2.895/3.839; Medium 4.782/6.035; High 6.555/9.597 | temp_result/1D+percentage_Label/result.txt | source says all samples; not an independent held-out test split |
 | EXP-008 | FFT regression mainline has validation training-history metrics | val_loss min 0.011499; val_mae min 0.043332; final val_mae 0.051927 | FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl | not a held-out/depth-blocked test metric; label unit needs description |
 | EXP-014 | sample weights + asymmetric loss should be appendix/failed attempt | weighted pkl history exists; result.txt says 结果很差 | temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt; training_history_weighted.pkl | failed attempt; do not use as mainline |
 
@@ -60,19 +60,13 @@ Generated: 2026-07-06.
 | EXP-014 | 1D percentage label + sample weights + asymmetric loss failed attempt | 5 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/final_analysis_plots/_error_distribution_by_category.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/final_analysis_plots/_overall_performance_scatter.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/weighted_model_analysis_plots/_error_distribution_by_category_weighted.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/weighted_model_analysis_plots/_overall_performance_scatter_weighted.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/visualization_plots/05_training_history_regression.png | image_only_needs_manual_read |
 | unknown | unknown | 2 | /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/visualization_plots/05_training_history_regression.png; /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet_1/output/visualization_plots/05_training_history_regression.png | image_only_needs_manual_read |
 
-## Missing Split Information
+## Split Information
 
-All extracted experiments currently remain `split_unknown` for thesis-grade reporting. Validation metrics are labeled by source key (`val_*`) but the split construction is not proven depth-blocked or leak-free in the result artifacts.
+Original metric extraction marked all rows `split_unknown`. HAL-THESIS-TENSORBOARD-SPLIT-AUDIT supersedes that for key supervised rows: EXP-008, EXP-007, EXP-006, EXP-002, EXP-003, and EXP-014 are now `random_split_depth_leakage_risk`; EXP-004/EXP-005 need manual verification; image-only routes remain `split_unknown`.
 
-EXP-001, EXP-002, EXP-003, EXP-004, EXP-005, EXP-006, EXP-007, EXP-008, EXP-009, EXP-010, EXP-011, EXP-012, EXP-013, EXP-014, unknown
+## Leakage Risk Status
 
-
-## Leakage Risk Unknown
-
-The metric table deliberately marks `leakage_risk_unknown` for extracted rows because adjacent-depth leakage/depth-blocked validation evidence is not present in the metric sources.
-
-EXP-001, EXP-002, EXP-003, EXP-004, EXP-005, EXP-006, EXP-007, EXP-008, EXP-009, EXP-010, EXP-011, EXP-012, EXP-013, EXP-014, unknown
-
+The updated metric table marks key supervised validation rows as `random_split_depth_leakage_risk` because code confirms shuffled random validation rather than depth-blocked validation. Depth ranges remain unavailable.
 
 ## Duplicate Training Histories
 
@@ -92,3 +86,11 @@ EXP-001, EXP-002, EXP-003, EXP-004, EXP-005, EXP-006, EXP-007, EXP-008, EXP-009,
 | memo_claim_qualitative_only | 5 |
 | metrics_extracted | 20 |
 | tensorboard_event_unparsed_local_tensorboard_missing | 72 |
+<!-- TENSORBOARD_SPLIT_AUDIT_START -->
+## TensorBoard/Split Audit Update (2026-07-06)
+
+- TensorBoard event parsing still requires a TensorBoard dependency; `tensorboard_scalar_metrics.csv` is header-only in this environment.
+- The split status is no longer merely unknown for key supervised runs: EXP-008, EXP-007, EXP-006, EXP-002, EXP-003, and EXP-014 are marked `random_split_depth_leakage_risk`.
+- EXP-004 and EXP-005 are failed/train-only routes or need manual verification.
+- Use `split_forensic_audit.csv` and `leakage_risk_report.md` for final thesis risk language.
+<!-- TENSORBOARD_SPLIT_AUDIT_END -->

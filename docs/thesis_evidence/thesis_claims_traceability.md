@@ -23,4 +23,15 @@ Every claim below is tied to at least one result path, code path, git branch/com
 | sample weights + asymmetric loss is failed attempt | weighted history exists; result.txt says 结果很差; remote commit message says effect was very poor | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/result.txt; remote branch commit b0825f3e from remote verification docs | appendix/failed_attempt only |
 | CSI+CNN, CSI+SE-ResNet, dual-channel and pre-correction metrics are not directly extractable numerically | performance summary PNGs found but no text/PKL numeric metrics | /mnt/c/Users/Administrator/Desktop/Hal/results/CSI+CNN; CSI+SE-ResNet; 双通道学习; 预校正 | image_only_needs_manual_read |
 <!-- METRIC_EXTRACTION_AUTO_END -->
+<!-- TENSORBOARD_SPLIT_AUDIT_START -->
+## TensorBoard And Split Risk Audit Update (2026-07-06)
 
+| question | answer | evidence | risk |
+| --- | --- | --- | --- |
+| EXP-008 是否能作为主结果直接写入论文 | 可以作为方法主线/探索性主结果写入，但当前不能作为最终泛化性能直接写入。 | origin/percentage_label+FFT train/dataset split code; split_forensic_audit.csv | random_split_depth_leakage_risk |
+| EXP-008 是否必须补 depth-blocked split | 是。若论文要报告最终性能或模型泛化，必须补 depth-blocked/depth-heldout split 或找到已存在证据。 | No depth-blocked code or split artifact found | high |
+| EXP-007 是否能作为 fallback 主线 | 可以作为 fallback/exploratory 主线和严重度误差分析，但仍不能声称 depth-heldout 泛化。 | EXP-007 result.txt severity MAE/RMSE plus random split audit | random_split_depth_leakage_risk |
+| EXP-006 baseline 的结论是否安全 | 安全范围是“随机验证下 CWT 与二分类标签存在可学习关系”；不安全范围是 depth-heldout/generalization。 | val_auc 0.95361; origin/test_relativity split code | random_split_depth_leakage_risk |
+| 哪些指标只能写成 exploratory | EXP-008/007/006/002/003/014 的 validation metrics；EXP-004/005 train losses；所有 image-only metrics。 | unified_metrics_table.csv; split_forensic_audit.csv | requires caveat |
+| 哪些实验必须标记 split_unknown | CSI+CNN, CSI+SE-ResNet, dual-channel metadata fusion, pre-correction, Grad-CAM image-only routes仍缺直接 split 代码/日志对应。 | result directories + no numeric/log split artifacts | split_unknown |
+<!-- TENSORBOARD_SPLIT_AUDIT_END -->

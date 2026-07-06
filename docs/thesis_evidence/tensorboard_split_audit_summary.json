@@ -1,0 +1,23 @@
+{
+  "generated": "2026-07-06",
+  "tensorboard_parse_decision": "needs_tensorboard_dependency",
+  "event_files": 72,
+  "tensorboard_scalar_rows_added": 0,
+  "metric_source_traceability_event_rows_updated": 72,
+  "unified_metrics_rows_added": 0,
+  "split_conclusions": {
+    "EXP-008": "random_split_depth_leakage_risk",
+    "EXP-007": "random_split_depth_leakage_risk",
+    "EXP-006": "random_split_depth_leakage_risk",
+    "EXP-002": "random_split_depth_leakage_risk",
+    "EXP-003": "random_split_depth_leakage_risk",
+    "EXP-014": "random_split_depth_leakage_risk",
+    "EXP-004": "needs_manual_verification",
+    "EXP-005": "needs_manual_verification"
+  },
+  "mainline_status": {
+    "EXP-008": "method_mainline_candidate_but_final_metric_requires_depth_blocked_split",
+    "EXP-007": "fallback_exploratory_mainline_requires_depth_blocked_split_for_final_performance",
+    "EXP-006": "baseline_signal_claim_safe_under_random_validation_only"
+  }
+}

@@ -7,3 +7,13 @@
 | R-003 | 结果目录与代码分支映射错误 | medium | 用 Git commit、result modified_time、服务器目录核对。 |
 | R-004 | FFT 主线性能不足 | medium | 把 1D percentage EfficientNet 作为强证据主结果，FFT 作为角度不匹配方法探索/局限。 |
 | R-005 | 为了补证据触发大规模重训 | medium | 当前阶段只做整理和轻量验证；训练需单独审批。 |
+<!-- TENSORBOARD_SPLIT_AUDIT_START -->
+## TensorBoard And Split Audit Update (2026-07-06)
+
+| risk_id | risk | impact | mitigation |
+| --- | --- | --- | --- |
+| R-006 | TensorBoard scalar metrics not parsed locally | medium | Run `scripts/thesis_parse_tensorboard_events.py` in an environment with TensorBoard; until then use PKL/text metrics only. |
+| R-007 | EXP-008 mainline metrics come from random shuffled validation | high | Do not state final generalization; add/recover depth-blocked split before final thesis claims. |
+| R-008 | take/skip after shuffle may produce unstable validation subset across independent iterations | high | Document as random split depth leakage risk; replace with deterministic split indices for any supplement. |
+| R-009 | No depth/index artifacts found for historical runs | medium | Search remote data artifacts or regenerate only lightweight split index from existing TFRecord/depth metadata if approved; no training needed. |
+<!-- TENSORBOARD_SPLIT_AUDIT_END -->

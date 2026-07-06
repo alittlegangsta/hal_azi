@@ -1,0 +1,15 @@
+{
+  "generated": "2026-07-06",
+  "python_executable": "/usr/bin/python3",
+  "python_version": "3.12.3 (main, Mar 23 2026, 19:04:32) [GCC 13.3.0]",
+  "results_root": "/mnt/c/Users/Administrator/Desktop/Hal/results",
+  "results_root_readable": true,
+  "tensorboard_importable": false,
+  "event_accumulator_importable": false,
+  "tensorflow_importable": false,
+  "tensorboard_error": "ModuleNotFoundError: No module named 'tensorboard'",
+  "event_accumulator_error": "ModuleNotFoundError: No module named 'tensorboard'",
+  "tensorflow_error": "ModuleNotFoundError: No module named 'tensorflow'",
+  "event_file_count": 72,
+  "decision": "needs_tensorboard_dependency"
+}
