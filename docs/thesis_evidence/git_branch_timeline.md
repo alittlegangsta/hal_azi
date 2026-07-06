@@ -201,3 +201,23 @@ ssh -o BatchMode=yes cement-server 'cd /home/xiaoj/hal_azi && pwd && git status 
 Consequence: the local Git timeline above remains the only verified Git evidence in this repository. Remote-only branches, reflog entries, uncommitted files, and the `hall` conda environment remain `needs_verification`.
 
 Decision: `manual_review_required`.
+
+## Remote Server Verification Retry
+
+Date: `2026-07-06`
+
+Required probe:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+```
+
+Result:
+
+```text
+xiaoj@121.48.161.238: Permission denied (publickey,password).
+```
+
+No Stage 1 Git commands were run after the failed probe. Remote branch list, tags, reflog, per-branch latest commits, uncommitted status, and remote-only Git history remain `needs_verification`.
+
+Decision: `manual_review_required`.

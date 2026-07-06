@@ -39,3 +39,18 @@ Impact on experiment mapping:
 | all other locally mapped experiments | no new remote evidence | Existing local evidence strength unchanged. |
 
 Migration decision: `manual_review_required`. Do not rsync or migrate remote code until SSH authentication is restored and the read-only command list is collected.
+
+## Remote Verification Retry
+
+Date: `2026-07-06`
+
+Required SSH probe failed:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+-> Permission denied (publickey,password).
+```
+
+No remote experiment-code evidence was collected in the retry. The following mappings remain `needs_verification`: EXP-001 exact baseline branch/order, EXP-010 CSI+SE-ResNet code provenance, EXP-011 dual-channel metadata fusion code provenance, and EXP-012 eccentricity pre-correction code provenance.
+
+Migration decision remains: `manual_review_required`.

@@ -94,3 +94,24 @@ Decision: `manual_review_required`
 
 Reason: remote SSH authentication failed, so this run cannot confirm whether the server has missing branches, uncommitted code, untracked scripts, or environment details that explain the remaining result directories.
 
+## Retry Attempt
+
+Retry date: `2026-07-06`
+
+Required first command:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+```
+
+Retry result: `failed`
+
+Observed output:
+
+```text
+xiaoj@121.48.161.238: Permission denied (publickey,password).
+```
+
+No further remote commands were executed after this failure. Stage 1 Git inspection, Stage 2 code-structure inspection, and Stage 3 `hall` environment inspection remain `needs_verification`.
+
+Updated decision: `manual_review_required`

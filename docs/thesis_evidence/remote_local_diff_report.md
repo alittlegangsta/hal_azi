@@ -56,3 +56,15 @@ Do not migrate or rsync anything yet. The safe next step is to restore SSH authe
 - Use `rsync_remote_untracked_code_only` only if remote has small, thesis-relevant untracked scripts/configs that are not in Git.
 - Keep `no_migration_needed` only if remote branches, untracked files, and environment evidence add nothing beyond current local inventory.
 
+## Retry Attempt
+
+Retry date: `2026-07-06`
+
+The required probe command failed:
+
+```text
+ssh -o BatchMode=yes cement-server 'echo remote_ssh_ok'
+-> Permission denied (publickey,password).
+```
+
+Because the probe failed, no remote/local comparison data was collected in the retry. The comparison status remains `needs_verification`, and the migration decision remains `manual_review_required`.
