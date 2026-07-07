@@ -21,3 +21,12 @@ Generated: 2026-07-06.
 | TAB-S09 | EXP-008 depth-heldout 主结果表 | 第5章 实验结果 | `docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json`; `val_metrics.json`; `unified_metrics_table.csv` | yes | 报告单井 depth-heldout validation/test MAE、RMSE、R2、Pearson、Spearman；图注和表注必须说明不是多井泛化。 |
 | TAB-S10 | EXP-008 split audit 表 | 第5章 实验设计 / 第7章 限制 | `docs/thesis_evidence/remote_exp008_depth_blocked_train/leakage_audit.json`; `remote_exp008_split_v001/depth_split_overview.csv` | yes | 报告 train/val/test 深度范围、gap、样本数和 `depth_heldout_split_confirmed`。 |
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- EXP008_RESULT_AUDIT_P3_START -->
+## EXP-008 Result Audit P3 Table Addendum (2026-07-07)
+
+| table_id | table_name_cn | thesis_chapter | source | must_use | notes |
+| --- | --- | --- | --- | --- | --- |
+| TAB-S11 | EXP-008 depth-heldout 基线对照表 | 第5章 实验结果 | `docs/thesis_evidence/exp008_depthheldout_baseline_comparison.csv` | yes | 必须同时报告 MAE/RMSE/R2；明确 zero baseline MAE 更低但 RMSE/R2 更差。 |
+| TAB-S12 | EXP-008 标签维度误差结构表 | 第5章 实验结果 / 第7章 讨论 | `docs/thesis_evidence/exp008_depthheldout_error_structure.csv` | yes | 展示 k=0-4 低频误差最大、高严重度样本低估、误差分位数。 |
+<!-- EXP008_RESULT_AUDIT_P3_END -->

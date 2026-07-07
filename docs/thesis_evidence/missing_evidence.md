@@ -47,3 +47,11 @@
 - Still missing for final broad claims: multi-well validation, EXP-007 depth-heldout fallback comparison, baseline depth-heldout comparison, and TensorBoard historical scalar extraction.
 - Current safest thesis claim: single-well depth-heldout method feasibility for EXP-008, with test MAE `0.079025` and Spearman `0.480519`.
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- EXP008_RESULT_AUDIT_P3_START -->
+## EXP-008 Result Audit P3 Missing Evidence Update (2026-07-07)
+
+- Completed: artifact consistency audit, zero/train-mean/train-median baseline comparison, per-coefficient/per-depth error structure, top-error sample summary, and thesis-quality redraws.
+- Still missing for a stronger performance chapter: EXP-007 depth-heldout fallback/comparison, baseline depth-heldout model comparison, and multi-well validation.
+- New limitation to carry into thesis: EXP-008 does not beat zero baseline on overall MAE, although it improves RMSE/R2 and train-based baselines.
+<!-- EXP008_RESULT_AUDIT_P3_END -->

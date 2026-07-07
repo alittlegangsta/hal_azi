@@ -46,3 +46,14 @@ Every claim below is tied to at least one result path, code path, git branch/com
 | EXP-008 can support final thesis method feasibility, but not multi-well generalization. | split is array_03 contiguous depth-heldout only; no second well evidence | supported with scope caveat |
 | EXP-007 fallback is not immediately required. | EXP-008 train_v001 completed successfully and produced heldout metrics | recommendation |
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- EXP008_RESULT_AUDIT_P3_START -->
+## EXP-008 Result Audit P3 Claim Update (2026-07-07)
+
+| claim | evidence | status |
+| --- | --- | --- |
+| EXP-008 beats train-mean/train-median baselines on depth-heldout test by MAE/RMSE/R2. | model MAE `0.079025`, train-mean `0.142358`, train-median `0.119024`; model RMSE `0.277019`, train-median `0.278963` | supported |
+| EXP-008 does not beat zero baseline by overall MAE. | model MAE `0.079025` vs zero MAE `0.069751` | limitation; must state |
+| EXP-008 beats zero baseline by RMSE/R2 and has positive test correlation. | model RMSE `0.277019` vs zero `0.301272`; model R2 `0.106634` vs zero `-0.056638`; Spearman `0.480519` | supported with metric caveat |
+| Main errors are low-frequency coefficients and high-severity underprediction. | worst coefficients k=0-4; top error samples true integrated severity around 2.4-4.6 with predictions near zero | supported |
+<!-- EXP008_RESULT_AUDIT_P3_END -->

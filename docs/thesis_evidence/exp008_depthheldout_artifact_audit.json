@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-07-07T08:06:03+00:00",
+  "source_run_dir": "output/thesis_depth_blocked/exp008/train_v001",
+  "source_split_dir": "output/thesis_depth_blocked/exp008/split_v001",
+  "artifact_rows": [
+    {
+      "artifact": "run_config.json",
+      "exists": true,
+      "size_bytes": 1718
+    },
+    {
+      "artifact": "training_history.csv",
+      "exists": true,
+      "size_bytes": 1322
+    },
+    {
+      "artifact": "training_history.json",
+      "exists": true,
+      "size_bytes": 1633
+    },
+    {
+      "artifact": "val_metrics.json",
+      "exists": true,
+      "size_bytes": 518
+    },
+    {
+      "artifact": "test_metrics.json",
+      "exists": true,
+      "size_bytes": 511
+    },
+    {
+      "artifact": "prediction_summary.csv",
+      "exists": true,
+      "size_bytes": 51058
+    },
+    {
+      "artifact": "prediction_vs_truth_scatter.png",
+      "exists": true,
+      "size_bytes": 72719
+    },
+    {
+      "artifact": "training_curve.png",
+      "exists": true,
+      "size_bytes": 85134
+    },
+    {
+      "artifact": "run_report.md",
+      "exists": true,
+      "size_bytes": 1800
+    }
+  ],
+  "warnings": [],
+  "test_tfrecord_label_match_max_abs": 0.0
+}

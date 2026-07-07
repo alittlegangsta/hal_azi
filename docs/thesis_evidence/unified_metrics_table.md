@@ -1,9 +1,9 @@
 # Unified Thesis Metrics Table
 
-Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Administrator/Desktop/Hal/results`. No OCR for historical figures. EXP-008 depth-heldout v001 metrics were added from remote output artifacts, not from Windows results.
+Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Administrator/Desktop/Hal/results`. No OCR for historical figures. EXP-008 depth-heldout v001 metrics and P3 baseline/error audits were added from remote output artifacts, not from Windows results.
 
-- Metric rows total: 293
-- Numeric/text/PKL/JSON rows excluding image-only: 248
+- Metric rows total: 387
+- Numeric/text/PKL/JSON/CSV rows excluding image-only: 342
 - Image-only rows marked `image_only_needs_manual_read`: 45
 - TensorBoard scalar rows added in split audit: `0` because local TensorBoard dependency is unavailable.
 - Split audit status: historical EXP-008/EXP-007/EXP-006/EXP-002/EXP-003/EXP-014 rows remain `random_split_depth_leakage_risk`; new EXP-008 train_v001 rows are `depth_heldout_simple` with `depth_heldout_split_confirmed`.
@@ -12,7 +12,7 @@ Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Adminis
 
 | split_type | count |
 | --- | --- |
-| depth_heldout_simple | 37 |
+| depth_heldout_simple | 131 |
 | needs_manual_verification | 32 |
 | random_split_depth_leakage_risk | 200 |
 | split_unknown | 24 |
@@ -21,7 +21,7 @@ Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Adminis
 
 | category | experiment_id | available_metrics | source | caveat |
 | --- | --- | --- | --- | --- |
-| mainline_candidate | EXP-008 | depth-heldout train_v001: test overall_mae 0.079025, RMSE 0.277019, R2 0.106634, Pearson 0.351950, Spearman 0.480519; historical random-split val_mae min 0.043332 retained only as exploratory comparison | docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json; historical source `/mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl` | new result is single-well depth-heldout, not multi-well generalization; old random-split metrics remain leakage-risk exploratory evidence |
+| mainline_candidate | EXP-008 | depth-heldout train_v001: test MAE 0.079025, RMSE 0.277019, R2 0.106634, Pearson 0.351950, Spearman 0.480519; P3 audit: train-mean/train-median worse by MAE/RMSE/R2, but zero baseline has lower MAE 0.069751 | docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json; docs/thesis_evidence/exp008_depthheldout_baseline_comparison.csv; historical source `/mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl` | single-well depth-heldout only; metric-dependent baseline result; old random-split metrics remain exploratory |
 | fallback_mainline | EXP-007 | 1D severity-group MAE/RMSE from result.txt; training histories exist but several are duplicated across folders | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt | random_split_depth_leakage_risk for training-history metrics; severity table is all-samples and not independent test split |
 | baseline | EXP-006 | CNN binary baseline val_auc 0.95361; pkl val_auc max 0.953608; val_accuracy max 0.885366 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt | random_split_depth_leakage_risk; safe only as random-validation signal evidence |
 | ablation | EXP-002/EXP-003 | log label and frequency-weighted loss histories contain loss/MAE/val_loss/val_mae | temp_result/log_label and temp_result/frequency-weighted_loss training_history.pkl | random_split_depth_leakage_risk; exploratory ablation only |
@@ -269,3 +269,16 @@ Training stopped at epoch 12 and restored epoch 2 best weights. These rows use `
 | EXP-013 | Grad-CAM interpretability across routes | 5 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/output/image_translation/array_03/results/classification_gradcam_plots/gradcam_sample_0.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/output/image_translation/array_03/results/classification_gradcam_plots/gradcam_sample_1.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/output/image_translation/array_03/results/classification_gradcam_plots/gradcam_sample_2.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/output/image_translation/array_03/results/classification_gradcam_plots/gradcam_sample_3.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/output/image_translation/array_03/results/classification_gradcam_plots/gradcam_sample_4.png | image_only_needs_manual_read |
 | EXP-014 | 1D percentage label + sample weights + asymmetric loss failed attempt | 5 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/final_analysis_plots/_error_distribution_by_category.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/final_analysis_plots/_overall_performance_scatter.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/weighted_model_analysis_plots/_error_distribution_by_category_weighted.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/image_translation/array_03/results/weighted_model_analysis_plots/_overall_performance_scatter_weighted.png; /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/样本权重+非对称损失/output/visualization_plots/05_training_history_regression.png | image_only_needs_manual_read |
 | unknown | unknown | 2 | /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/visualization_plots/05_training_history_regression.png; /mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet_1/output/visualization_plots/05_training_history_regression.png | image_only_needs_manual_read |
+
+<!-- EXP008_RESULT_AUDIT_P3_START -->
+## EXP-008 Result Audit P3 (2026-07-07)
+
+| comparator | MAE | RMSE | R2 | Pearson | Spearman | thesis note |
+| --- | ---: | ---: | ---: | ---: | ---: | --- |
+| model | 0.079025 | 0.277019 | 0.106634 | 0.351950 | 0.480519 | single-well depth-heldout EXP-008 |
+| zero baseline | 0.069751 | 0.301272 | -0.056638 | unknown | unknown | lower MAE than model because labels are sparse; worse RMSE/R2 |
+| train-mean baseline | 0.142358 | 0.316129 | -0.163426 | 0.418723 | 0.503310 | model improves MAE/RMSE/R2 |
+| train-median baseline | 0.119024 | 0.278963 | 0.094049 | 0.419976 | 0.503310 | model improves MAE/RMSE/R2 slightly |
+
+Audit conclusion: EXP-008 is not better than the zero baseline by overall MAE, but it is better by RMSE and R2 and has positive Pearson/Spearman correlation. This supports a cautious learnability claim, not a strong absolute-error performance claim.
+<!-- EXP008_RESULT_AUDIT_P3_END -->

@@ -28,3 +28,13 @@
 | R-011 | Heldout test weaker than historical random split | medium | Present as stricter validation evidence; report both with split labels and explain leakage risk. |
 | R-012 | Remote run used an uncommitted copied training script | low | Commit local script and docs; remote `run_config.json` records `status_short`; no push or raw/result overwrite occurred. |
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- EXP008_RESULT_AUDIT_P3_START -->
+## EXP-008 Result Audit P3 Risk Update (2026-07-07)
+
+| risk_id | risk | impact | mitigation |
+| --- | --- | --- | --- |
+| R-013 | Zero baseline has lower overall MAE than EXP-008 model | high | Do not claim uniformly better performance; report RMSE/R2/correlation separately and explain label sparsity. |
+| R-014 | High-frequency coefficients look best by MAE because target magnitude is small | medium | Avoid calling high-frequency coefficients physically most learnable; say they have lowest absolute error. |
+| R-015 | High-severity samples are underpredicted | medium | Use top-error and depth-curve figures as limitation evidence; consider EXP-007 fallback if stronger result needed. |
+<!-- EXP008_RESULT_AUDIT_P3_END -->

@@ -99,3 +99,14 @@ Generated: 2026-07-06. Shortlisted `34` figures from `figure_candidates.csv` (11
 | FIG-DH-002 | docs/thesis_evidence/remote_exp008_depth_blocked_train/prediction_vs_truth_scatter.png | 第5章 实验结果 | 5.2 EXP-008 depth-heldout 测试 | EXP-008 depth-heldout 测试集预测-真值散点图 | 展示 heldout test 样本的平均 integrated severity 预测关系；只作为 array_03 单井 depth-heldout 结果，不表述为多井泛化。 | exploratory_result | must_use | no | EXP-008 | depth_heldout_split_confirmed; single-well only |
 | FIG-DH-003 | docs/thesis_evidence/remote_exp008_depth_blocked_train/depth_curve_if_available.png | 第5章 实验结果 | 5.2 EXP-008 depth-heldout 深度曲线 | EXP-008 depth-heldout 测试深度曲线 | 展示 heldout tail depth interval 上真值与预测的深度趋势，用于说明模型在连续深度留出段上的趋势捕捉与误差。 | limitation | useful | yes | EXP-008 | depth_heldout_split_confirmed; single-well only |
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- EXP008_RESULT_AUDIT_P3_START -->
+## EXP-008 Result Audit P3 Figure Addendum (2026-07-07)
+
+| figure_id | source_path | thesis_chapter | thesis_section | figure_title_cn | caption_draft_cn | evidence_role | use_priority | needs_redraw | related_experiment_id | split_risk_note |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| FIG-DH-P3-001 | docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/training_curve_redraw.png | 第5章 实验结果 | 5.2 EXP-008 depth-heldout | EXP-008 depth-heldout 训练曲线重画图 | 展示 train_v001 的 loss/MAE 曲线和早停行为，用于说明早期过拟合与 best epoch。 | exploratory_result | must_use | no | EXP-008 | depth_heldout_single_well |
+| FIG-DH-P3-002 | docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/baseline_comparison_bar.png | 第5章 实验结果 | 5.2 基线对照 | EXP-008 与简单基线对照 | 展示模型、zero、train-mean、train-median 的 MAE/RMSE 对照；图注必须说明 MAE 不优于 zero baseline。 | limitation | must_use | no | EXP-008 | depth_heldout_single_well |
+| FIG-DH-P3-003 | docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/per_fft_coefficient_mae.png | 第5章 实验结果 | 5.3 标签维度误差 | EXP-008 按 FFT 系数的 MAE | 展示低频系数 k=0-4 误差最大，高频系数绝对误差较低但目标幅值也较小。 | limitation | must_use | no | EXP-008 | depth_heldout_single_well |
+| FIG-DH-P3-004 | docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/error_distribution.png | 第7章 讨论 | 7.1 误差分布 | EXP-008 测试样本误差分布 | 展示样本级误差长尾，用于说明高严重度低估和标签稀疏带来的指标风险。 | limitation | useful | no | EXP-008 | depth_heldout_single_well |
+<!-- EXP008_RESULT_AUDIT_P3_END -->
