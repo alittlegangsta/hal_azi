@@ -1,0 +1,65 @@
+2026-07-07 11:06:47.418823: I tensorflow/core/util/util.cc:169] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2026-07-07 11:06:49.550155: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2026-07-07 11:07:02.445734: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1532] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 10308 MB memory:  -> device: 0, name: NVIDIA A100-PCIE-40GB, pci bus id: 0000:3d:00.0, compute capability: 8.0
+2026-07-07 11:07:02.456634: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1532] Created device /job:localhost/replica:0/task:0/device:GPU:1 with 16012 MB memory:  -> device: 1, name: NVIDIA A100-PCIE-40GB, pci bus id: 0000:42:00.0, compute capability: 8.0
+2026-07-07 11:07:02.461160: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1532] Created device /job:localhost/replica:0/task:0/device:GPU:2 with 2320 MB memory:  -> device: 2, name: NVIDIA A100-PCIE-40GB, pci bus id: 0000:47:00.0, compute capability: 8.0
+Epoch 1/80
+2026-07-07 11:07:30.854163: I tensorflow/stream_executor/cuda/cuda_dnn.cc:384] Loaded cuDNN version 8302
+2026-07-07 11:07:39.307361: I tensorflow/core/platform/default/subprocess.cc:304] Start cannot spawn child process: No such file or directory
+2026-07-07 11:07:46.701562: I tensorflow/stream_executor/cuda/cuda_blas.cc:1786] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+
+Epoch 1: val_loss improved from inf to 0.02420, saving model to output/thesis_depth_blocked/exp008/train_v001/models/best_model.h5
+248/248 - 79s - loss: 0.0509 - mae: 0.1335 - val_loss: 0.0242 - val_mae: 0.0838 - lr: 1.0000e-04 - 79s/epoch - 319ms/step
+Epoch 2/80
+
+Epoch 2: val_loss improved from 0.02420 to 0.01522, saving model to output/thesis_depth_blocked/exp008/train_v001/models/best_model.h5
+248/248 - 27s - loss: 0.0345 - mae: 0.1028 - val_loss: 0.0152 - val_mae: 0.0428 - lr: 1.0000e-04 - 27s/epoch - 109ms/step
+Epoch 3/80
+
+Epoch 3: val_loss did not improve from 0.01522
+248/248 - 26s - loss: 0.0305 - mae: 0.0937 - val_loss: 0.0156 - val_mae: 0.0464 - lr: 1.0000e-04 - 26s/epoch - 104ms/step
+Epoch 4/80
+
+Epoch 4: val_loss did not improve from 0.01522
+248/248 - 27s - loss: 0.0285 - mae: 0.0892 - val_loss: 0.0185 - val_mae: 0.0518 - lr: 1.0000e-04 - 27s/epoch - 107ms/step
+Epoch 5/80
+
+Epoch 5: val_loss did not improve from 0.01522
+248/248 - 26s - loss: 0.0267 - mae: 0.0850 - val_loss: 0.0185 - val_mae: 0.0616 - lr: 1.0000e-04 - 26s/epoch - 104ms/step
+Epoch 6/80
+
+Epoch 6: val_loss did not improve from 0.01522
+248/248 - 27s - loss: 0.0250 - mae: 0.0815 - val_loss: 0.0156 - val_mae: 0.0385 - lr: 1.0000e-04 - 27s/epoch - 108ms/step
+Epoch 7/80
+
+Epoch 7: val_loss did not improve from 0.01522
+
+Epoch 7: ReduceLROnPlateau reducing learning rate to 1.9999999494757503e-05.
+248/248 - 27s - loss: 0.0241 - mae: 0.0795 - val_loss: 0.0157 - val_mae: 0.0363 - lr: 1.0000e-04 - 27s/epoch - 107ms/step
+Epoch 8/80
+
+Epoch 8: val_loss did not improve from 0.01522
+248/248 - 27s - loss: 0.0226 - mae: 0.0762 - val_loss: 0.0161 - val_mae: 0.0440 - lr: 2.0000e-05 - 27s/epoch - 107ms/step
+Epoch 9/80
+
+Epoch 9: val_loss did not improve from 0.01522
+248/248 - 26s - loss: 0.0220 - mae: 0.0751 - val_loss: 0.0165 - val_mae: 0.0447 - lr: 2.0000e-05 - 26s/epoch - 105ms/step
+Epoch 10/80
+
+Epoch 10: val_loss did not improve from 0.01522
+248/248 - 26s - loss: 0.0214 - mae: 0.0732 - val_loss: 0.0161 - val_mae: 0.0415 - lr: 2.0000e-05 - 26s/epoch - 105ms/step
+Epoch 11/80
+
+Epoch 11: val_loss did not improve from 0.01522
+248/248 - 27s - loss: 0.0206 - mae: 0.0720 - val_loss: 0.0159 - val_mae: 0.0411 - lr: 2.0000e-05 - 27s/epoch - 108ms/step
+Epoch 12/80
+
+Epoch 12: val_loss did not improve from 0.01522
+Restoring model weights from the end of the best epoch: 2.
+
+Epoch 12: ReduceLROnPlateau reducing learning rate to 3.999999898951501e-06.
+248/248 - 29s - loss: 0.0204 - mae: 0.0714 - val_loss: 0.0158 - val_mae: 0.0402 - lr: 2.0000e-05 - 29s/epoch - 116ms/step
+Epoch 12: early stopping
+EXP-008 depth-heldout training complete: output_dir=output/thesis_depth_blocked/exp008/train_v001
+test_metrics={"dc_mae": 0.1427205502986908, "dc_rmse": 0.4676450788974762, "keras_loss": 0.032993514090776443, "keras_mae": 0.0790247768163681, "low_freq_0_4_mae": 0.1314113438129425, "low_freq_0_4_rmse": 0.43136832118034363, "num_label_values": 888300, "num_samples": 423, "overall_mae": 0.079024767050357, "overall_mse": 0.07673956571576947, "overall_pearson": 0.35194989306253516, "overall_r2": 0.1066341559863514, "overall_rmse": 0.27701907103260864, "overall_spearman": 0.4805185128927375}

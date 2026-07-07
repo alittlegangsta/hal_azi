@@ -1,0 +1,49 @@
+{
+  "generated_at": "2026-07-07T03:07:07+00:00",
+  "command": "scripts/thesis_train_exp008_depth_blocked.py --split-dir output/thesis_depth_blocked/exp008/split_v001 --output-dir output/thesis_depth_blocked/exp008/train_v001 --epochs 80 --batch-size 8 --learning-rate 1e-4 --patience 10",
+  "git": {
+    "branch": "feature/thesis-depth-blocked-exp008",
+    "commit": "65bf784cd5186c879fcace0d93a2cf02746a6fa6",
+    "status_short": "?? requirements.txt\n?? scripts/thesis_train_exp008_depth_blocked.py"
+  },
+  "exp008_git_evidence": "origin/percentage_label+FFT@7ba021cfa6eacd148247258ee28b8527dbbc6c92",
+  "split_dir": "output/thesis_depth_blocked/exp008/split_v001",
+  "train_tfrecord": "output/thesis_depth_blocked/exp008/split_v001/train.tfrecord",
+  "val_tfrecord": "output/thesis_depth_blocked/exp008/split_v001/val.tfrecord",
+  "test_tfrecord": "output/thesis_depth_blocked/exp008/split_v001/test.tfrecord",
+  "split_manifest_json_exists": true,
+  "leakage_audit_json_exists": true,
+  "output_dir": "output/thesis_depth_blocked/exp008/train_v001",
+  "epochs": 80,
+  "batch_size": 8,
+  "learning_rate": 0.0001,
+  "patience": 10,
+  "dropout": 0.5,
+  "seed": 20260707,
+  "smoke": false,
+  "max_train_batches": null,
+  "max_val_batches": null,
+  "max_test_batches": null,
+  "input_shape": [
+    150,
+    400,
+    8
+  ],
+  "label_shape": [
+    70,
+    30
+  ],
+  "loss": "tf.keras.losses.Huber",
+  "metric": "mae",
+  "optimizer": "Adam",
+  "gradient_clipnorm": null,
+  "pretrained_status": {
+    "requested": true,
+    "loaded": true,
+    "policy": "optional",
+    "weights_path": "/home/xiaoj/.keras/models/efficientnetv2-b0_notop.h5",
+    "error": null
+  },
+  "no_random_split": true,
+  "no_validation_split": true
+}

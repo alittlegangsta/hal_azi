@@ -17,3 +17,14 @@
 | R-008 | take/skip after shuffle may produce unstable validation subset across independent iterations | high | Document as random split depth leakage risk; replace with deterministic split indices for any supplement. |
 | R-009 | No depth/index artifacts found for historical runs | medium | Search remote data artifacts or regenerate only lightweight split index from existing TFRecord/depth metadata if approved; no training needed. |
 <!-- TENSORBOARD_SPLIT_AUDIT_END -->
+
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-008 Depth-Heldout Training Risk Update (2026-07-07)
+
+| risk_id | risk | impact | mitigation |
+| --- | --- | --- | --- |
+| R-007 | EXP-008 mainline metrics come from random shuffled validation | reduced | New train_v001 uses explicit train/val/test TFRecords and `depth_heldout_split_confirmed`; keep historical metrics as exploratory only. |
+| R-010 | EXP-008 depth-heldout result is single-well only | medium | State single-well depth-heldout scope; do not claim multi-well generalization. |
+| R-011 | Heldout test weaker than historical random split | medium | Present as stricter validation evidence; report both with split labels and explain leakage risk. |
+| R-012 | Remote run used an uncommitted copied training script | low | Commit local script and docs; remote `run_config.json` records `status_short`; no push or raw/result overwrite occurred. |
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->

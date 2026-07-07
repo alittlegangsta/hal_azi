@@ -1,0 +1,96 @@
+{
+  "generated_at": "2026-07-06T09:43:45+00:00",
+  "dry_run": false,
+  "split_dir": "output/thesis_depth_blocked/exp008/split_v001",
+  "tfrecords": {
+    "train": "output/thesis_depth_blocked/exp008/split_v001/train.tfrecord",
+    "val": "output/thesis_depth_blocked/exp008/split_v001/val.tfrecord",
+    "test": "output/thesis_depth_blocked/exp008/split_v001/test.tfrecord"
+  },
+  "manifest": "output/thesis_depth_blocked/exp008/split_v001/split_manifest.csv",
+  "audit_json": "output/thesis_depth_blocked/exp008/split_v001/leakage_audit.json",
+  "output_json": "output/thesis_depth_blocked/exp008/split_v001/smoke_check.json",
+  "parse_one": true,
+  "tfrecord_counts": {
+    "train": 1984,
+    "val": 416,
+    "test": 423
+  },
+  "manifest_counts": {
+    "train": 1984,
+    "val": 416,
+    "test": 423
+  },
+  "audit_conclusion": "depth_heldout_split_confirmed",
+  "audit_warnings": [],
+  "parse_results": {
+    "train": {
+      "status": "parsed",
+      "feature_shape": [
+        150,
+        400,
+        8
+      ],
+      "label_shape": [
+        70,
+        30
+      ],
+      "expected_feature_shape": [
+        150,
+        400,
+        8
+      ],
+      "expected_label_shape": [
+        70,
+        30
+      ],
+      "shape_ok": true
+    },
+    "val": {
+      "status": "parsed",
+      "feature_shape": [
+        150,
+        400,
+        8
+      ],
+      "label_shape": [
+        70,
+        30
+      ],
+      "expected_feature_shape": [
+        150,
+        400,
+        8
+      ],
+      "expected_label_shape": [
+        70,
+        30
+      ],
+      "shape_ok": true
+    },
+    "test": {
+      "status": "parsed",
+      "feature_shape": [
+        150,
+        400,
+        8
+      ],
+      "label_shape": [
+        70,
+        30
+      ],
+      "expected_feature_shape": [
+        150,
+        400,
+        8
+      ],
+      "expected_label_shape": [
+        70,
+        30
+      ],
+      "shape_ok": true
+    }
+  },
+  "errors": [],
+  "status": "pass"
+}

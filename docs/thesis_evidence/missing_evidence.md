@@ -38,3 +38,12 @@
 - Minimum required supplement before final performance claims: construct deterministic depth-blocked/depth-heldout split and rerun only necessary evaluation/training if explicitly approved. If training is not approved, present old metrics as exploratory and list this as limitation.
 - Still missing: train/val/test depth ranges, split index artifacts, TensorBoard scalar extraction, and split mapping for image-only CSI/dual-channel/pre-correction routes.
 <!-- TENSORBOARD_SPLIT_AUDIT_END -->
+
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-008 Depth-Heldout Training Missing Evidence Update (2026-07-07)
+
+- Completed for EXP-008: deterministic depth-heldout split, smoke training, full train_v001, validation/test metrics, training curve, prediction scatter, depth curve, and split audit archive.
+- No longer missing for EXP-008: train/val/test depth ranges and heldout test metrics.
+- Still missing for final broad claims: multi-well validation, EXP-007 depth-heldout fallback comparison, baseline depth-heldout comparison, and TensorBoard historical scalar extraction.
+- Current safest thesis claim: single-well depth-heldout method feasibility for EXP-008, with test MAE `0.079025` and Spearman `0.480519`.
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->

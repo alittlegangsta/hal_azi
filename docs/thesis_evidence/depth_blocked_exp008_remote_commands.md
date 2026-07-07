@@ -150,3 +150,29 @@ python scripts/thesis_train_exp008_depth_blocked.py \
 ```
 
 The future training entry must not use random `validation_split`, `train_test_split`, or `take/skip` on a shuffled full dataset.
+
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_START -->
+## P2 Training Commands Actually Used (2026-07-07)
+
+The local P2 training script was copied to the remote working tree because this branch was not pushed. No raw data, TFRecords, checkpoints, or old results were copied.
+
+Smoke command:
+
+```bash
+cd /home/xiaoj/hal_azi
+source ~/.bashrc
+conda activate hall
+python scripts/thesis_train_exp008_depth_blocked.py   --split-dir output/thesis_depth_blocked/exp008/split_v001   --output-dir output/thesis_depth_blocked/exp008/train_smoke_v001   --epochs 1   --batch-size 8   --learning-rate 1e-4   --patience 1   --smoke   --max-train-batches 2   --max-val-batches 1   --max-test-batches 1
+```
+
+Full train_v001 command:
+
+```bash
+cd /home/xiaoj/hal_azi
+source ~/.bashrc
+conda activate hall
+python scripts/thesis_train_exp008_depth_blocked.py   --split-dir output/thesis_depth_blocked/exp008/split_v001   --output-dir output/thesis_depth_blocked/exp008/train_v001   --epochs 80   --batch-size 8   --learning-rate 1e-4   --patience 10
+```
+
+Both commands read explicit `train.tfrecord`, `val.tfrecord`, and `test.tfrecord` inside `split_v001`. They do not call random split or `validation_split`.
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->

@@ -129,3 +129,20 @@ Updated migration decision: `fetch_missing_branches_only`. Fetching the missing 
 | EXP-014 | numeric_or_text_metrics_available | accuracy, accuracy_final, auc, auc_final, epoch_count, loss, loss_final, mae, mae_final, qualitative_result, val_accuracy, val_accuracy_final, val_auc, val_auc_final, val_loss, val_loss_final, val_mae, val_mae_final, val_weighted_mae, val_weighted_mae_final | failed/baseline evidence should not be mainline unless thesis frames it as negative result; split_unknown; leakage_risk_unknown |
 <!-- METRIC_EXTRACTION_AUTO_END -->
 
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-008 Depth-Heldout Training Update (2026-07-07)
+
+| field | updated value |
+| --- | --- |
+| experiment_id | EXP-008 |
+| experiment_name | EfficientNet FFT severity regression depth-heldout v001 |
+| method_family | FFT severity label |
+| model | EfficientNetV2B0 with 1x1 CWT channel adapter and `(70,30)` FFT regression head |
+| split | depth_heldout_simple; train 1984 / val 416 / test 423 records; gap_ft 5.0 |
+| evidence_strength | strong for single-well depth-heldout training result |
+| thesis_use | mainline_candidate / main_result with single-well caveat |
+| main_result_summary | test MAE `0.079025`, RMSE `0.277019`, R2 `0.106634`, Pearson `0.351950`, Spearman `0.480519` |
+| main_failure_or_limitation | weaker than random split and single-well only; no multi-well generalization evidence |
+| result_paths | `docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json`; `training_curve.png`; `prediction_vs_truth_scatter.png`; `depth_curve_if_available.png` |
+| code_paths | `scripts/thesis_train_exp008_depth_blocked.py`; `scripts/thesis_make_exp008_depth_split.py`; `scripts/thesis_check_exp008_tfrecord_split.py` |
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->

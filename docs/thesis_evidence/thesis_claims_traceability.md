@@ -35,3 +35,14 @@ Every claim below is tied to at least one result path, code path, git branch/com
 | 哪些指标只能写成 exploratory | EXP-008/007/006/002/003/014 的 validation metrics；EXP-004/005 train losses；所有 image-only metrics。 | unified_metrics_table.csv; split_forensic_audit.csv | requires caveat |
 | 哪些实验必须标记 split_unknown | CSI+CNN, CSI+SE-ResNet, dual-channel metadata fusion, pre-correction, Grad-CAM image-only routes仍缺直接 split 代码/日志对应。 | result directories + no numeric/log split artifacts | split_unknown |
 <!-- TENSORBOARD_SPLIT_AUDIT_END -->
+
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-008 Depth-Heldout Training Update (2026-07-07)
+
+| claim | evidence | status |
+| --- | --- | --- |
+| EXP-008 no longer relies only on random-split validation metrics. | `remote_exp008_depth_blocked_train/test_metrics.json`; `remote_exp008_depth_blocked_train/leakage_audit.json` | supported for single-well depth-heldout |
+| FFT severity + EfficientNet remains learnable under depth-heldout split. | test MAE `0.079025`, RMSE `0.277019`, R2 `0.106634`, Pearson `0.351950`, Spearman `0.480519` | supported cautiously |
+| EXP-008 can support final thesis method feasibility, but not multi-well generalization. | split is array_03 contiguous depth-heldout only; no second well evidence | supported with scope caveat |
+| EXP-007 fallback is not immediately required. | EXP-008 train_v001 completed successfully and produced heldout metrics | recommendation |
+<!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->

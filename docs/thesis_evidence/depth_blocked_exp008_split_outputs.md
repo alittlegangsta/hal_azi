@@ -104,3 +104,15 @@ These outputs are split evidence only. They are not model performance evidence. 
 - `docs/thesis_evidence/thesis_claims_traceability.md`
 
 Do not replace old random-split EXP-008 metrics; add new rows with `split_type=depth_heldout_simple`.
+
+<!-- EXP008_DEPTH_HELDOUT_ARCHIVE_START -->
+## Remote Split Evidence Archive (2026-07-07)
+
+Small split evidence files from remote `split_v001` were archived under:
+
+```text
+docs/thesis_evidence/remote_exp008_split_v001/
+```
+
+Archived files include `leakage_audit.md/json`, `depth_split_overview.csv`, `split_manifest.json/csv`, `smoke_check.json`, and dry-run audit/overview files. The full train/val/test TFRecords were not copied. The confirmed split has train/val/test counts 1984/416/423 and audit conclusion `depth_heldout_split_confirmed`.
+<!-- EXP008_DEPTH_HELDOUT_ARCHIVE_END -->
