@@ -1,18 +1,18 @@
 # Unified Thesis Metrics Table
 
-Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Administrator/Desktop/Hal/results`. No OCR for historical figures. EXP-008 depth-heldout v001 metrics and P3 baseline/error audits were added from remote output artifacts, not from Windows results.
+Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Administrator/Desktop/Hal/results`. No OCR for historical figures. EXP-008 and EXP-007 depth-heldout metrics were added from remote output artifacts/command output, not from Windows results.
 
-- Metric rows total: 387
-- Numeric/text/PKL/JSON/CSV rows excluding image-only: 342
+- Metric rows total: 406
+- Numeric/text/PKL/JSON/CSV rows excluding image-only: 361
 - Image-only rows marked `image_only_needs_manual_read`: 45
 - TensorBoard scalar rows added in split audit: `0` because local TensorBoard dependency is unavailable.
-- Split audit status: historical EXP-008/EXP-007/EXP-006/EXP-002/EXP-003/EXP-014 rows remain `random_split_depth_leakage_risk`; new EXP-008 train_v001 rows are `depth_heldout_simple` with `depth_heldout_split_confirmed`.
+- Split audit status: historical EXP-008/EXP-007/EXP-006/EXP-002/EXP-003/EXP-014 rows remain `random_split_depth_leakage_risk`; new EXP-008 and EXP-007 supplement rows are `depth_heldout_simple` with `depth_heldout_split_confirmed`.
 
 ## Split Type Counts
 
 | split_type | count |
 | --- | --- |
-| depth_heldout_simple | 131 |
+| depth_heldout_simple | 150 |
 | needs_manual_verification | 32 |
 | random_split_depth_leakage_risk | 200 |
 | split_unknown | 24 |
@@ -22,7 +22,7 @@ Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Adminis
 | category | experiment_id | available_metrics | source | caveat |
 | --- | --- | --- | --- | --- |
 | mainline_candidate | EXP-008 | depth-heldout train_v001: test MAE 0.079025, RMSE 0.277019, R2 0.106634, Pearson 0.351950, Spearman 0.480519; P3 audit: train-mean/train-median worse by MAE/RMSE/R2, but zero baseline has lower MAE 0.069751 | docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json; docs/thesis_evidence/exp008_depthheldout_baseline_comparison.csv; historical source `/mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet/output/fft_regression/array_03/logs/training_history_fft.pkl` | single-well depth-heldout only; metric-dependent baseline result; old random-split metrics remain exploratory |
-| fallback_mainline | EXP-007 | 1D severity-group MAE/RMSE from result.txt; training histories exist but several are duplicated across folders | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/1D+percentage_Label/result.txt | random_split_depth_leakage_risk for training-history metrics; severity table is all-samples and not independent test split |
+| fallback_mainline | EXP-007 | depth-heldout train_v002: test MAE 0.811672, RMSE 2.832056, R2 -0.011278, Pearson 0.198048, Spearman 0.413335; beats zero by RMSE/R2 but not MAE | /home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/test_metrics.json; docs/thesis_evidence/exp007_depthheldout_baseline_comparison.csv; historical result.txt | single-well depth-heldout only; weaker than EXP-008 and should be fallback/limitation comparison |
 | baseline | EXP-006 | CNN binary baseline val_auc 0.95361; pkl val_auc max 0.953608; val_accuracy max 0.885366 | /mnt/c/Users/Administrator/Desktop/Hal/results/temp_result/test_relativity/result.txt.txt | random_split_depth_leakage_risk; safe only as random-validation signal evidence |
 | ablation | EXP-002/EXP-003 | log label and frequency-weighted loss histories contain loss/MAE/val_loss/val_mae | temp_result/log_label and temp_result/frequency-weighted_loss training_history.pkl | random_split_depth_leakage_risk; exploratory ablation only |
 | failed_attempt | EXP-004/EXP-005/EXP-014 | GAN generator/discriminator train losses; sample-weight pkl history; qualitative very poor result | GaN+2Dlabel result.txt; 样本权重+非对称损失 result.txt/training_history_weighted.pkl | failed route; EXP-004/EXP-005 need manual split verification or train-only caveat |
@@ -36,6 +36,17 @@ Generated: 2026-07-07. Source directory treated read-only: `/mnt/c/Users/Adminis
 | test | 0.032994 | 0.079025 | 0.277019 | 0.106634 | 0.351950 | 0.480519 | 423 | docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json |
 
 Training stopped at epoch 12 and restored epoch 2 best weights. These rows use `split_type=depth_heldout_simple` and are the current safest EXP-008 performance evidence. They remain single-well depth-heldout evidence, not multi-well generalization.
+
+## EXP-007 Depth-Heldout Fallback Metrics (2026-07-07)
+
+| run | split | loss/val evidence | MAE | RMSE | R2 | Pearson | Spearman | samples | source |
+| --- | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |
+| train_v001 | test | best val_loss epoch 7: 0.32228 | 0.881390 | 2.982832 | -0.121823 | 0.151424 | 0.425906 | 423 | `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v001/test_metrics.json` |
+| train_v002 | test | best val_loss epoch 1: 0.34110 | 0.811672 | 2.832056 | -0.011278 | 0.198048 | 0.413335 | 423 | `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/test_metrics.json` |
+
+Best completed EXP-007 run is `train_v002`. It beats train-mean/train-median baselines by MAE/RMSE/R2 and beats zero by RMSE/R2, but still does not beat zero by MAE. EXP-007 is therefore a fallback/limitation comparison, not a stronger mainline than EXP-008.
+
+Local copy caveat: remote v001/v002 metrics were captured from SSH command output. Full remote small artifacts and v003 were not completed because SSH/SCP escalation was denied by the execution environment usage limit.
 
 ## Extracted Metric Rows (Non-Image)
 

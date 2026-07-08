@@ -1,0 +1,35 @@
+{
+  "generated_at": "2026-07-07T08:34:00+00:00",
+  "experiment_id": "EXP-007",
+  "split_preset": "depth_heldout_simple",
+  "source_tfrecord": "/home/xiaoj/hal_azi/data/processed/image_translation/array_03/tfrecords/profile_regression_data.tfrecord",
+  "source_processed_waveforms_pkl": "/home/xiaoj/hal_azi/data/processed/image_translation/array_03/processed_waveforms.pkl",
+  "source_ground_truth_h5": "/home/xiaoj/hal_azi/data/processed/image_translation/array_03/ground_truth_db_array_03.h5",
+  "output_dir": "/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/split_v001",
+  "gap_ft": 5.0,
+  "record_depth_mapping": {
+    "method": "sonic_depths_order_filtered_by_ground_truth_path_data_key",
+    "sonic_depths_len": 2846,
+    "path_data_key_count": 2842,
+    "matched_count": 2842,
+    "missing_count": 4,
+    "first_processed_indices": [0, 1, 2, 3, 4],
+    "last_processed_indices": [2837, 2838, 2839, 2840, 2841]
+  },
+  "stats": {
+    "train": {"count": 1984, "min_depth_ft": 2732.4396282122984, "max_depth_ft": 3715.852672292335, "median_depth_ft": 3232.6427716114194},
+    "val": {"count": 416, "min_depth_ft": 3721.118907594681, "max_depth_ft": 3917.68482944096, "median_depth_ft": 3819.798245939437},
+    "test": {"count": 423, "min_depth_ft": 3922.7850794766823, "max_depth_ft": 4129.7434705787255, "median_depth_ft": 4025.08450001953}
+  },
+  "boundary_distances": {
+    "train_val_ft": 5.266235302346104,
+    "val_test_ft": 5.100250035722183,
+    "train_test_ft": 206.93240718434754
+  },
+  "mutually_exclusive_record_sets": true,
+  "dropped_buffer_count": 19,
+  "dropped_other_count": 0,
+  "warnings": [],
+  "conclusion": "depth_heldout_split_confirmed",
+  "local_archive_note": "Reconstructed from remote command output; full remote split_manifest was not copied after SSH/SCP approval usage limit was hit."
+}

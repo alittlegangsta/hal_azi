@@ -1,0 +1,20 @@
+{
+  "run": "train_v001",
+  "remote_source_path": "/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v001/test_metrics.json",
+  "keras_loss": 0.8008472919464111,
+  "keras_mae": 0.8813897371292114,
+  "overall_mae": 0.8813897362721808,
+  "overall_mse": 8.897284713603689,
+  "overall_rmse": 2.982831660285858,
+  "overall_r2": -0.12182281336470835,
+  "overall_pearson": 0.1514244935080298,
+  "overall_spearman": 0.42590583241052704,
+  "profile_mean_mae": 0.824259340763092,
+  "profile_max_mae": 6.155834674835205,
+  "shallow_profile_0_9_mae": 3.0360500125998264,
+  "mid_profile_10_34_mae": 1.2534712565221755,
+  "deep_profile_35_69_mae": 0.0,
+  "num_samples": 423,
+  "num_label_values": 29610,
+  "local_archive_note": "Metrics captured from remote train.log command output; remote JSON was not copied after SSH/SCP approval usage limit was hit."
+}

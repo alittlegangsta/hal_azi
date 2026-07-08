@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-07-07",
+  "scope": "single-well depth-heldout EXP-007 array_03",
+  "best_run": "train_v002",
+  "copy_status": "Remote metrics captured from command output; full remote small artifacts were not copied after SSH/SCP approval usage limit was hit.",
+  "rows": [
+    {"run": "train_v001", "comparator": "model", "mae": 0.8813897362721808, "rmse": 2.982831660285858, "r2": -0.12182281336470835, "pearson": 0.1514244935080298, "spearman": 0.42590583241052704},
+    {"run": "train_v001", "comparator": "zero", "mae": 0.7383391714788538, "rmse": 2.911398458974683, "r2": -0.06873510478598965},
+    {"run": "train_v001", "comparator": "train_mean", "mae": 2.438933853119139, "rmse": 4.8608657630730905, "r2": -1.9791614182434758, "pearson": 0.41455141547681496, "spearman": 0.49972081841764276},
+    {"run": "train_v001", "comparator": "train_median", "mae": 1.390605667127785, "rmse": 2.8672879399641564, "r2": -0.03659568192844542, "pearson": 0.41436597841409906, "spearman": 0.5073529657543635},
+    {"run": "train_v002", "comparator": "model", "mae": 0.8116716963127828, "rmse": 2.8320563809401027, "r2": -0.011278023512772517, "pearson": 0.19804780372723088, "spearman": 0.4133349613698664},
+    {"run": "train_v002", "comparator": "zero", "mae": 0.7383391714788538, "rmse": 2.911398458974683, "r2": -0.06873510478598965},
+    {"run": "train_v002", "comparator": "train_mean", "mae": 2.438933853119139, "rmse": 4.8608657630730905, "r2": -1.9791614182434758, "pearson": 0.41455141547681496, "spearman": 0.49972081841764276},
+    {"run": "train_v002", "comparator": "train_median", "mae": 1.390605667127785, "rmse": 2.8672879399641564, "r2": -0.03659568192844542, "pearson": 0.41436597841409906, "spearman": 0.5073529657543635}
+  ]
+}

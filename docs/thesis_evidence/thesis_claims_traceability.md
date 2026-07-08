@@ -57,3 +57,16 @@ Every claim below is tied to at least one result path, code path, git branch/com
 | EXP-008 beats zero baseline by RMSE/R2 and has positive test correlation. | model RMSE `0.277019` vs zero `0.301272`; model R2 `0.106634` vs zero `-0.056638`; Spearman `0.480519` | supported with metric caveat |
 | Main errors are low-frequency coefficients and high-severity underprediction. | worst coefficients k=0-4; top error samples true integrated severity around 2.4-4.6 with predictions near zero | supported |
 <!-- EXP008_RESULT_AUDIT_P3_END -->
+
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-007 Depth-Heldout Fallback Claim Update (2026-07-07)
+
+| claim | evidence | status |
+| --- | --- | --- |
+| EXP-007 no longer relies only on random-split validation metrics. | `remote_exp007_split_v001/leakage_audit.md`; `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/split_v001`; `scripts/thesis_make_exp007_depth_split.py` | supported for single-well depth-heldout |
+| EXP-007 1D percentage-label route is trainable under depth-heldout split but remains weak. | best run `train_v002`: test MAE `0.811672`, RMSE `2.832056`, R2 `-0.011278`, Pearson `0.198048`, Spearman `0.413335` | supported with limitation |
+| EXP-007 beats train-mean/train-median baselines by MAE/RMSE/R2. | `exp007_depthheldout_baseline_comparison.csv` | supported |
+| EXP-007 does not beat zero baseline by MAE. | model MAE `0.811672` vs zero MAE `0.738339` | limitation; must state |
+| EXP-007 is not a stronger mainline than EXP-008. | EXP-008 R2 `0.106634`; EXP-007 best R2 `-0.011278`; both fail zero-baseline MAE | supported |
+| EXP-007 severity group detail remains incomplete locally. | remote `severity_group_metrics.csv/json` exists, but was not copied/read after SSH/SCP approval usage limit rejection | needs_verification |
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->

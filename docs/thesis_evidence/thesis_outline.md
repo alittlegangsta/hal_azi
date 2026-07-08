@@ -100,3 +100,38 @@
 | TAB-S07 | Git 分支与实验映射表 | 附录：复现与证据链 | docs/thesis_evidence/branch_experiment_mapping.csv; git_branch_timeline.md | useful | 用于证明旧项目版本来源，正文可简化。 |
 | TAB-S08 | 缺失证据与最小补充计划表 | 第7章 讨论与后续工作 | docs/thesis_evidence/missing_evidence.md; minimal_supplement_plan.md | yes | 明确必须补 depth-blocked split/TensorBoard dependency/图件重画。 |
 <!-- FIGURE_SHORTLIST_END -->
+
+<!-- EXP007_DEPTH_HELDOUT_FALLBACK_START -->
+## EXP-007 Depth-Heldout Fallback Update (2026-07-07)
+
+### Updated Thesis Result Logic
+
+The recommended result narrative after EXP-007 fallback training is:
+
+1. Use EXP-008 as the method innovation mainline: CWT + EfficientNetV2B0 + FFT severity magnitude label for azimuth-invariant weak supervision.
+2. Use EXP-007 as a simpler fallback/limitation comparison: CWT + EfficientNetV2B0 + 1D percentage label confirms that a profile label is trainable under a single-well depth-heldout split, but it is not stronger than EXP-008.
+3. Do not present either EXP-008 or EXP-007 as multi-well generalization. Both are `array_03` single-well depth-heldout evidence.
+4. Do not run EXP-006 for the shortest thesis path unless the thesis committee explicitly requires a binary-detection fallback.
+
+### Updated Chapter Placement
+
+| chapter | added_exp007_depthheldout_use | evidence | limitation |
+| --- | --- | --- | --- |
+| 第3章 标签构造 | 1D percentage label as fallback label route | `docs/thesis_evidence/exp007_artifact_and_code_inspection.md`; old `create_tfrecords.py` evidence from `origin/1D+percentage_Label` | It removes azimuth matching but produces sparse labels. |
+| 第5章 实验结果 | Report EXP-007 `train_v002` after EXP-008, as fallback comparison | `docs/thesis_evidence/exp007_depthheldout_training_report.md`; `exp007_depthheldout_baseline_comparison.csv`; `unified_metrics_table.csv` | Test MAE `0.811672`, RMSE `2.832056`, R2 `-0.011278`; better than zero by RMSE/R2 but not by MAE. |
+| 第5章 实验结果 | Compare EXP-007 and EXP-008 depth-heldout results | `docs/thesis_evidence/exp007_vs_exp008_depthheldout_comparison.md` | Metrics are not directly scale-comparable because labels differ; comparison is about thesis role and evidence strength. |
+| 第7章 讨论 | Sparse-label baseline limitation and early overfitting | `docs/thesis_evidence/exp007_depthheldout_final_claim.md`; `risk_register.md` | Severity-group details remain `needs_verification` until remote `severity_group_metrics.csv/json` can be copied/read. |
+
+### Updated Figure/Table Placement
+
+| item | chapter | source | use |
+| --- | --- | --- | --- |
+| EXP-007 split audit table | 第5章 / 第7章 | `docs/thesis_evidence/remote_exp007_split_v001/leakage_audit.json` | Show `depth_heldout_split_confirmed` and continuous train/val/test ranges. |
+| EXP-007 baseline comparison table | 第5章 | `docs/thesis_evidence/exp007_depthheldout_baseline_comparison.csv` | Show model vs zero/train-mean/train-median; highlight MAE caveat. |
+| EXP-007 vs EXP-008 comparison table | 第5章 / 第7章 | `docs/thesis_evidence/exp007_vs_exp008_depthheldout_comparison.csv` | Justify retaining EXP-008 as mainline and EXP-007 as fallback/limitation comparison. |
+| EXP-007 training/prediction figures | 第5章 | Remote `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/*.png` | Use after small figures are copied locally; captions must say single-well depth-heldout. |
+
+### Stop/Continue Recommendation
+
+Current evidence is sufficient to move into thesis writing if the result chapter is framed as single-well method feasibility plus limitations. The next shortest useful task is not another training run, but copying the already generated EXP-007 small figure/CSV artifacts from remote once SSH/SCP execution is available again, then redrawing final thesis figures.
+<!-- EXP007_DEPTH_HELDOUT_FALLBACK_END -->

@@ -30,3 +30,14 @@ Generated: 2026-07-06.
 | TAB-S11 | EXP-008 depth-heldout 基线对照表 | 第5章 实验结果 | `docs/thesis_evidence/exp008_depthheldout_baseline_comparison.csv` | yes | 必须同时报告 MAE/RMSE/R2；明确 zero baseline MAE 更低但 RMSE/R2 更差。 |
 | TAB-S12 | EXP-008 标签维度误差结构表 | 第5章 实验结果 / 第7章 讨论 | `docs/thesis_evidence/exp008_depthheldout_error_structure.csv` | yes | 展示 k=0-4 低频误差最大、高严重度样本低估、误差分位数。 |
 <!-- EXP008_RESULT_AUDIT_P3_END -->
+
+<!-- EXP007_DEPTH_HELDOUT_FALLBACK_START -->
+## EXP-007 Depth-Heldout Fallback Table Addendum (2026-07-07)
+
+| table_id | table_name_cn | thesis_chapter | source | must_use | notes |
+| --- | --- | --- | --- | --- | --- |
+| TAB-S13 | EXP-007 depth-heldout split audit 表 | 第5章 实验设计 / 第7章 限制 | `docs/thesis_evidence/remote_exp007_split_v001/leakage_audit.json`; `depth_split_overview.csv` | yes | 报告 train/val/test 样本数 `1984/416/423`、连续深度范围、`gap_ft=5.0` 和 `depth_heldout_split_confirmed`。 |
+| TAB-S14 | EXP-007 depth-heldout fallback 指标与基线表 | 第5章 实验结果 | `docs/thesis_evidence/exp007_depthheldout_baseline_comparison.csv`; `unified_metrics_table.csv` | yes | 使用 best completed run `train_v002`；明确模型优于 zero baseline 的 RMSE/R2，但未优于 zero baseline 的 MAE。 |
+| TAB-S15 | EXP-007 与 EXP-008 depth-heldout 对比表 | 第5章 实验结果 / 第7章 讨论 | `docs/thesis_evidence/exp007_vs_exp008_depthheldout_comparison.csv` | yes | 支撑论文组织：EXP-008 作为 FFT 方位不变方法主线，EXP-007 作为 1D percentage fallback/limitation comparison。 |
+| TAB-S16 | EXP-007 训练尝试与停止原因表 | 第7章 讨论 / 附录 | `docs/thesis_evidence/exp007_depthheldout_training_report.md` | useful | 记录 v001/v002 完成、v003 因执行环境 SSH/SCP 审批额度被拒绝而未运行；不能写成 v003 性能失败。 |
+<!-- EXP007_DEPTH_HELDOUT_FALLBACK_END -->

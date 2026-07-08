@@ -1,0 +1,16 @@
+{
+  "generated_at": "2026-07-07T08:34:02+00:00",
+  "split_dir": "/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/split_v001",
+  "tfrecord_counts": {"train": 1984, "val": 416, "test": 423},
+  "manifest_counts": {"train": 1984, "val": 416, "test": 423},
+  "audit_conclusion": "depth_heldout_split_confirmed",
+  "audit_warnings": [],
+  "parse_results": {
+    "train": {"status": "parsed", "feature_shape": [150, 400, 8], "label_shape": [70], "shape_ok": true},
+    "val": {"status": "parsed", "feature_shape": [150, 400, 8], "label_shape": [70], "shape_ok": true},
+    "test": {"status": "parsed", "feature_shape": [150, 400, 8], "label_shape": [70], "shape_ok": true}
+  },
+  "errors": [],
+  "status": "pass",
+  "local_archive_note": "Reconstructed from remote command output."
+}

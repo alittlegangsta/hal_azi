@@ -38,3 +38,15 @@
 | R-014 | High-frequency coefficients look best by MAE because target magnitude is small | medium | Avoid calling high-frequency coefficients physically most learnable; say they have lowest absolute error. |
 | R-015 | High-severity samples are underpredicted | medium | Use top-error and depth-curve figures as limitation evidence; consider EXP-007 fallback if stronger result needed. |
 <!-- EXP008_RESULT_AUDIT_P3_END -->
+
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-007 Depth-Heldout Fallback Risk Update (2026-07-07)
+
+| risk_id | risk | impact | mitigation |
+| --- | --- | --- | --- |
+| R-016 | EXP-007 fallback still does not beat zero baseline by MAE | high | Use EXP-007 as fallback/limitation comparison only; do not present as clean performance rescue. |
+| R-017 | EXP-007 best R2 remains slightly negative | medium | Use RMSE/R2 improvement over zero and train-based baselines cautiously; keep EXP-008 as main method route. |
+| R-018 | Remote v001/v002 artifacts were not fully copied locally | medium | Local docs cite remote paths and captured stdout; copy remote small files later when SSH/SCP approval is available. |
+| R-019 | EXP-007 severity-group conclusions are incomplete locally | medium | Do not state severity-group conclusions until `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/severity_group_metrics.csv` is copied/read. |
+| R-020 | v003 could not be run after approval usage limit rejection | low | Record as not run; do not infer potential v003 performance. |
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->

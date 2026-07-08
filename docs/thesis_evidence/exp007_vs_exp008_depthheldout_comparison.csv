@@ -1,0 +1,3 @@
+experiment_id,best_run,target_label,test_mae,test_rmse,test_r2,test_pearson,test_spearman,beats_zero_mae,beats_zero_rmse_r2,beats_train_mean_median,thesis_role,source_path
+EXP-008,train_v001,FFT severity magnitude/log coefficients,0.079025,0.277019,0.106634,0.351950,0.480519,no,yes,yes,method_mainline,/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp008/train_v001/test_metrics.json
+EXP-007,train_v002,1D channeling percentage profile,0.811672,2.832056,-0.011278,0.198048,0.413335,no,yes,yes,fallback_limitation_comparison,/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/test_metrics.json

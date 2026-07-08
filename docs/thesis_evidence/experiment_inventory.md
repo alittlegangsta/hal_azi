@@ -146,3 +146,23 @@ Updated migration decision: `fetch_missing_branches_only`. Fetching the missing 
 | result_paths | `docs/thesis_evidence/remote_exp008_depth_blocked_train/test_metrics.json`; `training_curve.png`; `prediction_vs_truth_scatter.png`; `depth_curve_if_available.png` |
 | code_paths | `scripts/thesis_train_exp008_depth_blocked.py`; `scripts/thesis_make_exp008_depth_split.py`; `scripts/thesis_check_exp008_tfrecord_split.py` |
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-007 Depth-Heldout Fallback Update (2026-07-07)
+
+| field | updated value |
+| --- | --- |
+| experiment_id | EXP-007 |
+| experiment_name | 1D percentage label depth-heldout fallback |
+| method_family | 1D percentage label |
+| model | EfficientNetV2B0 with 1x1 CWT channel adapter and 70-point percentage-profile regression head |
+| split | depth_heldout_simple; train 1984 / val 416 / test 423 records; gap_ft 5.0 |
+| evidence_strength | strong for single-well depth-heldout split/training attempt; severity-group detail needs remote file copy |
+| thesis_use | fallback / limitation comparison |
+| main_result_summary | best completed run `train_v002`: test MAE `0.811672`, RMSE `2.832056`, R2 `-0.011278`, Pearson `0.198048`, Spearman `0.413335` |
+| baseline_summary | beats train-mean/train-median by MAE/RMSE/R2; beats zero by RMSE/R2 but not MAE |
+| main_failure_or_limitation | zero baseline still has lower MAE; R2 remains slightly negative; single-well only |
+| result_paths | `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/test_metrics.json`; `docs/thesis_evidence/exp007_depthheldout_baseline_comparison.csv` |
+| code_paths | `scripts/thesis_make_exp007_depth_split.py`; `scripts/thesis_check_exp007_tfrecord_split.py`; `scripts/thesis_train_exp007_depth_blocked.py` |
+| notes | `train_v003` was planned but not run because SSH/SCP escalation was rejected by the execution environment usage limit. |
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->

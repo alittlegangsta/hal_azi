@@ -44,7 +44,7 @@
 
 - Completed for EXP-008: deterministic depth-heldout split, smoke training, full train_v001, validation/test metrics, training curve, prediction scatter, depth curve, and split audit archive.
 - No longer missing for EXP-008: train/val/test depth ranges and heldout test metrics.
-- Still missing for final broad claims: multi-well validation, EXP-007 depth-heldout fallback comparison, baseline depth-heldout comparison, and TensorBoard historical scalar extraction.
+- Still missing for final broad claims: multi-well validation, baseline depth-heldout model comparison, and TensorBoard historical scalar extraction. EXP-007 depth-heldout fallback has now been run but is weak.
 - Current safest thesis claim: single-well depth-heldout method feasibility for EXP-008, with test MAE `0.079025` and Spearman `0.480519`.
 <!-- EXP008_DEPTH_HELDOUT_TRAINING_END -->
 
@@ -55,3 +55,13 @@
 - Still missing for a stronger performance chapter: EXP-007 depth-heldout fallback/comparison, baseline depth-heldout model comparison, and multi-well validation.
 - New limitation to carry into thesis: EXP-008 does not beat zero baseline on overall MAE, although it improves RMSE/R2 and train-based baselines.
 <!-- EXP008_RESULT_AUDIT_P3_END -->
+
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_START -->
+## EXP-007 Depth-Heldout Fallback Missing Evidence Update (2026-07-07)
+
+- Completed: EXP-007 record-depth mapping inspection, deterministic depth-heldout split, smoke check, smoke training, full training attempts v001/v002, baseline comparison, and EXP-007 vs EXP-008 comparison.
+- Not completed: train_v003 was planned but not run because SSH/SCP escalation was rejected by the execution environment usage limit.
+- Still missing locally: byte-for-byte copied remote small artifacts for EXP-007 v001/v002, especially `severity_group_metrics.csv/json`, `profile_index_error.csv`, figures, and full `run_report.md`.
+- Current EXP-007 result is not a clean fallback: best run train_v002 beats zero by RMSE/R2 and train-based baselines by MAE/RMSE/R2, but zero still has lower MAE.
+- Multi-well validation remains missing for both EXP-008 and EXP-007.
+<!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->
