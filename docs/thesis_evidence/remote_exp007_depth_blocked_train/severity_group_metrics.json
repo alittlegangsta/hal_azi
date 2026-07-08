@@ -1,0 +1,32 @@
+{
+  "rows": [
+    {
+      "severity_group": "zero",
+      "count": 177,
+      "mae": 0.12185443192720413,
+      "rmse": 0.6204712390899658,
+      "bias_mean": 0.12185443192720413
+    },
+    {
+      "severity_group": "low_0_5",
+      "count": 244,
+      "mae": 1.2762081623077393,
+      "rmse": 3.579331398010254,
+      "bias_mean": -0.9260880947113037
+    },
+    {
+      "severity_group": "medium_5_20",
+      "count": 2,
+      "mae": 5.187058925628662,
+      "rmse": 9.96276569366455,
+      "bias_mean": -5.186744213104248
+    },
+    {
+      "severity_group": "high_gt_20",
+      "count": 0,
+      "mae": null,
+      "rmse": null,
+      "bias_mean": null
+    }
+  ]
+}
