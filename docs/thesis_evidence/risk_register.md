@@ -50,3 +50,16 @@
 | R-019 | EXP-007 severity-group conclusions are incomplete locally | medium | Do not state severity-group conclusions until `/home/xiaoj/hal_azi/output/thesis_depth_blocked/exp007/train_v002/severity_group_metrics.csv` is copied/read. |
 | R-020 | v003 could not be run after approval usage limit rejection | low | Record as not run; do not infer potential v003 performance. |
 <!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- FINAL_EVIDENCE_FREEZE_START -->
+## Final Evidence Freeze Risk Update (2026-07-08)
+
+| risk_id | risk | impact | mitigation |
+| --- | --- | --- | --- |
+| R-021 | Mixing random-split exploratory metrics with depth-heldout metrics in one final ranking | high | Use `final_thesis_metrics_table.*`; label EXP-006 as random-split background and EXP-007/008 as single-well depth-heldout. |
+| R-022 | Overstating EXP-008 as fully superior despite zero-baseline MAE caveat | high | Always report MAE/RMSE/R2 together and cite `thesis_overclaim_blacklist.md`. |
+| R-023 | Treating EXP-007 as a successful rescue result | medium | Present EXP-007 as fallback/limitation comparison; state R2 is slightly negative and zero MAE is lower. |
+| R-024 | Writing multi-well or deployment claims | high | Use `thesis_safe_claims.md`; explicitly state single-well `array_03` scope. |
+| R-025 | Depending on remote EXP-007 figures that were not copied locally | medium | Use remote paths as traceable sources now; copy/redraw small figures in a later non-training writing task. |
+| R-026 | Continuing experiments instead of writing | medium | Freeze evidence; treat additional training as optional future work only. |
+<!-- FINAL_EVIDENCE_FREEZE_END -->

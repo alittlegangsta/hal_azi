@@ -70,3 +70,16 @@ Every claim below is tied to at least one result path, code path, git branch/com
 | EXP-007 is not a stronger mainline than EXP-008. | EXP-008 R2 `0.106634`; EXP-007 best R2 `-0.011278`; both fail zero-baseline MAE | supported |
 | EXP-007 severity group detail remains incomplete locally. | remote `severity_group_metrics.csv/json` exists, but was not copied/read after SSH/SCP approval usage limit rejection | needs_verification |
 <!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- FINAL_EVIDENCE_FREEZE_START -->
+## Final Evidence Freeze Claim Update (2026-07-08)
+
+| claim | evidence | final thesis status |
+| --- | --- | --- |
+| EXP-008 is the final method innovation mainline. | `final_thesis_metrics_table.csv`; `exp008_depthheldout_final_claim.md`; `scripts/thesis_train_exp008_depth_blocked.py` | supported for single-well depth-heldout feasibility |
+| EXP-007 is fallback/limitation comparison, not a replacement mainline. | `exp007_depthheldout_final_claim.md`; `exp007_vs_exp008_depthheldout_comparison.md` | supported |
+| EXP-006 is baseline/background only. | `split_forensic_audit.csv`; EXP-006 `result.txt.txt`; `unified_metrics_table.csv` | supported as random-split exploratory baseline |
+| Final result chapter must separate random split exploratory metrics from single-well depth-heldout metrics. | `leakage_risk_report.md`; `final_thesis_metrics_table.md` | required |
+| Existing evidence is sufficient to stop experiments and enter writing. | EXP-008 and EXP-007 depth-heldout reports; final writing pack files | recommendation supported, with limitations |
+| Multi-well generalization is not established. | no multi-well heldout evidence in inventory | missing evidence; must state limitation |
+<!-- FINAL_EVIDENCE_FREEZE_END -->

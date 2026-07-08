@@ -135,3 +135,31 @@ The recommended result narrative after EXP-007 fallback training is:
 
 Current evidence is sufficient to move into thesis writing if the result chapter is framed as single-well method feasibility plus limitations. The next shortest useful task is not another training run, but copying the already generated EXP-007 small figure/CSV artifacts from remote once SSH/SCP execution is available again, then redrawing final thesis figures.
 <!-- EXP007_DEPTH_HELDOUT_FALLBACK_END -->
+
+<!-- FINAL_EVIDENCE_FREEZE_START -->
+## Final Evidence Freeze And Writing Pack Update (2026-07-08)
+
+### Final Mainline Organization
+
+| thesis role | experiment | placement | writing rule |
+| --- | --- | --- | --- |
+| method innovation | EXP-008 FFT severity magnitude + EfficientNet | 第3章标签构造、第4章模型、第5章主结果 | Present as single-well depth-heldout method feasibility; report MAE/RMSE/R2/correlation and baseline caveats together. |
+| fallback / limitation comparison | EXP-007 1D percentage label + EfficientNet | 第3章标签对照、第5章fallback结果、第7章限制 | Present after EXP-008; use it to show simpler labels are trainable but not stronger. |
+| baseline / background | EXP-006 CNN binary CWT baseline | 第5章前置baseline或附录 | Report random-split learnability only; do not compare as final generalization. |
+| appendix / failed attempts | GAN, dual-channel, eccentricity correction, weighted/asymmetric loss, SE-ResNet route | 第7章或附录 | Use to justify route selection; avoid main performance claims. |
+
+### Final Writing Outputs
+
+| file | use |
+| --- | --- |
+| `docs/thesis_evidence/final_thesis_metrics_table.csv` / `.md` | Frozen metric table for the result chapter. |
+| `docs/thesis_evidence/final_thesis_figure_table_plan.md` | Frozen figure/table placement and redraw plan. |
+| `docs/thesis_evidence/thesis_results_chapter_draft.md` | Result chapter draft text. |
+| `docs/thesis_evidence/thesis_discussion_chapter_draft.md` | Discussion chapter draft text. |
+| `docs/thesis_evidence/thesis_safe_claims.md` | Approved claim wording. |
+| `docs/thesis_evidence/thesis_overclaim_blacklist.md` | Claims that must not appear in the thesis. |
+
+### Final Stop/Continue Decision
+
+Stop model training and enter thesis writing. The current shortest path is figure redrawing, source citation, and polishing the result/discussion chapters. Additional training should be treated as optional future work, not required for the current thesis package.
+<!-- FINAL_EVIDENCE_FREEZE_END -->

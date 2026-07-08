@@ -65,3 +65,27 @@
 - Current EXP-007 result is not a clean fallback: best run train_v002 beats zero by RMSE/R2 and train-based baselines by MAE/RMSE/R2, but zero still has lower MAE.
 - Multi-well validation remains missing for both EXP-008 and EXP-007.
 <!-- EXP007_DEPTH_HELDOUT_TRAINING_END -->
+
+<!-- FINAL_EVIDENCE_FREEZE_START -->
+## Final Evidence Freeze Missing Evidence Update (2026-07-08)
+
+### No Longer Blocking For Thesis Draft
+
+- EXP-008 depth-heldout split, training, metrics, baseline comparison, and error structure are available.
+- EXP-007 depth-heldout fallback split, training attempts v001/v002, baseline comparison, and EXP-007 vs EXP-008 comparison are available.
+- Final result/discussion writing drafts and safe/unsafe claim lists are available.
+
+### Still Missing But Can Be Written As Limitation
+
+| item | status | thesis handling |
+| --- | --- | --- |
+| Multi-well validation | missing | State as major limitation and future work. |
+| EXP-006 depth-heldout baseline | not run by decision | Not needed for shortest thesis path; keep EXP-006 as random-split baseline/background. |
+| EXP-007 remote small figures and severity-group CSV/JSON copied locally | partial/missing locally | Use remote path references and mark severity-group details `needs_verification` until copied/read. |
+| TensorBoard historical scalar parsing | optional missing | Not required because PKL/text/depth-heldout metrics now cover thesis tables. |
+| Final thesis-style redrawn method/result figures | writing task, not experiment | Redraw from frozen evidence; do not alter original results. |
+
+### Final Recommendation
+
+Stop experiments and enter thesis writing. Additional model runs are not required unless the advisor explicitly requests multi-well validation or a depth-heldout binary baseline.
+<!-- FINAL_EVIDENCE_FREEZE_END -->
