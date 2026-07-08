@@ -52,3 +52,17 @@ EXP-007 的误差集中在 1D profile 的 shallow/mid index 区间，而 deep �
 ## 7.7 后续工作
 
 最小后续工作不是继续训练更多模型，而是完善论文图件和证据引用。若需要进一步提升研究完整性，优先级应为：多井或跨井 depth-heldout 验证、严重度分组统计、低频 FFT 系数定向误差分析、以及批量 Grad-CAM 统计。大规模重训、复杂新弱标签、STC/APES 或多目标人工审核不适合作为当前毕业论文的短期任务。
+
+<!-- FIGURE_REDRAW_PACK_START -->
+## Discussion Chapter Figure Placement Update (2026-07-08)
+
+Use these redraw-pack figures in the discussion chapter:
+
+| section | figure | discussion role |
+| --- | --- | --- |
+| 7.1 方位失配与标签设计 | `fig_01_xsi_cast_azimuth_mismatch_schematic.png`; `fig_03_percentage_label_construction.png`; `fig_04_fft_severity_label_construction.png` | Explain why direct azimuth supervision was avoided and why FFT magnitude is the mainline label. |
+| 7.3 Depth-heldout 结果意义 | `fig_08_exp008_baseline_comparison.png`; `fig_11_exp007_baseline_comparison.png` | Compare metric-qualified improvements and zero-baseline MAE limitations. |
+| 7.4 误差来源 | `fig_09_exp008_per_fft_coefficient_error.png`; `fig_12_limitation_high_severity_underestimation.png` | Discuss low-frequency FFT error and high-severity underestimation. |
+
+Do not insert a generated EXP-007 prediction scatter until a per-sample EXP-007 prediction summary is copied or otherwise available as a small archived evidence file.
+<!-- FIGURE_REDRAW_PACK_END -->

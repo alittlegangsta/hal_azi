@@ -39,3 +39,17 @@ EXP-008 保留为论文方法创新主线，原因有三点。第一，FFT magni
 EXP-007 应放在 EXP-008 之后作为 fallback 对照，说明更直观的一维标签同样可训练但并未解决稀疏标签下的 zero-baseline MAE 问题。EXP-006 放在前面作为 CWT 可学习性 baseline，不参与最终回归主线性能排序。
 
 本章最终应避免“模型已达到工程应用精度”或“泛化性能充分验证”等表述。更安全的结论是：在 `array_03` 单井连续深度留出条件下，CWT + EfficientNet 能从 XSI 时频特征中学习到与 CAST 窜槽标签相关的结构，FFT severity 标签路线较 1D percentage fallback 更适合作为本文主线，但仍存在稀疏标签、低频系数误差和高严重度低估等限制。
+
+<!-- FIGURE_REDRAW_PACK_START -->
+## Results Chapter Figure Placement Update (2026-07-08)
+
+Use the generated redraw pack under `docs/thesis_figures_redraw/`:
+
+| section | figure |
+| --- | --- |
+| 5.1 实验设置与结果证据分级 | `fig_02_data_pipeline.png` |
+| 5.2 EXP-006 baseline | no final-performance figure; keep EXP-006 as random-split exploratory baseline |
+| 5.3 EXP-008 主线结果 | `fig_06_exp008_training_curve.png`; `fig_07_exp008_prediction_scatter.png`; `fig_08_exp008_baseline_comparison.png`; `fig_09_exp008_per_fft_coefficient_error.png` |
+| 5.4 EXP-007 fallback | `fig_11_exp007_baseline_comparison.png`; do not insert `fig_10` because per-sample EXP-007 prediction data is missing locally |
+| 5.5 最终对比 | use `final_thesis_metrics_table.csv` and `exp007_vs_exp008_depthheldout_comparison.csv` as tables, not additional figures |
+<!-- FIGURE_REDRAW_PACK_END -->

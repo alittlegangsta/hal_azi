@@ -48,3 +48,31 @@ Generated: 2026-07-08. This plan freezes the figure/table arrangement for writin
 3. EXP-008 result panel: training curve, baseline bar, per-FFT error, prediction scatter.
 4. EXP-007 fallback panel after remote small figures are copied locally.
 5. Failure route overview as one compact appendix figure rather than many separate plots.
+
+<!-- FIGURE_REDRAW_PACK_START -->
+## Figure Redraw Pack Update (2026-07-08)
+
+Generated directory: `docs/thesis_figures_redraw/`.
+
+| figure | status | thesis use | source evidence |
+| --- | --- | --- | --- |
+| `fig_01_xsi_cast_azimuth_mismatch_schematic.png` | generated | 第2章 方位失配问题 | `figure_redraw_plan.md`; method inference from evidence inventory |
+| `fig_02_data_pipeline.png` | generated | 第2章 数据构建流程 | `final_thesis_figure_table_plan.md`; `thesis_results_chapter_draft.md` |
+| `fig_03_percentage_label_construction.png` | generated | 第3章 EXP-007 标签构造 | `exp007_artifact_and_code_inspection.md`; `origin/1D+percentage_Label` code evidence |
+| `fig_04_fft_severity_label_construction.png` | generated | 第3章 EXP-008 标签构造 | `exp008_training_code_inspection.md`; `origin/percentage_label+FFT` code evidence |
+| `fig_05_cwt_efficientnet_regression_architecture.png` | generated | 第4章 模型结构 | `scripts/thesis_train_exp008_depth_blocked.py`; `scripts/thesis_train_exp007_depth_blocked.py` |
+| `fig_06_exp008_training_curve.png` | generated | 第5章 EXP-008 训练过程 | `remote_exp008_depth_blocked_train/training_history.csv` |
+| `fig_07_exp008_prediction_scatter.png` | generated | 第5章 EXP-008 测试结果 | `remote_exp008_depth_blocked_train/prediction_summary.csv` |
+| `fig_08_exp008_baseline_comparison.png` | generated | 第5章 EXP-008 基线对照 | `exp008_depthheldout_baseline_comparison.csv` |
+| `fig_09_exp008_per_fft_coefficient_error.png` | generated | 第5章/第7章 EXP-008 误差结构 | `exp008_depthheldout_error_structure.csv` |
+| `fig_10_exp007_prediction_scatter_missing.md` | missing_data_no_plot | 第5章占位，不插入 PNG | missing EXP-007 per-sample prediction summary locally |
+| `fig_11_exp007_baseline_comparison.png` | generated | 第5章 EXP-007 fallback 对照 | `exp007_depthheldout_baseline_comparison.csv` |
+| `fig_12_limitation_high_severity_underestimation.png` | generated | 第7章 高严重度低估限制 | `remote_exp008_depth_blocked_train/prediction_summary.csv` |
+
+Caption and placement files:
+
+- `docs/thesis_figures_redraw/figure_captions.md`
+- `docs/thesis_figures_redraw/figure_insert_plan.md`
+
+All generated PNG files are below 5 MB. Figure 10 was not drawn because the required EXP-007 per-sample prediction artifact is missing locally.
+<!-- FIGURE_REDRAW_PACK_END -->
