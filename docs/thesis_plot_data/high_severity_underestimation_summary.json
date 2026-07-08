@@ -1,0 +1,9 @@
+{
+  "source_path": "docs/thesis_evidence/remote_exp008_depth_blocked_train/prediction_summary.csv",
+  "threshold_for_high_severity_context": 5.0,
+  "num_high_severity_rows": 75,
+  "num_context_rows_exported": 324,
+  "depth_min_ft": 3955.62963825,
+  "depth_max_ft": 4111.3950092,
+  "limitation": "This is a plotting subset for EXP-008 single-well depth-heldout only; not multi-well generalization."
+}

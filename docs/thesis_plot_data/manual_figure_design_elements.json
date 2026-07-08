@@ -1,0 +1,98 @@
+{
+  "generated": "2026-07-08",
+  "scope": "manual design reference only; no final-style figures",
+  "figures": [
+    {
+      "figure_id": "FIG-M01",
+      "title_cn": "XSI 与 CAST 方位失配问题示意图",
+      "required_elements": [
+        "XSI sonic receiver / waveform / CWT input",
+        "CAST Zc azimuth map",
+        "depth alignment arrow",
+        "unknown azimuth offset / rotation arrow",
+        "weak label strategy: 1D percentage and FFT magnitude"
+      ],
+      "layout": "left-right comparison, XSI left and CAST right, mismatch arrows in the middle",
+      "color_logic": "blue for XSI/CWT, red/orange for CAST/Zc, gray dashed or red arrow for azimuth uncertainty",
+      "do_not_say": [
+        "Relative Bearing is always useless",
+        "azimuth mismatch is fully solved",
+        "any model performance value"
+      ]
+    },
+    {
+      "figure_id": "FIG-M02",
+      "title_cn": "XSI-CWT 与 CAST 弱标签数据构建流程",
+      "required_elements": [
+        "XSI waveform -> CWT 150 x 400 x 8",
+        "CAST Zc -> severity max(0, 2.5-Zc) -> FFT magnitude label",
+        "CAST Zc -> binary mask Zc < 2.5 -> azimuth mean -> 1D percentage label",
+        "explicit train/val/test TFRecord split",
+        "EfficientNetV2B0 regression"
+      ],
+      "layout": "two-branch pipeline; XSI features on top, CAST labels below, merge at TFRecord/model",
+      "color_logic": "EXP-008 main route emphasized; EXP-007 fallback in secondary color",
+      "do_not_say": [
+        "validation_split",
+        "EXP-006 is final performance mainline"
+      ]
+    },
+    {
+      "figure_id": "FIG-M03",
+      "title_cn": "一维窜槽百分比标签构造流程",
+      "required_elements": [
+        "CAST Zc slice",
+        "Zc < 2.5 mask",
+        "azimuth average",
+        "70-point percentage profile"
+      ],
+      "layout": "four-step horizontal process",
+      "color_logic": "Zc heatmap red/orange, mask red/gray, profile line blue or teal",
+      "do_not_say": [
+        "label preserves full azimuth information",
+        "EXP-007 is stronger than EXP-008"
+      ]
+    },
+    {
+      "figure_id": "FIG-M04",
+      "title_cn": "FFT severity magnitude 标签构造流程",
+      "required_elements": [
+        "CAST Zc",
+        "severity = max(0, 2.5 - Zc)",
+        "azimuth FFT",
+        "magnitude/log magnitude",
+        "phase discarded",
+        "70 x 30 target map"
+      ],
+      "layout": "horizontal process ending with spectrum bars or target heatmap",
+      "color_logic": "severity heatmap red/orange, FFT magnitude teal/blue, phase discarded shown in gray",
+      "do_not_say": [
+        "FFT magnitude preserves phase",
+        "rotation-invariant label fully solves all azimuth issues"
+      ]
+    },
+    {
+      "figure_id": "FIG-M05",
+      "title_cn": "CWT-EfficientNet 回归模型结构示意",
+      "required_elements": [
+        "CWT input 150 x 400 x 8",
+        "1x1 Conv 8 -> 3",
+        "EfficientNetV2B0 backbone",
+        "Global Average Pooling",
+        "Dropout",
+        "Dense regression head",
+        "EXP-008 output 70 x 30",
+        "EXP-007 output 70",
+        "explicit train/val/test TFRecords"
+      ],
+      "layout": "horizontal model backbone with output branch for EXP-008 and EXP-007",
+      "color_logic": "input teal, backbone purple/blue, outputs teal for EXP-008 and amber for EXP-007",
+      "do_not_say": [
+        "unverified parameter counts",
+        "FLOPs",
+        "deployment speed",
+        "architecture proves performance"
+      ]
+    }
+  ]
+}
