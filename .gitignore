@@ -20,3 +20,6 @@ output/
 # 忽略常见的操作系统生成文件
 .DS_Store
 Thumbs.db
+# Local upstream UESTC LaTeX template
+third_party/
+*:Zone.Identifier
