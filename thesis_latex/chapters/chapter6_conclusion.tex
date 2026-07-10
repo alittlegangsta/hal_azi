@@ -1,0 +1,30 @@
+\chapter{结论与展望}
+
+\section{主要结论}
+
+本文围绕 XSI 声波测井与 CAST 超声成像测井之间的方位失配问题，研究了基于 CWT 时频特征和 CAST 弱监督标签的水泥窜槽结构特征反演方法。主要结论如下：
+
+\begin{enumerate}
+  \item 针对 XSI 与 CAST 直接方位点对点监督不可靠的问题，本文构造了一维 percentage label 和 FFT severity magnitude label 两类弱监督标签。其中，FFT magnitude 标签通过丢弃相位降低对绝对方位匹配的依赖，更适合作为本文方法主线。
+  \item 在 \texttt{array\_03} 单井 depth-heldout 条件下，EXP-008 取得 Test MAE 0.079025、RMSE 0.277019、R2 0.106634、Pearson 0.351950 和 Spearman 0.480519。该结果说明 FFT severity magnitude 标签具有一定可学习性，但不构成多井泛化证明。
+  \item EXP-008 优于 train-mean 和 train-median baseline 的 MAE/RMSE/R2，并优于 zero baseline 的 RMSE/R2；但其 MAE 未优于 zero baseline。因此，本文只能将其表述为 metric-qualified learnability，而不能写成全面优于简单基线。
+  \item EXP-007 一维 percentage label 在同一单井 depth-heldout 设置下可训练，但 Test R2 为 -0.011278，且 MAE 同样未优于 zero baseline。该结果支持其作为 fallback/limitation comparison，而不替代 EXP-008 主线。
+  \item EXP-006 二分类 baseline 仅在 random split 设置下说明 CWT 与 CAST 派生窜槽标签存在可学习关系，不作为最终 depth-heldout 性能证据。
+\end{enumerate}
+
+\section{创新点总结}
+
+本文的主要创新点体现在以下方面：
+
+\begin{enumerate}
+  \item 从方位失配问题出发，将 CAST Zc 图像转化为弱监督标签，避免直接依赖不可靠的 XSI--CAST 点对点方位匹配。
+  \item 提出并验证 severity map 到方位向 FFT magnitude 标签的主线方法，用频域幅值表征降低对环向旋转相位的依赖。
+  \item 将 XSI 全波列 CWT 时频图与 EfficientNetV2B0 回归模型结合，用于学习 CAST 派生窜槽结构特征。
+  \item 在证据整理中明确区分 random split exploratory evidence 与 single-well depth-heldout evidence，避免将相邻深度泄漏风险下的旧指标写成最终泛化性能。
+\end{enumerate}
+
+\section{不足与展望}
+
+本文仍存在明显限制。首先，最终 depth-heldout 实验仅覆盖 \texttt{array\_03} 单井，无法代表多井泛化。其次，EXP-008 和 EXP-007 均未在 MAE 上优于 zero baseline，说明稀疏标签下的评价体系和模型目标仍需改进。再次，EXP-008 对低频 FFT 系数和高严重度样本存在较大误差，高风险窜槽段低估问题需要进一步研究。最后，Grad-CAM 等可解释性证据目前只能作为定性分析，尚不能构成物理因果证明。
+
+后续工作可从四个方向展开：一是增加多井或跨井 depth-heldout 验证，评估方法在不同井段和工况下的稳定性；二是设计面向非零区域和高严重度样本的评价指标与损失函数；三是针对低频 FFT 系数进行更细粒度的误差建模；四是结合声学机理和批量可解释性统计，进一步分析模型关注区域与物理响应之间的关系。

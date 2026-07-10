@@ -1,0 +1,138 @@
+\chapter{实验设计与结果分析}
+
+\section{实验设置}
+
+本文将实验结果分为两类。第一类是旧项目中的 random split 探索实验，用于说明方法探索过程和 CWT 特征可学习性，但由于存在相邻深度泄漏风险，不作为最终泛化性能证据。第二类是补充完成的 single-well depth-heldout 实验，训练、验证和测试集由显式 TFRecord 文件给出，并通过 split audit 确认 record index 互斥、深度范围不重叠且设置边界缓冲。
+
+EXP-008 是本文方法创新主线，采用 severity + FFT magnitude 旋转不变标签和 CWT-EfficientNetV2B0 回归模型。EXP-007 是一维 percentage label fallback/limitation comparison。EXP-006 是 random split 二分类 baseline，仅用于说明 CWT 与 CAST 派生窜槽标签之间存在可学习关系。
+
+\placeholderfigure{按照深度排序的样本被划分为 train、validation 和 test 连续区间，并在边界设置 5 ft gap。}{depth-heldout 深度区间划分示意图。该图说明最终实验如何避免 random split 相邻深度泄漏风险。}{fig:depth-heldout}
+
+\begin{table}[htbp]
+  \centering
+  \caption{depth-heldout 数据划分统计}
+  \label{tab:split-stats}
+  \begin{tabular}{lccc}
+    \toprule
+    split & 样本数 & 划分方式 & 结论 \\
+    \midrule
+    train & 1984 & 连续深度区间 & \texttt{depth\_heldout\_split\_confirmed} \\
+    validation & 416 & 连续深度区间 & \texttt{gap\_ft = 5.0} \\
+    test & 423 & 连续深度区间 & record index 互斥且深度范围不重叠 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{random split 探索实验}
+
+旧项目中保存了多条 random split 或类似随机验证设置下的实验路线。这些结果包括二分类 baseline、早期 EfficientNet 回归、标签 log transform、frequency-weighted loss、样本权重与非对称损失等。由于测井样本沿连续深度采集，随机划分可能使相邻深度样本同时出现在训练集和验证集中，因此这些结果不能作为最终泛化性能。
+
+尽管如此，random split 结果仍具有探索意义。它们说明 CWT 时频图中包含与 CAST 派生标签相关的可学习信号，也解释了为什么后续需要在更严格的 depth-heldout 设置下验证 EXP-008 和 EXP-007。
+
+\placeholderfigure{旧 random split 探索实验训练曲线占位，图注需标注 exploratory only。}{random split 探索实验训练曲线。该图仅用于说明旧项目探索过程，不作为最终泛化性能证据。}{fig:random-training}
+
+\section{EXP-008 depth-heldout 主实验}
+
+EXP-008 使用 XSI CWT 输入和 EfficientNetV2B0 回归模型，目标标签为 CAST severity map 的方位向 FFT magnitude。该实验直接回应本文的方位失配问题，因为 FFT magnitude 降低了对绝对方位相位的依赖。
+
+在 single-well \texttt{array\_03} depth-heldout split 上，EXP-008 train\_v001 的验证指标为 MAE 0.042817、RMSE 0.187167、R2 0.010882；测试集包含 423 个样本，测试指标如表 \ref{tab:exp008-test} 所示。EarlyStopping 在第 12 轮停止并恢复第 2 轮权重，训练过程没有出现 NaN，但训练曲线显示较早过拟合。
+
+\placeholderfigure{EXP-008 train\_v001 的训练/验证 loss 与 MAE 曲线。}{EXP-008 depth-heldout 训练曲线。该图用于显示单井 depth-heldout 下的训练过程和早期过拟合现象。}{fig:exp008-training}
+
+\placeholderfigure{EXP-008 测试集预测值与真实 FFT 标签摘要的散点图。}{EXP-008 depth-heldout 预测值与真实值散点图。该图用于展示测试集预测与 CAST 派生 FFT 标签之间的关系。}{fig:exp008-scatter}
+
+\begin{table}[htbp]
+  \centering
+  \caption{EXP-008 depth-heldout 测试指标}
+  \label{tab:exp008-test}
+  \begin{tabular}{lc}
+    \toprule
+    指标 & 数值 \\
+    \midrule
+    Test MAE & 0.079025 \\
+    Test RMSE & 0.277019 \\
+    Test R2 & 0.106634 \\
+    Test Pearson & 0.351950 \\
+    Test Spearman & 0.480519 \\
+    Test samples & 423 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{EXP-008 基线对比}
+
+为了避免仅报告模型指标造成过度解释，本文将 EXP-008 与 zero、train-mean 和 train-median 三类简单基线进行对比。表 \ref{tab:exp008-baseline} 显示，EXP-008 优于 train-mean 和 train-median baseline 的 MAE/RMSE/R2，也优于 zero baseline 的 RMSE/R2；但模型 MAE 为 0.079025，高于 zero baseline MAE 0.069751。因此，EXP-008 只能表述为 metric-qualified learnability，不能写成全面优于所有简单基线。
+
+\placeholderfigure{EXP-008 模型与 zero、train-mean、train-median baseline 的 MAE/RMSE/R2 条形图。}{EXP-008 与简单基线模型的指标对比。该图必须同时标注模型未优于 zero baseline 的 MAE。}{fig:exp008-baseline}
+
+\begin{table}[htbp]
+  \centering
+  \caption{EXP-008 与简单基线对比}
+  \label{tab:exp008-baseline}
+  \begin{tabular}{lccc}
+    \toprule
+    方法 & MAE & RMSE & R2 \\
+    \midrule
+    EXP-008 model & 0.079025 & 0.277019 & 0.106634 \\
+    zero baseline & 0.069751 & 0.301272 & -0.056638 \\
+    train-mean baseline & 0.142358 & 0.316129 & -0.163426 \\
+    train-median baseline & 0.119024 & 0.278963 & 0.094049 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{EXP-008 误差结构分析}
+
+EXP-008 的误差并非在所有 FFT 系数上均匀分布。冻结证据显示，低频 FFT 系数的绝对误差高于高频系数，其中 low-frequency $k=0$--5 MAE 为 0.128785，而 high-frequency $k=15$--29 MAE 为 0.050184。低频系数通常与整体严重度和大尺度环向结构有关，因此该误差会直接影响主结构表征。
+
+此外，高严重度样本存在低估现象。该现象说明模型虽然在 RMSE/R2 上优于部分基线，但对高风险窜槽段的幅值预测仍不足。正文中应将其作为主要限制，而不能写成高严重度样本预测准确。
+
+\placeholderfigure{不同 FFT 系数上的 MAE 分布，突出低频系数误差较大。}{EXP-008 各 FFT 系数误差分布。该图用于说明低频 FFT 系数是主要误差来源之一。}{fig:exp008-coeff-error}
+
+\placeholderfigure{高 integrated severity 样本的真实值与预测值对比，展示峰值低估。}{高严重度样本低估现象示意图。该图用于说明 EXP-008 的主要限制之一。}{fig:high-severity-under}
+
+\section{EXP-007 depth-heldout 对照实验}
+
+EXP-007 使用一维 percentage label 和 CWT-EfficientNetV2B0 模型，是 EXP-008 的 fallback/limitation comparison。该标签路线直观且去除了方位位置要求，但同时丢弃了方位结构，并在稀疏标签下受到 zero baseline MAE 的限制。
+
+在同一 single-well depth-heldout 设置下，EXP-007 train\_v002 的测试指标见表 \ref{tab:exp007-test}。模型取得正 Spearman 相关，但 R2 略为负。它优于 train-mean 和 train-median baseline 的 MAE/RMSE/R2，也优于 zero baseline 的 RMSE/R2；但模型 MAE 0.811672 高于 zero baseline MAE 0.738339。因此，EXP-007 不替代 EXP-008，而用于说明简化标量/剖面标签在 depth-heldout 下同样存在泛化挑战。
+
+\placeholderfigure{EXP-007 model 与 zero、train-mean、train-median baseline 的指标对比。}{EXP-007 与简单基线模型的指标对比。该图用于说明一维 percentage label fallback 的可训练性和 MAE 限制。}{fig:exp007-baseline}
+
+\begin{table}[htbp]
+  \centering
+  \caption{EXP-007 depth-heldout 测试指标}
+  \label{tab:exp007-test}
+  \begin{tabular}{lc}
+    \toprule
+    指标 & 数值 \\
+    \midrule
+    Test MAE & 0.811672 \\
+    Test RMSE & 2.832056 \\
+    Test R2 & -0.011278 \\
+    Test Pearson & 0.198048 \\
+    Test Spearman & 0.413335 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{EXP-006 二分类 baseline}
+
+EXP-006 是旧项目中的 CWT 二分类 baseline，用于判断 CWT 特征是否包含与 CAST 派生窜槽存在性相关的可学习信号。该实验在 random split 验证设置下取得 validation AUC 0.95361、validation accuracy 0.885366。由于该实验存在 random split depth leakage risk，不能写成 depth-heldout 或最终泛化性能。
+
+\begin{table}[htbp]
+  \centering
+  \caption{EXP-006 random split baseline 结果}
+  \label{tab:exp006-baseline}
+  \begin{tabular}{lccp{0.38\textwidth}}
+    \toprule
+    实验 & split 类型 & 指标 & 论文使用边界 \\
+    \midrule
+    EXP-006 CNN binary CWT baseline & random split exploratory & val AUC 0.95361; val accuracy 0.885366 & 仅说明 CWT 与二分类窜槽标签存在可学习关系，不作为 depth-heldout 泛化证据。 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{本章小结}
+
+本章给出了本文最终实验结果。EXP-008 在单井 depth-heldout 条件下显示 FFT severity magnitude 标签具有一定可学习性，并保留为方法创新主线；但其 MAE 未优于 zero baseline，且低频 FFT 系数和高严重度样本是主要误差来源。EXP-007 作为 fallback 能够训练，但结果不强于 EXP-008。EXP-006 仅作为 random split exploratory baseline，用于说明 CWT 特征与窜槽标签之间存在可学习关系。

@@ -1,0 +1,56 @@
+\chapter{数据基础与问题分析}
+
+\section{数据来源与总体说明}
+
+本文使用的最终实验数据证据来自已归档的旧项目结果和补充完成的 single-well depth-heldout 实验。最终性能结论只使用 \texttt{docs/thesis\_evidence/} 中冻结的指标与审计结果。本文不重新训练模型，不修改原始数据，不修改已处理数据，也不修改旧 Windows results 目录。
+
+最终主线实验 EXP-008 和 fallback 实验 EXP-007 均使用 \texttt{array\_03} 单井数据，并通过显式的 train/validation/test TFRecord 文件进行连续深度留出验证。旧项目中的 random split 实验保留为探索性证据，用于说明方法路线和特征可学习性，但不作为最终泛化性能。
+
+\placeholderfigure{数据来源、XSI 波形、CAST Zc、处理范围、样本窗口和输出标签之间的关系。}{实验数据组成与处理范围示意图。该图用于说明本文实验使用的 XSI 与 CAST 数据及其处理边界。}{fig:data-scope}
+
+\section{XSI 声波测井数据结构}
+
+XSI 阵列声波测井记录多通道全波列响应。根据参考材料和代码证据，本文采用的 CWT 输入可表述为由多个接收器或方位通道构成的时频张量。对每个样本，声波时间序列经过连续小波变换后形成二维时频图，多个通道堆叠后输入卷积模型。
+
+声波全波列具有明显的非平稳特征，不同时间窗和频率带可能对应不同传播模式或井眼响应。使用 CWT 的目的在于将瞬态波形转换为时间--频率联合表示，使模型能够从局部时频结构中学习与 CAST 派生窜槽标签相关的信息。
+
+\placeholderfigure{上方为 XSI 原始波形，下方为对应 CWT 时频图，并标注时间、频率和通道维度。}{XSI 原始波形与 CWT 时频图示意图。该图用于说明连续小波变换对声波全波列的时频展开。}{fig:xsi-cwt}
+
+\section{CAST 超声成像数据结构}
+
+CAST 超声成像测井提供沿深度和方位展开的声阻抗图像。本文将 CAST Zc 作为构造弱监督标签的主要依据。与 XSI 声波波形相比，CAST 图像在环向方向具有更直观的空间结构，但其方位参考与 XSI 通道之间不能被假设为可靠点对点对应。
+
+\placeholderfigure{深度为纵轴、方位为横轴的 CAST Zc 图像示意，并标注低声阻抗异常区域。}{CAST 声阻抗深度-方位图示意图。该图用于说明 CAST Zc 的二维结构和窜槽相关异常区域。}{fig:cast-zc}
+
+\section{XSI--CAST 方位失配问题分析}
+
+本文的核心问题是 XSI 与 CAST 之间的方位失配。对于垂直井，旧实验未能证明 Relative Bearing 等信息足以支撑稳定的 XSI--CAST 方位点对点监督。如果直接将 CAST 某一方位像素与 XSI 某一方位通道绑定，标签可能包含未知旋转偏差，从而影响训练目标的物理一致性。
+
+因此，本文采用两类弱监督标签以降低对绝对方位匹配的依赖。一类是沿方位平均的一维 percentage label，完全去除方位位置；另一类是方位向 FFT magnitude label，保留一定环向结构频率信息但丢弃相位。二者共同构成本文的标签工程比较，其中 FFT magnitude label 与方位失配问题更直接相关。
+
+\placeholderfigure{同一窜槽结构在 CAST 方位图上旋转后，与 XSI 通道方位不再直接对应；右侧给出 percentage 与 FFT magnitude 两条弱标签路线。}{XSI 与 CAST 方位失配示意图。该图用于说明本文不采用直接点对点方位监督的原因。}{fig:azimuth-mismatch}
+
+\section{CAST 声阻抗阈值与 severity 表征}
+
+本文使用 CAST Zc 阈值构造窜槽相关 severity 表征。根据冻结的实验路线，severity 定义为
+\begin{equation}
+  s(d,\theta)=\max(0, 2.5 - Z_c(d,\theta)),
+  \label{eq:severity}
+\end{equation}
+其中 $d$ 表示深度或深度窗口位置，$\theta$ 表示方位，$Z_c$ 为 CAST 声阻抗。该变换保留低 Zc 对应的窜槽严重度，并将高于阈值的区域压为零。
+
+需要说明的是，本文不修改 2.5 的 Zc 阈值，也不在论文中声称该阈值对所有井或所有地层条件均最优。该阈值是旧项目和最终证据冻结中采用的实验设定。
+
+\placeholderfigure{CAST Zc 图像经过阈值函数转换为 severity map，低 Zc 区域对应较高 severity。}{CAST 声阻抗到 severity map 的转换示意图。该图用于说明式 \ref{eq:severity} 的标签变换。}{fig:severity-map}
+
+\section{测井样本划分与相邻深度泄漏风险}
+
+测井样本沿连续深度采集，相邻深度窗口之间可能共享相似的声波响应和 CAST 标签结构。如果采用随机划分，训练集和验证集可能包含相邻深度样本，从而引入相邻深度泄漏风险。旧项目中 EXP-006 以及若干早期回归实验属于 random split 或类似随机验证设置，因此只能作为探索性证据。
+
+为获得更严格的验证，本文补充构造了 single-well depth-heldout split。对于 EXP-008/EXP-007，训练、验证和测试样本按照深度排序后划分为连续区间，并在 split 边界设置 \texttt{gap\_ft = 5.0} 的缓冲。最终 split audit 确认为 \texttt{depth\_heldout\_split\_confirmed}，样本数为 train 1984、validation 416、test 423。
+
+\placeholderfigure{左侧为 random split 将相邻深度样本打散，右侧为 depth-heldout 将连续深度区间划分为训练、验证和测试。}{random split 与 depth-heldout split 对比示意图。该图用于说明本文最终性能证据采用连续深度留出。}{fig:split-comparison}
+
+\section{本章小结}
+
+本章说明了 XSI 声波测井和 CAST 超声成像测井的数据特点，分析了二者在方位参考上的不可靠性，并给出了 CAST Zc 到 severity map 的基本变换。由于连续深度样本存在相邻泄漏风险，本文将旧 random split 结果限制为探索性证据，并以 single-well depth-heldout 结果作为最终实验依据。

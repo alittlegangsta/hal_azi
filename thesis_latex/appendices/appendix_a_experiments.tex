@@ -1,0 +1,29 @@
+\chapter{旧项目实验路线补充说明}
+
+\section{失败路线与附录定位}
+
+旧项目中曾尝试多条方法路线，包括 SE-ResNet 方位匹配、GAN 或 two-channel binary FFT label、dual-channel metadata fusion、eccentricity pre-correction、sample weights 与 asymmetric loss 等。这些路线没有形成稳定优于 EXP-008 主线的最终证据，因此不作为正文主线展开。
+
+\section{SE-ResNet 方位匹配路线}
+
+SE-ResNet 路线尝试直接利用声波通道与 CAST 方位结构之间的对应关系。但由于 XSI 与 CAST 的相对方位参考不可靠，直接方位匹配路线容易受到标签错配影响。本文仅将其作为方法探索背景，不作为最终性能证据。
+
+\section{dual-channel metadata fusion}
+
+dual-channel metadata fusion 尝试将声波 CWT 输入与偏心或元数据信息联合输入模型。旧证据显示该路线未能学习到稳定有效特征，因此不进入正文主线。
+
+\section{eccentricity pre-correction}
+
+eccentricity pre-correction 试图利用偏心信息对波形或特征进行预校正。最终证据表明该路线效果较差，不能支撑论文主结果。本文将其用于说明为什么最终转向弱监督标签工程，而不是作为新的实验主线。
+
+\section{sample weights 与 asymmetric loss}
+
+样本权重和非对称损失曾用于尝试缓解高严重度样本预测不足问题。远程分支核验显示该路线效果很差，适合作为 failed attempt 或附录说明，不应在正文中写成有效改进。
+
+\section{GAN 与 two-channel binary FFT label}
+
+GAN 或 two-channel binary FFT label 路线证据不足，且与最终 single-well depth-heldout 主线不一致。本文不继续训练该路线，也不将其作为正文实验结果。
+
+\section{附录小结}
+
+上述失败路线的价值在于说明本文技术取舍：直接方位匹配、元数据融合和偏心预校正均未形成稳定证据；最终采用 CWT-EfficientNet 与 FFT severity magnitude 弱监督标签，是在旧项目探索基础上形成的更适合论文主线的方案。

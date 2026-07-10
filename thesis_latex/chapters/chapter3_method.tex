@@ -1,0 +1,96 @@
+\chapter{旋转不变标签构建与模型方法}
+
+\section{方法总体框架}
+
+本文方法框架由三部分组成：第一，基于 XSI 全波列构建 CWT 时频输入；第二，基于 CAST Zc 构建弱监督标签，包括一维 percentage label 和 FFT severity magnitude label；第三，采用 EfficientNetV2B0 回归模型学习 CWT 输入到标签空间的映射。该框架的核心不是直接恢复 CAST 的绝对方位图像，而是在方位失配条件下学习与窜槽结构相关的弱监督表征。
+
+\placeholderfigure{XSI CWT 输入、CAST 标签构建、EfficientNet 回归、depth-heldout 评估和误差分析模块。}{本文方法总体框架图。该图展示本文从多源数据到弱监督回归模型的整体方法。}{fig:method-framework}
+
+\section{1D percentage label 构建}
+
+一维 percentage label 是本文的 fallback 标签路线。其构建过程首先根据 CAST Zc 阈值生成二值窜槽掩膜：
+\begin{equation}
+  m(d,\theta)=
+  \begin{cases}
+  1, & Z_c(d,\theta)<2.5,\\
+  0, & Z_c(d,\theta)\ge 2.5.
+  \end{cases}
+  \label{eq:binary-mask}
+\end{equation}
+随后沿方位方向求平均，得到深度方向的一维窜槽比例：
+\begin{equation}
+  p(d)=\frac{1}{N_\theta}\sum_{\theta=1}^{N_\theta} m(d,\theta).
+  \label{eq:percentage-label}
+\end{equation}
+
+该标签的优点是含义直观，避免了 XSI 与 CAST 的方位点对点匹配；缺点是完全丢弃方位结构，并在标签稀疏时使 zero baseline 在 MAE 上具有较强竞争力。因此，本文将其用于 EXP-007 fallback/limitation comparison，而不作为最终方法创新主线。
+
+\placeholderfigure{CAST Zc 到二值窜槽掩膜，再沿方位平均得到一维百分比剖面。}{1D percentage label 构建流程图。该图说明一维标签如何降低方位对齐要求，同时也丢弃方位结构。}{fig:percentage-label}
+
+\section{severity map 构建}
+
+为了保留窜槽严重度而非仅使用二值掩膜，本文采用式 \ref{eq:severity} 将 CAST Zc 转换为 severity map。与二值标签相比，severity map 对低声阻抗异常区域赋予连续强度，有助于描述窜槽严重度和环向分布。
+
+\placeholderfigure{CAST Zc 图像、阈值函数和 severity map 的对应关系。}{severity map 构建示意图。该图说明 CAST 声阻抗如何转换为连续严重度标签。}{fig:severity-construction}
+
+\section{基于方位向 FFT magnitude 的旋转不变标签}
+
+对于每个深度位置 $d$，将 severity map 沿方位方向记为序列 $s_d(\theta)$。对其进行离散傅里叶变换：
+\begin{equation}
+  S_d(k)=\sum_{n=0}^{N_\theta-1}s_d(n)\exp\left(-j2\pi kn/N_\theta\right),
+  \label{eq:fft}
+\end{equation}
+并取幅度谱作为标签：
+\begin{equation}
+  y_d(k)=|S_d(k)|.
+  \label{eq:fft-mag}
+\end{equation}
+
+若方位序列发生循环平移，傅里叶变换的相位将发生变化，而幅度保持不变。因此，FFT magnitude 标签能够降低对绝对方位匹配的依赖。需要强调的是，该标签并不保留完整方位位置信息，也不能表述为完全解决方位失配问题。它的作用是在保留部分环向结构频率信息的同时，避免将不可靠相位作为监督目标。
+
+\placeholderfigure{同一环向 severity 序列旋转前后，FFT phase 改变而 magnitude 基本保持的示意。}{方位旋转对 FFT phase 与 magnitude 的影响示意图。该图用于说明 FFT magnitude 标签的旋转不变性来源。}{fig:fft-invariance}
+
+\placeholderfigure{CAST Zc、severity map、方位向 FFT、magnitude 截取和最终回归标签形状。}{severity map 到 FFT magnitude label 的构建流程图。该图对应 EXP-008 主线标签路线。}{fig:fft-label}
+
+\section{XSI 波形 CWT 时频图构建}
+
+声波全波列是典型非平稳信号。本文采用连续小波变换将每个通道的一维时间序列转换为二维时频图：
+\begin{equation}
+  W_x(a,b)=\frac{1}{\sqrt{a}}\int x(t)\psi^\ast\left(\frac{t-b}{a}\right)\mathrm{d}t,
+  \label{eq:cwt}
+\end{equation}
+其中 $a$ 为尺度，$b$ 为时间平移，$\psi$ 为小波基函数。参考材料和代码证据表明，CWT 输入可表述为多通道时频张量，用于 EfficientNet 图像回归模型。
+
+\placeholderfigure{多通道 XSI 波形分别进行 CWT，形成可输入卷积模型的时频张量。}{XSI 波形到 CWT 时频图的转换示意图。该图用于说明模型输入特征的构建方式。}{fig:cwt-construction}
+
+\section{CWT-EfficientNetV2B0 回归模型}
+
+本文采用 EfficientNetV2B0 作为 CWT 图像特征提取主干。由于 CWT 输入包含多个声波通道，模型前端可使用 $1\times1$ 卷积进行通道适配，随后经过 EfficientNetV2B0、全局平均池化、Dropout 和全连接回归头输出目标标签。对于 EXP-008，输出为 FFT severity magnitude 标签；对于 EXP-007，输出为一维 percentage profile 标签。
+
+\placeholderfigure{CWT 多通道输入、1x1 通道适配、EfficientNetV2B0、Global Average Pooling、Dropout、Dense 回归头。}{CWT-EfficientNetV2B0 回归模型结构图。该图用于说明本文主线模型结构，不作为性能证明。}{fig:efficientnet-architecture}
+
+\section{训练目标与评价指标}
+
+回归训练采用 Huber loss 或旧代码中对应的稳健回归损失设置。模型评价指标包括 MAE、RMSE、R2、Pearson 相关系数和 Spearman 相关系数。MAE 衡量平均绝对误差，RMSE 对较大误差更敏感，R2 衡量相对于均值基线的解释能力，Pearson 和 Spearman 分别衡量线性相关和排序相关。
+
+\begin{table}[htbp]
+  \centering
+  \caption{模型训练与评价指标说明}
+  \label{tab:metrics}
+  \begin{tabular}{p{0.22\textwidth}p{0.26\textwidth}p{0.42\textwidth}}
+    \toprule
+    指标 & 含义 & 本文使用方式 \\
+    \midrule
+    Huber loss & 稳健回归损失 & 用于训练过程，降低局部异常误差对优化的影响。 \\
+    MAE & 平均绝对误差 & 必须与 zero baseline 对比，EXP-008/EXP-007 均未优于 zero baseline MAE。 \\
+    RMSE & 均方根误差 & 对大误差更敏感，EXP-008/EXP-007 均优于 zero baseline RMSE。 \\
+    R2 & 决定系数 & EXP-008 测试 R2 为正，EXP-007 测试 R2 略为负。 \\
+    Pearson & 线性相关系数 & 用于描述预测与标签的线性相关，不单独等同于高精度。 \\
+    Spearman & 排序相关系数 & 用于描述排序一致性，不替代误差指标。 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{本章小结}
+
+本章给出了本文的标签构建和模型方法。1D percentage label 通过方位平均降低对绝对方位的依赖，但丢弃方位结构；FFT severity magnitude label 通过傅里叶幅度降低旋转影响，并保留一定环向结构频率信息，因此作为本文主线。模型部分采用 CWT-EfficientNetV2B0 回归框架，并使用 MAE、RMSE、R2 和相关系数进行综合评价。

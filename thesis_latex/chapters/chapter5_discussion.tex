@@ -1,0 +1,58 @@
+\chapter{讨\hspace{6pt}论}
+
+\section{旋转不变标签的意义}
+
+本文采用 FFT severity magnitude label 的根本原因是 XSI 与 CAST 的方位参考不可靠。若直接使用 CAST 环向像素作为 XSI 方位通道标签，模型可能学习到由未知旋转偏差引起的错误监督。FFT magnitude 标签通过丢弃相位降低了对绝对方位的依赖，同时保留一定环向结构频率信息，因此比一维 percentage label 更贴合方位失配问题。
+
+需要注意的是，FFT magnitude 标签并不保留完整的方位位置信息，也不能说明方位失配问题已经完全解决。它是一种弱监督标签工程方案，其价值在于将不可靠的方位点对点问题转化为相对稳定的频域幅值学习问题。
+
+\section{depth-heldout 结果与 random split 差异}
+
+旧项目中许多实验使用 random split 或 shuffle 后的验证划分。由于测井样本沿连续深度采集，相邻样本之间可能高度相似，因此 random split 指标容易受到相邻深度泄漏影响。EXP-006 的 high validation AUC 和 accuracy 可以说明 CWT 特征中存在可学习信号，但不能作为最终泛化能力。
+
+EXP-008 和 EXP-007 的补充实验使用同一口井的连续深度留出段，验证严格程度高于 random split。其结果也更谨慎：EXP-008 仅取得正但较低的 R2，EXP-007 的 R2 略为负，二者均未在 MAE 上优于 zero baseline。这一差异说明，论文结果必须区分探索性可学习性和 depth-heldout 性能证据。
+
+\section{zero baseline MAE 问题}
+
+zero baseline 在 EXP-008 和 EXP-007 中都具有较低 MAE，主要原因是 CAST 派生标签具有稀疏性，许多位置或系数接近零。在这种分布下，零预测可以在平均绝对误差上取得较强结果。EXP-008 优于 zero baseline 的 RMSE/R2，但未优于 MAE；EXP-007 也存在同样问题。
+
+因此，本文不能写“模型全面优于基线”。更准确的表述是：模型在 RMSE/R2 和相关性上显示出学习非零结构的能力，但稀疏标签使 MAE 指标受到 zero baseline 的强约束。后续研究需要引入严重度分组评价、非零区域加权评价或更适合稀疏标签的评价体系，但这些内容不作为本文新增实验结论。
+
+\section{低频 FFT 系数误差原因}
+
+EXP-008 的误差结构显示，低频 FFT 系数绝对误差较高。低频系数通常对应整体严重度和大尺度环向结构，既包含较强信号，也更容易受到样本分布、标签幅值和模型容量限制影响。相比之下，高频系数的绝对误差较低，但不能简单解释为模型更擅长高频结构，因为高频目标幅值本身可能更小。
+
+该现象提示，若后续继续改进 EXP-008，应优先关注低频系数的损失权重、标签归一化和高严重度样本覆盖，而不是盲目增加模型复杂度。
+
+\section{高严重度样本低估问题}
+
+高严重度样本低估是 EXP-008 的另一项主要限制。对固井质量评价而言，高严重度窜槽段通常更具工程关注价值；如果模型对这类样本系统性低估，即使总体 RMSE/R2 优于基线，也不能直接用于风险判定。
+
+\placeholderfigure{高严重度样本的真实 severity/FFT 摘要高于预测结果，旁侧列出可能原因：样本稀疏、标签幅值不平衡、低频系数难学。}{高严重度样本低估机制讨论图。该图用于讨论 EXP-008 的主要误差来源，不表示已完成机制验证。}{fig:high-severity-discussion}
+
+\section{单井数据与多井泛化限制}
+
+本文最终 depth-heldout 证据仅来自 \texttt{array\_03} 单井。连续深度留出能够降低同井相邻样本泄漏风险，但不能替代跨井验证。不同井的套管条件、地层条件、仪器响应、噪声水平和固井质量分布均可能不同。因此，本文不能写成多井泛化模型，也不能声称具备工业部署能力。
+
+更安全的结论是：在单井连续深度留出条件下，CWT-EfficientNet 能从 XSI 时频特征中学习到与 CAST 派生标签相关的部分结构；FFT severity magnitude 标签比一维 percentage label 更适合作为方位失配条件下的主线探索。
+
+\begin{table}[htbp]
+  \centering
+  \caption{本文方法局限性与后续改进方向}
+  \label{tab:limitations}
+  \begin{tabular}{p{0.30\textwidth}p{0.30\textwidth}p{0.30\textwidth}}
+    \toprule
+    局限性 & 当前证据 & 后续改进方向 \\
+    \midrule
+    单井验证 & 最终 depth-heldout 仅覆盖 \texttt{array\_03} & 增加多井或跨井 depth-heldout 验证。 \\
+    zero baseline MAE 强 & EXP-008/EXP-007 均未优于 zero baseline MAE & 增加非零区域和严重度分组评价。 \\
+    低频 FFT 系数误差 & low-frequency $k=0$--5 MAE 较高 & 研究低频系数加权和标签归一化。 \\
+    高严重度低估 & 高严重度样本预测幅值不足 & 增加高严重度样本覆盖和分组损失分析。 \\
+    可解释性有限 & Grad-CAM 仅为定性证据 & 进行批量 Grad-CAM 统计和声学机理对照。 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{本章小结}
+
+本章讨论了 FFT magnitude 标签在方位失配问题中的意义，以及 depth-heldout 结果相对 random split 的证据边界。EXP-008 支持单井条件下的可学习性，但 zero baseline MAE、低频 FFT 系数误差、高严重度低估和单井数据范围限制必须在论文结论中明确写出。
