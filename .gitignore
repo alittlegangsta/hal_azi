@@ -23,3 +23,18 @@ Thumbs.db
 # Local upstream UESTC LaTeX template
 third_party/
 *:Zone.Identifier
+
+# LaTeX build artifacts
+thesis_latex/build/
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.bbl
+*.blg
+thesis_latex/main.pdf

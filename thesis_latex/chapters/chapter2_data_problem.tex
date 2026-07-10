@@ -47,7 +47,11 @@ CAST 超声成像测井提供沿深度和方位展开的声阻抗图像。本文
 
 测井样本沿连续深度采集，相邻深度窗口之间可能共享相似的声波响应和 CAST 标签结构。如果采用随机划分，训练集和验证集可能包含相邻深度样本，从而引入相邻深度泄漏风险。旧项目中 EXP-006 以及若干早期回归实验属于 random split 或类似随机验证设置，因此只能作为探索性证据。
 
-为获得更严格的验证，本文补充构造了 single-well depth-heldout split。对于 EXP-008/EXP-007，训练、验证和测试样本按照深度排序后划分为连续区间，并在 split 边界设置 \texttt{gap\_ft = 5.0} 的缓冲。最终 split audit 确认为 \texttt{depth\_heldout\_split\_confirmed}，样本数为 train 1984、validation 416、test 423。
+为获得更严格的验证，本文补充构造了 single-well depth-heldout split。对于 EXP-008/EXP-007，训练、验证和测试样本按照深度排序后划分为连续区间，并在 split 边界设置 \texttt{gap\_ft = 5.0} 的缓冲。最终 split audit 确认为
+\begin{center}
+  \small\texttt{depth\_heldout\_split\_confirmed}
+\end{center}
+样本数为 train 1984、validation 416、test 423。
 
 \placeholderfigure{左侧为 random split 将相邻深度样本打散，右侧为 depth-heldout 将连续深度区间划分为训练、验证和测试。}{random split 与 depth-heldout split 对比示意图。该图用于说明本文最终性能证据采用连续深度留出。}{fig:split-comparison}
 
