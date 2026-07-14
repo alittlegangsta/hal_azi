@@ -1,0 +1,28 @@
+[[mcp]]
+name = "thesisFilesystem"
+package = "@modelcontextprotocol/server-filesystem"
+version = "2026.7.10"
+transport = "stdio"
+command = "npx -y @modelcontextprotocol/server-filesystem@2026.7.10 /mnt/c/Users/Administrator/Desktop/Hal/hal_azi_thesis"
+scope = "/mnt/c/Users/Administrator/Desktop/Hal/hal_azi_thesis"
+status = "installed_verified"
+installed_at = "2026-07-14T15:50:54+08:00"
+[[mcp]]
+name = "thesisGit"
+package = "mcp-server-git"
+version = "2026.7.10"
+transport = "stdio"
+command = "uvx --from mcp-server-git==2026.7.10 mcp-server-git --repository /mnt/c/Users/Administrator/Desktop/Hal/hal_azi_thesis"
+scope = "/mnt/c/Users/Administrator/Desktop/Hal/hal_azi_thesis"
+status = "installed_verified_read_only"
+installed_at = "2026-07-14T15:50:54+08:00"
+
+[[mcp]]
+name = "paperSearch"
+package = "paper-search-mcp"
+version = "0.1.4"
+transport = "stdio"
+command = "uvx --from paper-search-mcp==0.1.4 paper-search-mcp"
+scope = "external scholarly search APIs; no repository download scope"
+status = "installed_verified_scheme_A"
+installed_at = "2026-07-14T15:50:54+08:00"
