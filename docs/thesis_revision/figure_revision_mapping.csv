@@ -1,0 +1,15 @@
+chapter,figure_number,caption,source_file,experiment_name,split_protocol,verified,inserted,latex_path,notes
+第一章,图1-1,本文数据处理、标签构造与模型验证技术路线,项目代码、配置与数据契约,不适用,不适用,yes,yes,thesis_latex/figures/revision/method_pipeline.png,基于已核验处理流程重绘；与第三章共用源图。
+第二章,图2-1,Inclination 随记录索引的变化,D2_XSI_RelBearing_Inclination.mat,不适用,目标井段,yes,yes,thesis_latex/figures/revision/inclination.png,只读提取；不改变原始数组。
+第二章,图2-2,Relative Bearing 随记录索引的变化,D2_XSI_RelBearing_Inclination.mat,不适用,目标井段,yes,yes,thesis_latex/figures/revision/relative_bearing.png,只读提取；图中不推断未知参考方向。
+第三章,图3-1,XSI 时频输入、CAST 派生标签与回归验证流程,项目代码、配置与数据契约,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/method_pipeline.png,方法流程重绘。
+第三章,图3-2,一维窜槽占比标签的构造过程,标签生成代码与配置,实验二,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/percentage_label.png,示意图，不包含新实验数据。
+第三章,图3-3,CAST 严重度图到方位向 FFT 幅值标签的构造,标签生成代码与配置,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/fft_label.png,示意图，不恢复绝对方位。
+第三章,图3-4,CWT--EfficientNetV2B0 多输出回归模型,模型代码与训练配置,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/model_architecture.png,结构示意图。
+第四章,图4-1,实验三训练损失与验证损失曲线,docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/training_curve_redraw.png,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/exp3_training_curve.png,best epoch 2；来源为记录的训练历史。
+第四章,图4-2,实验三测试集预测值与真实值散点,docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/prediction_vs_truth_scatter_redraw.png,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/exp3_prediction_scatter.png,测试集 n=423。
+第四章,图4-3,实验三模型与简单基线比较,docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/baseline_comparison_bar.png,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/exp3_baseline_comparison.png,完整报告 MAE、RMSE 与 R2。
+第四章,图4-4,实验三各方位 FFT 系数测试 MAE,docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/per_fft_coefficient_mae.png,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/exp3_coefficient_mae.png,高阶小误差不解释为更易学习。
+第四章,图4-5,实验三低频结构摘要比较,docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/target_vs_prediction_lowfreq_summary.png,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/exp3_lowfreq_summary.png,用于描述高值低估，不作因果解释。
+第四章,图4-6,实验三测试集标签元素误差分布,docs/thesis_evidence/remote_exp008_depth_blocked_train/figures_redraw/error_distribution.png,实验三,单井深度区间隔离划分,yes,yes,thesis_latex/figures/revision/exp3_error_distribution.png,描述性残差图。
+第四章,未编号,候选 Grad-CAM 组合图,results/.../fft_model_analysis_plots/combo_plots_High_Severity/combo_sample_312.png,实验三先导运行,随机样本划分,no,no,,checkpoint、目标输出、卷积层及样本与深度隔离测试集对应关系无法唯一核验。

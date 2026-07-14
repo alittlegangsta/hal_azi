@@ -1,0 +1,12 @@
+material_id,source_path,type,size_bytes,modified_at,sha256,access,inventory_result,notes
+A1,/home/xiaoj/hal_azi/docs/thesis_reference_raw/Inc.png,PNG,21255,2026-07-13T11:14:37+08:00,a073650003fdaf22249efa129bb37a2ff862f8da1fb6b9150cbf914d9a851da7,read_only,inspected,768x485 inclination plot
+A2,/home/xiaoj/hal_azi/docs/thesis_reference_raw/Relative Bearing.png,PNG,92572,2026-07-13T11:14:26+08:00,e35c351ff1c8648c46ea286bd9e705c49f9ec7f0956d3fca47690a6756c9b52f,read_only,inspected,768x482 relative-bearing plot
+A3,/home/xiaoj/hal_azi/docs/thesis_reference_raw/final_project_report.pptx,PPTX,10840258,2025-11-18T08:41:51+08:00,a2992c8930067031df8bbf99398fccdd12a89e1590cac80b32353c25ad88075c,read_only,parsed,Byte-identical to Report20251118.pptx and repository copy
+A4,/home/xiaoj/hal_azi/docs/thesis_reference_raw/proposal_defense.pptx,PPTX,11715960,2025-11-25T20:36:43+08:00,0ce5a06969a57ba17934327e274b0ca77aa65258d5460d9c0bd3fd5ede02212d,read_only,inventoried,Not used for numerical claims in this round
+A5,/home/xiaoj/hal_azi/docs/thesis_reference_raw/proposal_report_form.docx,DOCX,2057570,2025-12-05T16:32:29+08:00,e8219809f34f8b59c2122726b1086b13edcd0345645ae0f8dc980a6d535d8ea2,read_only,parsed,Confirms a cooperative project but does not name Halliburton
+B1,/mnt/c/Users/Administrator/Desktop/Hal/Report/Report20251118.pptx,PPTX,10840258,2025-11-18T08:41:51+08:00,a2992c8930067031df8bbf99398fccdd12a89e1590cac80b32353c25ad88075c,read_only,parsed,Eleven slides; contains pilot-model analysis and label design
+C1,/mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet_1/output,results_directory,501219328,2025-11-17,not_applicable,read_only,inventoried,"1020 files: 997 PNG, 2 H5, 3 PKL, 18 TensorBoard event files"
+C2,/mnt/c/Users/Administrator/Desktop/Hal/results/FFT_EfficientNet_1/output/fft_regression/array_03/results/fft_model_analysis_plots,figure_directory,not_applicable,2025-11-17,not_applicable,read_only,inspected,Random-split pilot figures; checkpoint/run identity not unique
+D1,/home/xiaoj/cement-channel-data/raw/D2_XSI_RelBearing_Inclination.mat,MAT,not_recorded,not_recorded,not_recorded,read_only,parsed,Depth Inc and RelBearing arrays inspected
+D2,/home/xiaoj/cement-channel-data/raw/CAST.mat,MAT,not_recorded,not_recorded,not_recorded,read_only,parsed,Depth and 180-channel Zc matrix inspected
+D3,/home/xiaoj/cement-channel-data/raw/XSILMR/XSILMR03.mat,MAT,not_recorded,not_recorded,not_recorded,read_only,parsed,Depth ACQ Tad and SideA--H arrays inspected

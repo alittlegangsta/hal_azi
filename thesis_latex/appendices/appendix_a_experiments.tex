@@ -1,29 +1,40 @@
-\chapter{旧项目实验路线补充说明}
+\chapter{前期实验路线补充说明}
 
-\section{失败路线与附录定位}
+\section{实验对应关系}
 
-旧项目中曾尝试多条方法路线，包括 SE-ResNet 方位匹配、GAN 或 two-channel binary FFT label、dual-channel metadata fusion、eccentricity pre-correction、sample weights 与 asymmetric loss 等。这些路线没有形成稳定优于 EXP-008 主线的最终证据，因此不作为正文主线展开。
+为便于实验记录与正文名称对应，表 \ref{tab:appendix-exp-map} 保留内部编号。正文以正式名称为主。
 
-\section{SE-ResNet 方位匹配路线}
+\begin{table}[htbp]
+  \centering
+  \caption{正式实验名称与内部编号对应关系}
+  \label{tab:appendix-exp-map}
+  \begin{tabular}{lp{0.67\textwidth}}
+    \toprule
+    内部编号 & 正式名称 \\
+    \midrule
+    EXP-006 & 基于 CWT 特征的窜槽二分类可学习性验证实验 \\
+    EXP-007 & 基于一维窜槽占比标签的回归对照实验 \\
+    EXP-008 & 基于方位旋转不变 FFT 幅值标签的窜槽结构特征反演实验 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
-SE-ResNet 路线尝试直接利用声波通道与 CAST 方位结构之间的对应关系。但由于 XSI 与 CAST 的相对方位参考不可靠，直接方位匹配路线容易受到标签错配影响。本文仅将其作为方法探索背景，不作为最终性能证据。
+\section{直接方位匹配路线}
 
-\section{dual-channel metadata fusion}
+前期研究曾尝试使用 SE-ResNet 直接学习声波通道与 CAST 方位结构之间的对应关系。由于 XSI 与 CAST 的相对方位基准不能唯一确定，该路线可能把未知循环偏移作为监督误差。它用于形成方位失配问题的认识，不作为本文性能结论。
 
-dual-channel metadata fusion 尝试将声波 CWT 输入与偏心或元数据信息联合输入模型。旧证据显示该路线未能学习到稳定有效特征，因此不进入正文主线。
+\section{姿态元数据融合路线}
 
-\section{eccentricity pre-correction}
+另一类尝试将声波 CWT 输入与偏心或姿态元数据联合输入模型，包括双分支特征融合和偏心预校正。现有记录未显示这些方案在一致验证协议下形成稳定改善，而且 Inclination 与 Relative Bearing 不能直接等同于工具间旋转角。因此，本文没有把姿态元数据融合列为主要方法。
 
-eccentricity pre-correction 试图利用偏心信息对波形或特征进行预校正。最终证据表明该路线效果较差，不能支撑论文主结果。本文将其用于说明为什么最终转向弱监督标签工程，而不是作为新的实验主线。
+\section{样本加权与非对称损失}
 
-\section{sample weights 与 asymmetric loss}
+样本权重和非对称损失曾用于缓解较高严重度样本预测不足。现有结果不足以支持其改善效果，正文只报告使用 Huber 损失的可追溯实验。后续若重新研究损失函数，需要固定相同数据划分、初始化和评价指标进行受控比较。
 
-样本权重和非对称损失曾用于尝试缓解高严重度样本预测不足问题。远程分支核验显示该路线效果很差，适合作为 failed attempt 或附录说明，不应在正文中写成有效改进。
+\section{生成式与二值频谱路线}
 
-\section{GAN 与 two-channel binary FFT label}
-
-GAN 或 two-channel binary FFT label 路线证据不足，且与最终 single-well depth-heldout 主线不一致。本文不继续训练该路线，也不将其作为正文实验结果。
+前期还考察过生成式模型和二值频谱标签。相关记录在数据划分、模型版本和结果完整性方面不足以进入正文。本文最终保留一维窜槽占比标签作为简化对照，并以连续严重度的方位向 FFT 幅值作为主要结构标签。
 
 \section{附录小结}
 
-上述失败路线的价值在于说明本文技术取舍：直接方位匹配、元数据融合和偏心预校正均未形成稳定证据；最终采用 CWT-EfficientNet 与 FFT severity magnitude 弱监督标签，是在旧项目探索基础上形成的更适合论文主线的方案。
+前期实验说明，方位失配不能仅通过增加网络复杂度或直接加入未明确定义的姿态量解决。本文据此把研究重点转向可证明的循环平移不变标签、明确的数据划分和完整的基线比较。

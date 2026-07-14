@@ -2,137 +2,207 @@
 
 \section{实验设置}
 
-本文将实验结果分为两类。第一类是旧项目中的 random split 探索实验，用于说明方法探索过程和 CWT 特征可学习性，但由于存在相邻深度泄漏风险，不作为最终泛化性能证据。第二类是补充完成的 single-well depth-heldout 实验，训练、验证和测试集由显式 TFRecord 文件给出，并通过 split audit 确认 record index 互斥、深度范围不重叠且设置边界缓冲。
+\subsection{数据划分策略}
 
-EXP-008 是本文方法创新主线，采用 severity + FFT magnitude 旋转不变标签和 CWT-EfficientNetV2B0 回归模型。EXP-007 是一维 percentage label fallback/limitation comparison。EXP-006 是 random split 二分类 baseline，仅用于说明 CWT 与 CAST 派生窜槽标签之间存在可学习关系。
+本文设置随机样本划分和单井深度区间隔离划分两类协议。随机样本划分将样本打乱后分配到训练集和验证集，用于先导性地判断输入与标签之间是否存在可学习关系。由于测井样本沿深度连续，相邻窗口可能共享相似波形、地层和标签，随机划分会使邻近样本出现在不同集合中。结构化数据验证研究指出，此类依赖可能导致预测误差被低估\cite{Roberts2017CrossValidation,Valavi2019BlockCV,Ploton2020SpatialValidation}。因此，随机样本划分结果不用于表征最终泛化能力。
 
-\placeholderfigure{按照深度排序的样本被划分为 train、validation 和 test 连续区间，并在边界设置 5 ft gap。}{depth-heldout 深度区间划分示意图。该图说明最终实验如何避免 random split 相邻深度泄漏风险。}{fig:depth-heldout}
+主要回归实验采用单井深度区间隔离划分。训练、验证和测试井段按深度连续分隔，并在相邻集合之间保留 5~ft 缓冲区。划分结果见表 \ref{tab:depth-split}。三个集合的深度键无交集，缓冲区内 19 个样本被排除。
 
 \begin{table}[htbp]
   \centering
-  \caption{depth-heldout 数据划分统计}
-  \label{tab:split-stats}
-  \begin{tabular}{lccc}
+  \caption{单井深度区间隔离划分}
+  \label{tab:depth-split}
+  \begin{tabular}{lrrr}
     \toprule
-    split & 样本数 & 划分方式 & 结论 \\
+    集合 & 样本数 & 起始深度/ft & 终止深度/ft \\
     \midrule
-    train & 1984 & 连续深度区间 & \texttt{depth\_heldout\_split\_confirmed} \\
-    validation & 416 & 连续深度区间 & \texttt{gap\_ft = 5.0} \\
-    test & 423 & 连续深度区间 & record index 互斥且深度范围不重叠 \\
+    训练集 & 1984 & 2732.440 & 3715.853 \\
+    验证集 & 416 & 3721.119 & 3917.685 \\
+    测试集 & 423 & 3922.785 & 4129.744 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\section{random split 探索实验}
+该协议检验模型从较浅连续区间迁移到更深连续区间的能力，比同井随机划分更严格，但仍属于单井验证。地层和仪器域变化仅限同一口井，不能据此推断跨井性能。
 
-旧项目中保存了多条 random split 或类似随机验证设置下的实验路线。这些结果包括二分类 baseline、早期 EfficientNet 回归、标签 log transform、frequency-weighted loss、样本权重与非对称损失等。由于测井样本沿连续深度采集，随机划分可能使相邻深度样本同时出现在训练集和验证集中，因此这些结果不能作为最终泛化性能。
+\subsection{对照实验设置}
 
-尽管如此，random split 结果仍具有探索意义。它们说明 CWT 时频图中包含与 CAST 派生标签相关的可学习信号，也解释了为什么后续需要在更严格的 depth-heldout 设置下验证 EXP-008 和 EXP-007。
+本文使用三个正式实验名称：
 
-\placeholderfigure{旧 random split 探索实验训练曲线占位，图注需标注 exploratory only。}{random split 探索实验训练曲线。该图仅用于说明旧项目探索过程，不作为最终泛化性能证据。}{fig:random-training}
+\begin{enumerate}
+  \item 基于 CWT 特征的窜槽二分类可学习性验证实验（内部编号 EXP-006，以下简称实验一）；
+  \item 基于一维窜槽占比标签的回归对照实验（内部编号 EXP-007，以下简称实验二）；
+  \item 基于方位旋转不变 FFT 幅值标签的窜槽结构特征反演实验（内部编号 EXP-008，以下简称实验三）。
+\end{enumerate}
 
-\section{EXP-008 depth-heldout 主实验}
+实验一采用随机样本划分，只回答 CWT 输入是否含有与 CAST 派生二分类标签相关的可学习信号。实验二和实验三采用相同的单井深度区间隔离划分，分别比较一维占比标签与 $70\times30$ FFT 幅值标签。实验三是本文针对方位失配问题的主要实验。
 
-EXP-008 使用 XSI CWT 输入和 EfficientNetV2B0 回归模型，目标标签为 CAST severity map 的方位向 FFT magnitude。该实验直接回应本文的方位失配问题，因为 FFT magnitude 降低了对绝对方位相位的依赖。
+\subsection{模型训练参数}
 
-在 single-well \texttt{array\_03} depth-heldout split 上，EXP-008 train\_v001 的验证指标为 MAE 0.042817、RMSE 0.187167、R2 0.010882；测试集包含 423 个样本，测试指标如表 \ref{tab:exp008-test} 所示。EarlyStopping 在第 12 轮停止并恢复第 2 轮权重，训练过程没有出现 NaN，但训练曲线显示较早过拟合。
+实验三使用第 3 接收环的 $150\times400\times8$ CWT 输入，模型输出为 $70\times30$。训练采用 Adam 优化器、初始学习率 $1\times10^{-4}$、批量大小 8、Huber 损失和 0.5 的 Dropout。最大训练轮数设为 80，早停耐心值为 10；同时根据验证损失降低学习率。数据增强包括小幅噪声和频率掩膜，最前 30 个时间采样使用伪影掩膜。训练在 NVIDIA A100 GPU 环境完成。
 
-\placeholderfigure{EXP-008 train\_v001 的训练/验证 loss 与 MAE 曲线。}{EXP-008 depth-heldout 训练曲线。该图用于显示单井 depth-heldout 下的训练过程和早期过拟合现象。}{fig:exp008-training}
+实验三实际训练 12 轮，验证损失在第 2 轮达到最小值 0.015220，早停后恢复第 2 轮权重。实验二使用相同的数据划分和输入处理框架，其最佳完成结果用于本章比较。
 
-\placeholderfigure{EXP-008 测试集预测值与真实 FFT 标签摘要的散点图。}{EXP-008 depth-heldout 预测值与真实值散点图。该图用于展示测试集预测与 CAST 派生 FFT 标签之间的关系。}{fig:exp008-scatter}
+% TODO: 根据原始训练配置确认实验一的全部优化器与批量参数
+
+\section{随机样本划分条件下的先导实验}
+
+随机样本划分先导实验的目的不是给出泛化结论，而是排除“XSI 时频输入与 CAST 派生标签完全无关”的可能性。实验一在随机样本划分下取得验证 AUC 0.95361、验证准确率 0.885366。该结果说明在该划分条件下，CWT 输入包含可用于区分 CAST 派生窜槽类别的统计信息。
+
+然而，相邻深度样本并非完全独立。高 AUC 可能同时反映真实可学习关系和邻近样本相似性。按照分块验证研究的建议\cite{Roberts2017CrossValidation,Meyer2018TargetValidation}，本文只把实验一作为可学习性验证，不将其写成跨深度、跨井或工程应用性能。
 
 \begin{table}[htbp]
   \centering
-  \caption{EXP-008 depth-heldout 测试指标}
-  \label{tab:exp008-test}
-  \begin{tabular}{lc}
+  \caption{实验一的随机样本划分验证结果}
+  \label{tab:exp1}
+  \begin{tabular}{lccp{0.42\textwidth}}
+    \toprule
+    输入与任务 & 验证 AUC & 验证准确率 & 解释边界 \\
+    \midrule
+    CWT 二分类 & 0.95361 & 0.885366 & 仅说明随机样本划分下存在可学习信号 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\section{实验三整体性能}
+
+\subsection{训练过程}
+
+图 \ref{fig:exp3-training} 给出训练与验证损失。验证损失在第 2 轮达到最小，之后没有继续改善；训练过程持续至第 12 轮并触发早停。较早出现最佳验证点、后续训练损失继续下降而验证改善有限，表明模型存在过拟合倾向。这与样本量有限、输出维度较高和标签稀疏的条件一致，但这些因素只是可能解释，不能由损失曲线单独证明。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.94\textwidth]{figures/revision/exp3_training_curve.png}
+  \caption{实验三训练损失与验证损失曲线}
+  \label{fig:exp3-training}
+\end{figure}
+
+\subsection{验证集与测试集指标}
+
+实验三的验证集和测试集指标见表 \ref{tab:exp3-metrics}。测试集包含 423 个样本、888300 个标签元素。测试 $R^2=0.106634$，说明模型相对测试标签均值只能解释有限比例的方差；Pearson 系数 0.351950、Spearman 系数 0.480519，表现为中等偏弱的正相关。该结果支持“存在一定可学习性”，不支持“高精度反演”。
+
+\begin{table}[htbp]
+  \centering
+  \caption{实验三的验证集与测试集整体指标}
+  \label{tab:exp3-metrics}
+  \begin{tabular}{lrrrrrr}
+    \toprule
+    集合 & MAE & RMSE & $R^2$ & Pearson & Spearman & $n$ \\
+    \midrule
+    验证集 & 0.042817 & 0.187167 & 0.010882 & 0.200575 & 0.266137 & 416 \\
+    测试集 & 0.079025 & 0.277019 & 0.106634 & 0.351950 & 0.480519 & 423 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+预测与真实值散点见图 \ref{fig:exp3-scatter}。大量标签元素聚集在零值附近，非零标签分布更分散。模型能够产生与真实值同向变化的响应，但对较大目标的覆盖不足；这与较低的 $R^2$ 和有限相关性相一致。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figures/revision/exp3_prediction_scatter.png}
+  \caption{实验三测试集预测值与真实值散点}
+  \label{fig:exp3-scatter}
+\end{figure}
+
+\section{基线比较}
+
+表 \ref{tab:exp3-baseline} 和图 \ref{fig:exp3-baseline} 比较模型与三类简单基线。零值基线将全部 $70\times30$ 标签预测为 0；训练集均值和中位数基线分别用训练标签的逐元素统计量预测测试样本。
+
+\begin{table}[htbp]
+  \centering
+  \caption{实验三与简单基线的测试集比较}
+  \label{tab:exp3-baseline}
+  \begin{tabular}{lrrr}
+    \toprule
+    方法 & MAE & RMSE & $R^2$ \\
+    \midrule
+    本文模型 & 0.079025 & 0.277019 & 0.106634 \\
+    零值基线 & \textbf{0.069751} & 0.301272 & -0.056638 \\
+    训练集均值基线 & 0.142358 & 0.316129 & -0.163426 \\
+    训练集中位数基线 & 0.119024 & 0.278963 & 0.094049 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.91\textwidth]{figures/revision/exp3_baseline_comparison.png}
+  \caption{实验三模型与简单基线的 MAE、RMSE 和 $R^2$}
+  \label{fig:exp3-baseline}
+\end{figure}
+
+比较结果具有指标依赖性。模型的 MAE 没有优于零值基线，说明标签稀疏时“全部预测为零”可获得较低平均绝对误差；但模型的 RMSE 和 $R^2$ 优于零值基线，表明模型对部分非零结构的预测减少了较大平方误差。模型在三项指标上均优于训练集均值基线。与训练集中位数基线相比，模型 RMSE 只改善 0.001944，差距很小；$R^2$ 略高，MAE 较低。因而不存在“所有指标全面领先”的结论。
+
+标签元素的绝对误差中有较高比例集中在零附近，使 MAE 对稀疏区域权重较大。RMSE 对大误差更敏感，$R^2$ 又以测试集方差为参照，三者回答的问题不同。本文保留全部指标，不选择性报告对模型有利的结果。
+
+\section{FFT 系数误差}
+
+图 \ref{fig:exp3-coeff} 给出 $k=0$--29 各系数 MAE。测试集中 $k=0$--4 的平均 MAE 为 0.131411；按既有汇总口径，$k=0$--5 的 MAE 为 0.128785，而 $k=15$--29 的 MAE 为 0.050184。低阶系数包括周向总量和较大尺度结构，其目标幅值总体较大，因此绝对误差也较高。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.93\textwidth]{figures/revision/exp3_coefficient_mae.png}
+  \caption{实验三各方位 FFT 系数的测试 MAE}
+  \label{fig:exp3-coeff}
+\end{figure}
+
+高阶系数 MAE 较小不能直接解释为“高频结构更容易学习”。当目标系数本身接近零时，即使模型忽略其变化，绝对误差也可能较小。因而需要结合目标幅值、归一化误差和结构重构共同判断。现有证据只支持低阶系数是总体绝对误差的重要组成部分。
+
+\section{高严重度样本误差}
+
+为观察标签分布，将测试样本按真实平均积分严重度分组。423 个测试样本中，177 个为零，171 个位于 $(0,5)$，75 个位于 $[5,20)$，没有样本达到 20 以上。该分布说明测试集同时具有大量零样本和有限的较高严重度样本。
+
+图 \ref{fig:exp3-lowfreq} 比较低频摘要的真实值与预测值。误差较大的高严重度样本中，预测通常低于真实峰值，结果提示模型可能存在向样本中心收缩的倾向。可能原因包括较高严重度样本数量有限、ReLU 多输出回归的稀疏目标、损失由大量低值元素主导以及同井深度区间分布变化。现有实验没有逐项验证这些机制，因此只能将其列为可能因素。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.72\textwidth]{figures/revision/exp3_lowfreq_summary.png}
+  \caption{实验三低频结构摘要的真实值与预测值比较}
+  \label{fig:exp3-lowfreq}
+\end{figure}
+
+测试残差分布见图 \ref{fig:exp3-error}。分布集中于零附近但存在长尾，与 RMSE 高于 MAE 所反映的少量较大误差一致。对固井质量研究而言，较高严重度样本更值得关注；因此，总体平均指标不能替代分组误差分析。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{figures/revision/exp3_error_distribution.png}
+  \caption{实验三测试集标签元素误差分布}
+  \label{fig:exp3-error}
+\end{figure}
+
+\section{实验二对照结果}
+
+实验二使用一维窜槽占比标签，将每个深度位置的 180 个周向采样压缩为一个占比。输出维度降低后，模型不再需要预测方位结构，但仍要从 XSI 时频响应迁移到隔离测试井段。测试结果见表 \ref{tab:exp2-metrics}。
+
+\begin{table}[htbp]
+  \centering
+  \caption{实验二的单井深度区间隔离测试指标}
+  \label{tab:exp2-metrics}
+  \begin{tabular}{lr}
     \toprule
     指标 & 数值 \\
     \midrule
-    Test MAE & 0.079025 \\
-    Test RMSE & 0.277019 \\
-    Test R2 & 0.106634 \\
-    Test Pearson & 0.351950 \\
-    Test Spearman & 0.480519 \\
-    Test samples & 423 \\
+    MAE & 0.811672 \\
+    RMSE & 2.832056 \\
+    $R^2$ & -0.011278 \\
+    Pearson & 0.198048 \\
+    Spearman & 0.413335 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-\section{EXP-008 基线对比}
+负 $R^2$ 表明实验二在平方误差意义下未优于以测试均值为参照的常数预测。Pearson 相关较弱，Spearman 为正，说明预测排序中仍有部分信息，但幅值拟合不足。该结果说明，简单降低标签维度并未消除深度区间迁移困难。一维标签对照的价值在于揭示方位平均造成的信息损失，而不是提供比实验三更强的性能结论。
 
-为了避免仅报告模型指标造成过度解释，本文将 EXP-008 与 zero、train-mean 和 train-median 三类简单基线进行对比。表 \ref{tab:exp008-baseline} 显示，EXP-008 优于 train-mean 和 train-median baseline 的 MAE/RMSE/R2，也优于 zero baseline 的 RMSE/R2；但模型 MAE 为 0.079025，高于 zero baseline MAE 0.069751。因此，EXP-008 只能表述为 metric-qualified learnability，不能写成全面优于所有简单基线。
+\section{实验一结果的使用边界}
 
-\placeholderfigure{EXP-008 模型与 zero、train-mean、train-median baseline 的 MAE/RMSE/R2 条形图。}{EXP-008 与简单基线模型的指标对比。该图必须同时标注模型未优于 zero baseline 的 MAE。}{fig:exp008-baseline}
+实验一的高验证 AUC 仅在随机样本划分条件下成立。与实验二、实验三的深度区间隔离结果相比，它说明 CWT 输入中存在与 CAST 派生标签相关的可学习信号，却不能回答该信号能否稳定迁移到未见连续井段。本文不把二分类准确率与回归 MAE、$R^2$ 直接比较，也不以实验一替代主实验的严格验证。
 
-\begin{table}[htbp]
-  \centering
-  \caption{EXP-008 与简单基线对比}
-  \label{tab:exp008-baseline}
-  \begin{tabular}{lccc}
-    \toprule
-    方法 & MAE & RMSE & R2 \\
-    \midrule
-    EXP-008 model & 0.079025 & 0.277019 & 0.106634 \\
-    zero baseline & 0.069751 & 0.301272 & -0.056638 \\
-    train-mean baseline & 0.142358 & 0.316129 & -0.163426 \\
-    train-median baseline & 0.119024 & 0.278963 & 0.094049 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\section{Grad-CAM 图件核验}
 
-\section{EXP-008 误差结构分析}
+现有 Grad-CAM 组合图显示，随机样本划分先导模型对部分样本的梯度响应集中在约 0.5--1.2~ms、18--26~kHz 的区域。但图件只能确定来自早期方位 FFT 回归输出，无法唯一核验具体训练运行、checkpoint、回归目标系数和卷积层；其样本编号也不能与本章 423 个深度隔离测试样本建立可靠对应。
 
-EXP-008 的误差并非在所有 FFT 系数上均匀分布。冻结证据显示，低频 FFT 系数的绝对误差高于高频系数，其中 low-frequency $k=0$--5 MAE 为 0.128785，而 high-frequency $k=15$--29 MAE 为 0.050184。低频系数通常与整体严重度和大尺度环向结构有关，因此该误差会直接影响主结构表征。
-
-此外，高严重度样本存在低估现象。该现象说明模型虽然在 RMSE/R2 上优于部分基线，但对高风险窜槽段的幅值预测仍不足。正文中应将其作为主要限制，而不能写成高严重度样本预测准确。
-
-\placeholderfigure{不同 FFT 系数上的 MAE 分布，突出低频系数误差较大。}{EXP-008 各 FFT 系数误差分布。该图用于说明低频 FFT 系数是主要误差来源之一。}{fig:exp008-coeff-error}
-
-\placeholderfigure{高 integrated severity 样本的真实值与预测值对比，展示峰值低估。}{高严重度样本低估现象示意图。该图用于说明 EXP-008 的主要限制之一。}{fig:high-severity-under}
-
-\section{EXP-007 depth-heldout 对照实验}
-
-EXP-007 使用一维 percentage label 和 CWT-EfficientNetV2B0 模型，是 EXP-008 的 fallback/limitation comparison。该标签路线直观且去除了方位位置要求，但同时丢弃了方位结构，并在稀疏标签下受到 zero baseline MAE 的限制。
-
-在同一 single-well depth-heldout 设置下，EXP-007 train\_v002 的测试指标见表 \ref{tab:exp007-test}。模型取得正 Spearman 相关，但 R2 略为负。它优于 train-mean 和 train-median baseline 的 MAE/RMSE/R2，也优于 zero baseline 的 RMSE/R2；但模型 MAE 0.811672 高于 zero baseline MAE 0.738339。因此，EXP-007 不替代 EXP-008，而用于说明简化标量/剖面标签在 depth-heldout 下同样存在泛化挑战。
-
-\placeholderfigure{EXP-007 model 与 zero、train-mean、train-median baseline 的指标对比。}{EXP-007 与简单基线模型的指标对比。该图用于说明一维 percentage label fallback 的可训练性和 MAE 限制。}{fig:exp007-baseline}
-
-\begin{table}[htbp]
-  \centering
-  \caption{EXP-007 depth-heldout 测试指标}
-  \label{tab:exp007-test}
-  \begin{tabular}{lc}
-    \toprule
-    指标 & 数值 \\
-    \midrule
-    Test MAE & 0.811672 \\
-    Test RMSE & 2.832056 \\
-    Test R2 & -0.011278 \\
-    Test Pearson & 0.198048 \\
-    Test Spearman & 0.413335 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
-
-\section{EXP-006 二分类 baseline}
-
-EXP-006 是旧项目中的 CWT 二分类 baseline，用于判断 CWT 特征是否包含与 CAST 派生窜槽存在性相关的可学习信号。该实验在 random split 验证设置下取得 validation AUC 0.95361、validation accuracy 0.885366。由于该实验存在 random split depth leakage risk，不能写成 depth-heldout 或最终泛化性能。
-
-\begin{table}[htbp]
-  \centering
-  \caption{EXP-006 random split baseline 结果}
-  \label{tab:exp006-baseline}
-  \begin{tabular}{lccp{0.38\textwidth}}
-    \toprule
-    实验 & split 类型 & 指标 & 论文使用边界 \\
-    \midrule
-    EXP-006 CNN binary CWT baseline & random split exploratory & val AUC 0.95361; val accuracy 0.885366 & 仅说明 CWT 与二分类窜槽标签存在可学习关系，不作为 depth-heldout 泛化证据。 \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+基于上述来源限制，本章不插入这些 Grad-CAM 图，也不把先导模型热区解释为实验三的特征响应。Grad-CAM 的方法定义和解释边界已在第 3 章给出\cite{Selvaraju2017GradCAM}。后续只有在模型、划分、checkpoint、目标输出、样本深度和卷积层全部可追溯时，才适合开展正确样本与大误差样本的时频响应比较。
 
 \section{本章小结}
 
-本章给出了本文最终实验结果。EXP-008 在单井 depth-heldout 条件下显示 FFT severity magnitude 标签具有一定可学习性，并保留为方法创新主线；但其 MAE 未优于 zero baseline，且低频 FFT 系数和高严重度样本是主要误差来源。EXP-007 作为 fallback 能够训练，但结果不强于 EXP-008。EXP-006 仅作为 random split exploratory baseline，用于说明 CWT 特征与窜槽标签之间存在可学习关系。
+本章在相同单井深度区间隔离划分下比较了两种回归标签，并以随机样本划分二分类作为先导验证。实验三测试 MAE 为 0.079025、RMSE 为 0.277019、$R^2$ 为 0.106634，相关性为中等偏弱，支持有限可学习性而非高精度结论。模型在 RMSE 和 $R^2$ 上优于零值基线，却未在 MAE 上占优；与训练集中位数基线的 RMSE 接近。低阶 FFT 系数和较高严重度样本构成主要误差来源。实验二降低输出维度后 $R^2$ 仍为负，说明深度区间迁移并未因标签简化而解决。来源未能完全核验的 Grad-CAM 图件未用于正文证据。

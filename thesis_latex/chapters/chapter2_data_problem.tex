@@ -2,55 +2,163 @@
 
 \section{数据来源与总体说明}
 
-本文使用的最终实验数据证据来自已归档的旧项目结果和补充完成的 single-well depth-heldout 实验。最终性能结论只使用 \texttt{docs/thesis\_evidence/} 中冻结的指标与审计结果。本文不重新训练模型，不修改原始数据，不修改已处理数据，也不修改旧 Windows results 目录。
+本文研究数据来源于与某国际油田服务公司开展的横向合作项目。项目提供了同一井段的阵列声波测井、超声成像测井和工具姿态相关数据，用于研究声波响应与套管外水泥环状态之间的关系。为避免披露与研究目标无关的信息，本文只给出数据结构、井段范围和必要的处理参数，不公开井名、地理位置及生产信息。
 
-最终主线实验 EXP-008 和 fallback 实验 EXP-007 均使用 \texttt{array\_03} 单井数据，并通过显式的 train/validation/test TFRecord 文件进行连续深度留出验证。旧项目中的 random split 实验保留为探索性证据，用于说明方法路线和特征可学习性，但不作为最终泛化性能。
+% TODO: 确认合作单位名称是否允许在学位论文中公开
 
-\placeholderfigure{数据来源、XSI 波形、CAST Zc、处理范围、样本窗口和输出标签之间的关系。}{实验数据组成与处理范围示意图。该图用于说明本文实验使用的 XSI 与 CAST 数据及其处理边界。}{fig:data-scope}
+研究井段为 2732--4132~ft。主要数据包括：XSI 多接收器全波列、CAST 声阻抗矩阵，以及与 XSI 深度对应的 Relative Bearing 和 Inclination。XSI、CAST 和姿态数据分别具有不同的采样间隔和记录顺序，本研究先核验各自深度轴，再在 0.1~ft 派生深度网格上构造样本。该网格是本研究的数据处理参数，不是仪器原始采样分辨率。
+
+数据核验采用项目 MAT 文件、处理代码、配置文件、汇报材料和公开工具论文相互印证。公开工具论文用于说明接收器几何和一般测量原理，项目文件用于确定本研究实际使用的数组维度和处理参数。二者发生差异时，以“仪器结构”和“本文数据子集”分别表述，避免把处理窗口写成仪器能力。
+
+\begin{table}[htbp]
+  \centering
+  \small
+  \setlength{\tabcolsep}{4pt}
+  \caption{本文使用的主要数据及其原始组织}
+  \label{tab:data-overview}
+  \begin{tabular}{p{0.20\textwidth}p{0.25\textwidth}p{0.22\textwidth}p{0.23\textwidth}}
+    \toprule
+    数据 & 主要变量 & 原始数组 & 本文用途 \\
+    \midrule
+    XSI 第 3 接收环 & Depth、Tad、SideA--SideH & 每个侧向波形矩阵为 $1024\times7108$ & 构造 8 通道 CWT 输入 \\
+    CAST & Depth、$Z_c$ & $Z_c$ 为 $180\times24750$ & 构造深度--方位参考标签 \\
+    工具姿态 & Depth、Inc、RelBearing & 三个长度均为 13508 的向量 & 分析井斜与相对方位可靠性 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+在目标井段内，XSI 第 3 接收环共有 2852 条深度记录，其中 2846 个深度值唯一；CAST 对应 9884 个深度记录；姿态数据对应 5549 条记录。数据量差异来自工具采样方式，不代表一一对应关系。最终回归实验按共同有效范围和样本窗口形成 2842 个候选样本，其中 19 个位于划分缓冲区，不参与训练、验证或测试。
 
 \section{XSI 声波测井数据结构}
 
-XSI 阵列声波测井记录多通道全波列响应。根据参考材料和代码证据，本文采用的 CWT 输入可表述为由多个接收器或方位通道构成的时频张量。对每个样本，声波时间序列经过连续小波变换后形成二维时频图，多个通道堆叠后输入卷积模型。
+\subsection{工具几何与数据子集}
 
-声波全波列具有明显的非平稳特征，不同时间窗和频率带可能对应不同传播模式或井眼响应。使用 CWT 的目的在于将瞬态波形转换为时间--频率联合表示，使模型能够从局部时频结构中学习与 CAST 派生窜槽标签相关的信息。
+XSI 类超宽带阵列声波工具通过多个单极和偶极声源激发井内波场，并由轴向、周向分布的接收器记录波形。公开工具论文给出的接收段包含 13 个轴向接收环，每环 8 个接收器沿周向等间隔布置，共 104 个接收器\cite{Sun2016UltrabroadbandAcoustic}。13 个接收环提供不同源距，8 个周向单元提供工具坐标系内的方位采样。这里的“$13\times8$”描述仪器接收器几何，不等于本文模型输入维度。
 
-\placeholderfigure{上方为 XSI 原始波形，下方为对应 CWT 时频图，并标注时间、频率和通道维度。}{XSI 原始波形与 CWT 时频图示意图。该图用于说明连续小波变换对声波全波列的时频展开。}{fig:xsi-cwt}
+项目数据按接收环拆分。本文使用第 3 接收环，对应 SideA 至 SideH 共 8 个周向通道；其余接收环不进入本轮模型。项目配置给出的 13 个接收环相对源偏移从 3~ft 到 $-3$~ft，以 0.5~ft 递减，第 3 接收环偏移为 2~ft。接收器字母只表示工具内部的周向编号。除非同时知道工具姿态和每个字母相对参考方向的定义，SideA 不能直接解释为北向、井眼高边或 CAST 图像零点\cite{Che2014PhasedArcReception,Che2017AzimuthalReceiver}。
+
+\subsection{时间采样与分析窗口}
+
+第 3 接收环每个侧向通道的原始波形长度为 1024 点，存储类型为 32 位整数。MAT 文件中的 \texttt{Tad} 为 10.0，结合处理配置的 100~kHz 采样率，可将项目时间采样间隔解释为 10~$\mu$s。因此，完整记录时长为 10.24~ms。本文仅选取每条波形的前 400 点，即 4.00~ms，用于覆盖研究所关注的早期声波响应。400 点是本文的预处理窗口，不能表述为仪器只能采集 400 点。
+
+100~kHz 采样率对应 50~kHz 的奈奎斯特频率，但奈奎斯特频率不等于仪器换能器的有效响应范围。本文 CWT 采用 1--30~kHz 的分析频带，该范围由项目处理配置确定。公开工具论文展示了不同发射模式和处理频带\cite{Sun2016UltrabroadbandAcoustic}，但不能据此推定本项目全部原始采集带宽。
+
+% TODO: 需确认仪器原始模拟频率响应和 Tad 字段的正式单位定义
+
+\subsection{深度轴、异常值与张量维度}
+
+XSI 第 3 接收环在目标井段的唯一深度间隔中位数约为 0.493~ft，存在 9 个重复深度以及少量局部顺序变化。处理时先按深度排序、合并重复索引，再映射到统一网格。八个通道均未发现 NaN，但波形中存在接近 $\pm8388608$ 的极值，可能与 24 位采集范围或饱和编码有关。现有代码未显示独立的饱和修复步骤，因此本文只记录该事实，不宣称已经消除所有饱和影响。
+
+% TODO: 需确认 XSI 采集编码及饱和值处理规则
+
+单个深度样本经 1~kHz 四阶零相位高通、前 400 点截取和复 Morlet CWT 后，每个通道形成 $150\times400$ 的时间--频率图。8 个周向通道堆叠后，模型输入张量为
+\begin{equation}
+  \mathbf{X}\in\mathbb{R}^{150\times400\times8},
+  \label{eq:xsi-input-shape}
+\end{equation}
+其中 150 为尺度或频率采样数，400 为时间采样数，8 为第 3 接收环的周向通道数。
+
+\begin{table}[htbp]
+  \centering
+  \caption{XSI 原始参数与本文处理参数的区分}
+  \label{tab:xsi-parameters}
+  \begin{tabular}{p{0.32\textwidth}p{0.25\textwidth}p{0.32\textwidth}}
+    \toprule
+    项目 & 核验值 & 属性 \\
+    \midrule
+    接收器几何 & 13 环，每环 8 个接收器 & 公开工具结构 \\
+    本文接收环 & 第 3 环，SideA--SideH & 研究数据子集 \\
+    原始波形长度 & 1024 点 & 项目 MAT 文件 \\
+    时间采样间隔 & 10~$\mu$s & MAT 与配置交叉推定 \\
+    本文时间窗 & 前 400 点，4.00~ms & 预处理参数 \\
+    采样率/奈奎斯特频率 & 100/50~kHz & 项目配置/数学上限 \\
+    本文 CWT 频带 & 1--30~kHz & 特征提取参数 \\
+    CWT 输入维度 & $150\times400\times8$ & 模型输入 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \section{CAST 超声成像数据结构}
 
-CAST 超声成像测井提供沿深度和方位展开的声阻抗图像。本文将 CAST Zc 作为构造弱监督标签的主要依据。与 XSI 声波波形相比，CAST 图像在环向方向具有更直观的空间结构，但其方位参考与 XSI 通道之间不能被假设为可靠点对点对应。
+\subsection{测量原理与矩阵组织}
 
-\placeholderfigure{深度为纵轴、方位为横轴的 CAST Zc 图像示意，并标注低声阻抗异常区域。}{CAST 声阻抗深度-方位图示意图。该图用于说明 CAST Zc 的二维结构和窜槽相关异常区域。}{fig:cast-zc}
+CAST 数据以超声脉冲回波测量为基础。换能器向套管内壁发射脉冲，回波的到达、幅度和共振衰减受套管厚度、井液以及套管后介质影响。通过周向扫描，可将套管后介质的等效声阻抗按深度和方位排列为图像。脉冲回波、弯曲波和传统声波胶结测量对不同波模态敏感，解释时应结合其适用条件\cite{Froelich1982CementEvaluation,Froelich2008MultimodeCement,Wang2016AcousticCementMethods}。
+
+声阻抗通常定义为
+\begin{equation}
+  Z=\rho c,
+  \label{eq:acoustic-impedance}
+\end{equation}
+其中 $\rho$ 为介质密度，$c$ 为声速。套管与套管后介质的阻抗和界面耦合共同影响回波。低声阻抗响应可能与液体通道或胶结较差有关，但不能仅凭一个像素断言其对应真实窜槽。
+
+项目 \texttt{CAST.mat} 中的 $Z_c$ 矩阵为 $180\times24750$，第一维为周向采样，第二维为深度。深度从约 2395.445~ft 延伸到 5804.337~ft，在目标井段内有 9884 个记录，深度间隔中位数约为 0.142~ft。若 180 个采样覆盖完整圆周，则名义间隔为 $2^\circ$；但文件未存储显式方位角向量，因此正文只称其为 180 个周向采样，不把 $2^\circ$ 作为已经确认的仪器参数。
+
+% TODO: 需确认 CAST 180 个采样的方位角向量和零点定义
+
+\subsection{数值质量与派生标签}
+
+$Z_c$ 矩阵中的 4,455,000 个元素均为有限数值，没有 NaN；全数据中有 14 个负值。现有资料没有说明这些负值是有效反演结果、无效编码还是前序处理残留。由于少量负值会在后续严重度变换中产生较大数值，最终提交前需要核验其处理规则。
+
+% TODO: 需确认 CAST 负声阻抗值的有效性和处理方式
+% TODO: 需确认 CAST Zc 的正式单位
+
+本研究以阈值 2.5 构造 CAST 派生表征。该阈值可追溯到项目代码和汇报材料，但尚未找到证明其普适性的正式文献或仪器手册。因此，2.5 应被理解为本项目的数据约定或经验阈值，而不是适用于所有井、套管和水泥体系的物理常数。由该阈值得到的标签属于参考工具派生标签，不能称为窜槽绝对真实标签。
 
 \section{XSI--CAST 方位失配问题分析}
 
-本文的核心问题是 XSI 与 CAST 之间的方位失配。对于垂直井，旧实验未能证明 Relative Bearing 等信息足以支撑稳定的 XSI--CAST 方位点对点监督。如果直接将 CAST 某一方位像素与 XSI 某一方位通道绑定，标签可能包含未知旋转偏差，从而影响训练目标的物理一致性。
+\subsection{需要区分的坐标量}
 
-因此，本文采用两类弱监督标签以降低对绝对方位匹配的依赖。一类是沿方位平均的一维 percentage label，完全去除方位位置；另一类是方位向 FFT magnitude label，保留一定环向结构频率信息但丢弃相位。二者共同构成本文的标签工程比较，其中 FFT magnitude label 与方位失配问题更直接相关。
+方位关系分析中需要区分六类量：
 
-\placeholderfigure{同一窜槽结构在 CAST 方位图上旋转后，与 XSI 通道方位不再直接对应；右侧给出 percentage 与 FFT magnitude 两条弱标签路线。}{XSI 与 CAST 方位失配示意图。该图用于说明本文不采用直接点对点方位监督的原因。}{fig:azimuth-mismatch}
+\begin{enumerate}
+  \item 仪器方位：工具坐标系相对某一外部参考方向的转角；
+  \item 接收器编号：SideA--SideH 在工具圆周上的相对位置；
+  \item 井眼高边：倾斜井眼横截面中重力意义上的上方方向；
+  \item Relative Bearing：工具某参考轴相对于指定参考方向的周向角；
+  \item Inclination：井眼或工具轴相对铅垂方向的倾角；
+  \item CAST 与 XSI 方位零点：两套数据周向索引各自的起始方向。
+\end{enumerate}
 
-\section{CAST 声阻抗阈值与 severity 表征}
+方位阵列文献通常在接收器几何和参考方向已知时讨论入射方向或窜槽方位\cite{Che2014PhasedArcReception,Che2017AzimuthalReceiver,Zuo2020AzimuthCement}。本文虽然知道八个 XSI 通道以 $45^\circ$ 相对间隔布置，但缺少 CAST 零点和 XSI 工具参考轴之间的唯一对应。相对间隔已知不等于绝对起点已知。
 
-本文使用 CAST Zc 阈值构造窜槽相关 severity 表征。根据冻结的实验路线，severity 定义为
-\begin{equation}
-  s(d,\theta)=\max(0, 2.5 - Z_c(d,\theta)),
-  \label{eq:severity}
-\end{equation}
-其中 $d$ 表示深度或深度窗口位置，$\theta$ 表示方位，$Z_c$ 为 CAST 声阻抗。该变换保留低 Zc 对应的窜槽严重度，并将高于阈值的区域压为零。
+\subsection{Inclination 数据分析}
 
-需要说明的是，本文不修改 2.5 的 Zc 阈值，也不在论文中声称该阈值对所有井或所有地层条件均最优。该阈值是旧项目和最终证据冻结中采用的实验设定。
+目标井段 Inclination 的最小值为 $0.1349^\circ$，最大值为 $2.2879^\circ$，均值为 $0.5218^\circ$，中位数为 $0.4705^\circ$；5\%--95\% 分位范围约为 $0.2097^\circ$--$1.1975^\circ$。这说明研究井段总体接近直井。在接近铅垂时，井眼高边方向对微小姿态和测量噪声更敏感。
 
-\placeholderfigure{CAST Zc 图像经过阈值函数转换为 severity map，低 Zc 区域对应较高 severity。}{CAST 声阻抗到 severity map 的转换示意图。该图用于说明式 \ref{eq:severity} 的标签变换。}{fig:severity-map}
+Inclination 是工具轴相对铅垂方向的倾角大小，不包含绕工具轴旋转的方向信息。即使倾角测量完全可靠，也不能由一个标量倾角推导 XSI 方位零点相对 CAST 零点的旋转。因此，Inclination 不能直接作为方位校正角。
 
-\section{测井样本划分与相邻深度泄漏风险}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.78\textwidth]{figures/revision/inclination.png}
+  \caption{Inclination 随记录索引的变化。目标井段总体接近直井}
+  \label{fig:inclination}
+\end{figure}
 
-测井样本沿连续深度采集，相邻深度窗口之间可能共享相似的声波响应和 CAST 标签结构。如果采用随机划分，训练集和验证集可能包含相邻深度样本，从而引入相邻深度泄漏风险。旧项目中 EXP-006 以及若干早期回归实验属于 random split 或类似随机验证设置，因此只能作为探索性证据。
+\subsection{Relative Bearing 数据分析}
 
-为获得更严格的验证，本文补充构造了 single-well depth-heldout split。对于 EXP-008/EXP-007，训练、验证和测试样本按照深度排序后划分为连续区间，并在 split 边界设置 \texttt{gap\_ft = 5.0} 的缓冲。最终 split audit 确认为 \texttt{depth\_heldout\_split\_confirmed}，样本数为 train 1984、validation 416、test 423。
+在 2732--4132~ft 目标井段内，Relative Bearing 范围约为 $1.85^\circ$--$357.82^\circ$。按圆周差计算，相邻记录绝对变化的中位数为 $5.156^\circ$，95\% 分位为 $28.639^\circ$，99\% 分位为 $64.611^\circ$，最大值为 $178.563^\circ$；其中 111 次变化超过 $45^\circ$，23 次超过 $90^\circ$。图 \ref{fig:relative-bearing} 显示，接近直井的区间存在明显跳变，而井斜增大后的区间更平滑。该现象与项目汇报中“近直井段 Relative Bearing 可靠性较低”的记录一致。
 
-\placeholderfigure{左侧为 random split 将相邻深度样本打散，右侧为 depth-heldout 将连续深度区间划分为训练、验证和测试。}{random split 与 depth-heldout split 对比示意图。该图用于说明本文最终性能证据采用连续深度留出。}{fig:split-comparison}
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.78\textwidth]{figures/revision/relative_bearing.png}
+  \caption{Relative Bearing 随记录索引的变化。接近直井区间存在较多周向跳变}
+  \label{fig:relative-bearing}
+\end{figure}
+
+然而，当前 MAT 文件没有给出 Relative Bearing 的正式参考方向定义，也没有给出 CAST 方位零点。仅凭曲线连续性无法判断某一数值对应磁北、井眼高边、工具面还是其他处理约定。受现有工具姿态元数据和方位基准信息限制，本文无法建立两类测井数据绝对方位零点之间的唯一转换关系。
+
+\subsection{深度差异与标签误差}
+
+XSI、CAST 和姿态数据的原始深度采样分别约为 0.493、0.142 和 0.25~ft 的量级，并存在局部重复、重排或间隔变化。深度插值可以把三类数据映射到共同网格，却不能补充缺失的方位零点。若在没有绝对零点转换的条件下，把 CAST 第 $j$ 个方位像素直接赋给 XSI 第 $j$ 个通道，同一物理结构可能因未知循环移位而对应不同标签。这种误差不是增加样本量即可自动消除的随机噪声，而是与工具姿态相关的系统性标签不一致。
+
+本文因此不建立未经证据支持的绝对角度公式，而将 CAST 方位序列的未知旋转建模为离散循环平移。第三章利用离散傅里叶变换的平移性质构造幅值标签：循环移位改变相位而不改变幅值，从而降低对零点的依赖。该处理不能恢复绝对方位，也会丢失相位携带的位置关系，其作用是保留大尺度周向结构强度而规避不可靠监督。
+
+\section{相邻深度相关性与验证边界}
+
+声波和 CAST 标签均由连续深度窗口构造，相邻样本可能共享相近地层、套管条件和重叠窗口。对这类结构化数据进行随机划分，训练集与测试集容易包含邻近深度，从而低估预测误差\cite{Roberts2017CrossValidation,Valavi2019BlockCV}。本文将随机样本划分用于先导可学习性检验，将主要回归结论建立在单井深度区间隔离划分上。
+
+严格划分中，训练集为 1984 个样本，深度范围 2732.440--3715.853~ft；验证集为 416 个样本，范围 3721.119--3917.685~ft；测试集为 423 个样本，范围 3922.785--4129.744~ft。相邻集合之间设置 5~ft 缓冲区，共排除 19 个样本。三个集合的深度键无交集。该设置提高了同井验证的严格程度，但仍不能代替跨井验证。
 
 \section{本章小结}
 
-本章说明了 XSI 声波测井和 CAST 超声成像测井的数据特点，分析了二者在方位参考上的不可靠性，并给出了 CAST Zc 到 severity map 的基本变换。由于连续深度样本存在相邻泄漏风险，本文将旧 random split 结果限制为探索性证据，并以 single-well depth-heldout 结果作为最终实验依据。
+本章从项目文件和公开工具论文核验了 XSI、CAST 与姿态数据。XSI 工具具有 13 环、每环 8 个接收器的结构，而本文仅使用第 3 接收环的 8 通道、前 400 点波形；CAST 由 180 个周向采样和不规则深度轴组成，其 2.5 阈值属于项目数据约定。Inclination 只表示井斜大小，Relative Bearing 在目标近直井段存在大量跳变，且两类工具均缺少可相互转换的方位零点。上述事实构成采用方位旋转不变标签和深度区间隔离验证的直接依据。

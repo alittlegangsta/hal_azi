@@ -13,48 +13,28 @@
 \setdate[oral]{TODO}
 \setdate[confer]{TODO}
 
-\newcommand{\placeholderfigure}[3]{%
-\begin{figure}[htbp]
-  \centering
-  \fbox{%
-    \begin{minipage}[c][0.25\textheight][c]{0.86\textwidth}
-      \centering
-      \vspace{0.5em}
-      \textbf{图位占位}\\[0.8em]
-      #1\\[0.8em]
-      后续用手绘或重画图片替换，当前不插入真实图片。
-      \vspace{0.5em}
-    \end{minipage}
-  }
-  \caption{#2}
-  \label{#3}
-\end{figure}
-}
-
 \begin{document}
 
 \makecover
 
 \begin{chineseabstract}
-固井质量评价是油气井完整性管理中的重要内容。水泥环窜槽可能造成层间流体连通和井筒完整性风险，因此需要利用测井资料对窜槽结构及其严重程度进行识别。阵列声波测井具有覆盖范围广、成本相对较低等优势，但其全波列响应受井眼环境、套管和水泥环共同影响，直接从低维声波指标中识别复杂窜槽结构存在困难。CAST 超声成像测井能够提供较高分辨率的环向声阻抗图像，可作为构造弱监督标签的重要依据。然而，在垂直井条件下，XSI 声波测井与 CAST 图像之间存在方位参考不可靠的问题，直接建立点对点方位监督容易引入错误标签。
+固井水泥环承担层间封隔、套管支撑和井筒屏障维持等作用。窜槽具有沿深度延伸和周向局部化特征，需要结合声波传播响应与超声周向成像进行评价。XSI 阵列声波测井能够记录多接收器全波列，CAST 超声测井能够提供深度--方位声阻抗图；然而，本文数据缺少两类工具绝对方位零点之间的唯一转换关系，直接采用方位像素到声波通道的逐点监督会引入未知循环偏移。
 
-针对上述问题，本文研究面向方位失配条件的声波测井窜槽结构特征反演方法。首先，将 XSI 全波列信号通过连续小波变换转换为多通道时频图，以保留声波响应的时间--频率联合特征。其次，基于 CAST 声阻抗阈值构造两类弱监督标签：一类为沿方位平均的一维窜槽百分比标签，作为直观的 fallback 对照；另一类为基于 severity map 的方位向 FFT magnitude 标签，通过丢弃相位降低对绝对方位匹配的依赖，作为本文方法主线。随后，采用 CWT-EfficientNetV2B0 回归模型学习 XSI 时频特征与 CAST 派生标签之间的映射关系，并在单井连续深度留出设置下进行验证。
+针对上述问题，本文首先核验 XSI、CAST、Relative Bearing 和 Inclination 的数据结构及坐标物理含义。目标井段总体接近直井，Relative Bearing 存在较多跳变，Inclination 只表示井斜大小，不能作为方位校正角。随后，以 CAST 声阻抗构造一维窜槽占比标签和方位向快速傅里叶变换幅值标签。后者利用离散方位序列循环平移只改变傅里叶相位、不改变幅值的性质，降低对绝对方位零点的依赖，同时明确放弃绝对方位信息。XSI 第 3 接收环的 8 通道波形经连续小波变换形成 $150\times400\times8$ 时频张量，并由 EfficientNetV2B0 骨干回归 $70\times30$ 的 CAST 派生结构标签。
 
-实验结果表明，在 \texttt{array\_03} 单井 depth-heldout 条件下，EXP-008 的 FFT severity magnitude 标签路线取得测试 MAE 为 0.079025、RMSE 为 0.277019、R2 为 0.106634、Pearson 相关系数为 0.351950、Spearman 相关系数为 0.480519，说明该标签在连续深度留出测试段上具有一定可学习性。与简单基线相比，模型优于 train-mean 和 train-median baseline 的 MAE/RMSE/R2，并优于 zero baseline 的 RMSE/R2；但模型测试 MAE 未优于 zero baseline。EXP-007 的一维百分比标签在相同单井 depth-heldout 设置下可完成训练，但 R2 略为负，且同样未在 MAE 上优于 zero baseline。因此，本文将 EXP-008 作为方位失配问题下的主要方法探索，将 EXP-007 作为 fallback 与局限性对照。本文结果支持基于声波 CWT 特征与 CAST 弱监督标签的窜槽结构特征学习具有可行性，但现有证据仅限单井 depth-heldout，不代表多井泛化或工业部署性能。
+在带 5~ft 缓冲区的单井深度区间隔离划分下，主要实验测试 MAE 为 0.079025、RMSE 为 0.277019、$R^2$ 为 0.106634、Pearson 相关系数为 0.351950、Spearman 相关系数为 0.480519，测试样本数为 423。模型的 RMSE 和 $R^2$ 优于零值基线，但 MAE 未优于零值基线；模型与训练集中位数基线的 RMSE 接近。逐系数和分严重度分析表明，低阶傅里叶系数误差较大，较高严重度样本存在低估。一维窜槽占比标签对照实验的测试 $R^2$ 为 $-0.011278$。结果说明，声波时频特征对旋转不变 CAST 派生标签具有有限可学习性，但现有证据不支持绝对方位恢复、跨井泛化或工业应用结论。
 
-\chinesekeyword{声波测井，水泥窜槽，方位失配，连续小波变换，FFT magnitude 标签，EfficientNet}
+\chinesekeyword{声波测井，水泥窜槽，方位失配，连续小波变换，傅里叶幅值标签，深度区间隔离验证}
 \end{chineseabstract}
 
 \begin{englishabstract}
-This thesis investigates a weakly supervised acoustic logging method for cement channeling structure feature inversion under azimuth mismatch. The English abstract is a draft and needs manual polishing after the Chinese manuscript and bibliography are finalized.
+The cement sheath provides zonal isolation, casing support, and an important well-integrity barrier. Cement channeling is both depth-continuous and azimuthally localized, motivating the joint analysis of acoustic waveforms and circumferential ultrasonic images. The XSI array-sonic data used in this study contain multi-receiver full waveforms, whereas CAST provides depth-azimuth acoustic-impedance images. The available metadata, however, do not define a unique transformation between the absolute azimuth zeros of the two tools. Direct bin-to-channel supervision would therefore contain an unknown cyclic offset.
 
-Cement channeling is an important risk factor for well integrity. Array sonic logging provides broad coverage and relatively low operational cost, while CAST ultrasonic imaging provides high-resolution azimuthal cement-bond information. However, direct azimuth-wise supervision between XSI sonic waveforms and CAST impedance images is unreliable in the studied vertical-well setting because the relative azimuth reference is not sufficiently stable. To avoid over-reliance on pointwise azimuth matching, this thesis constructs weak supervision labels from CAST impedance maps and learns their relationship with XSI continuous-wavelet-transform time-frequency representations.
+This thesis first verifies the structures and physical meanings of the XSI, CAST, Relative Bearing, and Inclination data. The target interval is nearly vertical, Relative Bearing contains frequent jumps, and Inclination represents tilt magnitude rather than an azimuth-correction angle. Two CAST-derived targets are then constructed: a one-dimensional channeling-proportion label and an azimuthal Fourier-magnitude label. The latter uses the fact that a cyclic shift of a discrete azimuthal sequence changes Fourier phase but preserves magnitude. It reduces dependence on the unknown azimuth zero while explicitly discarding absolute orientation. Eight XSI channels from receiver ring 03 are transformed into a $150\times400\times8$ continuous-wavelet time-frequency tensor, from which an EfficientNetV2B0 backbone predicts a $70\times30$ CAST-derived structural target.
 
-Two label routes are studied. The first route constructs a one-dimensional percentage label by azimuthal averaging and is used as a fallback comparison. The second route transforms CAST impedance into a severity map and then applies an azimuthal FFT magnitude transform. Since circular shifts mainly affect FFT phase while preserving magnitude, the FFT magnitude label reduces the dependence on absolute azimuth alignment and is used as the main method route. An EfficientNetV2B0-based regression model is trained with explicit train/validation/test TFRecords generated by a continuous depth-heldout split.
+Under a single-well depth-interval-held-out split with 5-ft buffers, the main experiment obtains a test MAE of 0.079025, RMSE of 0.277019, $R^2$ of 0.106634, Pearson correlation of 0.351950, and Spearman correlation of 0.480519 on 423 samples. The model improves RMSE and $R^2$ over a constant-zero predictor but not MAE, and its RMSE is close to that of a predictor formed from training-set medians. Coefficient-wise and severity-wise analyses show larger errors for low-order Fourier coefficients and underestimation of higher-severity samples. The one-dimensional comparison yields a test $R^2$ of $-0.011278$. These results support limited learnability of rotation-invariant CAST-derived features from acoustic time-frequency data, but they do not establish absolute-azimuth recovery, cross-well generalization, or industrial readiness.
 
-Under a single-well \texttt{array\_03} depth-heldout setting, the EXP-008 FFT severity magnitude route achieves a test MAE of 0.079025, RMSE of 0.277019, R2 of 0.106634, Pearson correlation of 0.351950, and Spearman correlation of 0.480519 on 423 test samples. These results indicate metric-qualified learnability, but the model does not outperform the zero baseline in MAE. The EXP-007 percentage-label fallback is trainable but does not provide stronger evidence than EXP-008. Therefore, the thesis presents the FFT severity magnitude label as a feasible exploration for azimuth-mismatch-aware weak supervision, while explicitly limiting the conclusion to single-well depth-heldout evidence rather than multi-well generalization or industrial deployment performance.
-
-\englishkeyword{Acoustic logging, cement channeling, azimuth mismatch, continuous wavelet transform, FFT magnitude label, EfficientNet}
+\englishkeyword{Acoustic logging, cement channeling, azimuth mismatch, continuous wavelet transform, Fourier-magnitude label, depth-interval-held-out validation}
 \end{englishabstract}
 
 \thesistableofcontents
@@ -66,10 +46,7 @@ Under a single-well \texttt{array\_03} depth-heldout setting, the EXP-008 FFT se
 \input{chapters/chapter5_discussion}
 \input{chapters/chapter6_conclusion}
 
-% TODO: 补齐真实文献条目后，可改用 \thesisbibliography{refs/references}。
-\begin{thesisthebibliography}
-% \bibitem{todo} TODO: 在正式提交前补充声波测井、CAST、CWT、EfficientNet、Grad-CAM 等真实文献。
-\end{thesisthebibliography}
+\thesisbibliography{refs/references}
 
 \thesisappendix
 \input{appendices/appendix_a_experiments}

@@ -1,96 +1,218 @@
-\chapter{旋转不变标签构建与模型方法}
+\chapter{面向方位失配的窜槽结构特征反演方法}
 
 \section{方法总体框架}
 
-本文方法框架由三部分组成：第一，基于 XSI 全波列构建 CWT 时频输入；第二，基于 CAST Zc 构建弱监督标签，包括一维 percentage label 和 FFT severity magnitude label；第三，采用 EfficientNetV2B0 回归模型学习 CWT 输入到标签空间的映射。该框架的核心不是直接恢复 CAST 的绝对方位图像，而是在方位失配条件下学习与窜槽结构相关的弱监督表征。
+本文方法由 XSI 输入构造、CAST 标签构造和多输出回归三部分组成。XSI 分支以第 3 接收环的 8 通道全波列为输入，依次进行深度对应核验、异常检查、前 400 点时间窗截取、1~kHz 高通处理和连续小波变换，得到 $150\times400\times8$ 的时频张量。CAST 分支先处理声阻抗矩阵中的有效值，再按项目阈值构造严重度图，沿方位维进行离散傅里叶变换，保留前 30 个幅值系数并执行 $\log(1+x)$ 压缩，得到 $70\times30$ 的结构标签。
 
-\placeholderfigure{XSI CWT 输入、CAST 标签构建、EfficientNet 回归、depth-heldout 评估和误差分析模块。}{本文方法总体框架图。该图展示本文从多源数据到弱监督回归模型的整体方法。}{fig:method-framework}
+训练阶段，模型将 XSI 时频张量映射为预测标签，以 Huber 损失计算预测与 CAST 派生标签之间的差异并更新参数。测试阶段不再更新模型，只计算 MAE、RMSE、$R^2$ 和相关系数，并与零值、训练集均值和训练集中位数基线比较。数据流如图 \ref{fig:method-pipeline} 所示。
 
-\section{1D percentage label 构建}
-
-一维 percentage label 是本文的 fallback 标签路线。其构建过程首先根据 CAST Zc 阈值生成二值窜槽掩膜：
-\begin{equation}
-  m(d,\theta)=
-  \begin{cases}
-  1, & Z_c(d,\theta)<2.5,\\
-  0, & Z_c(d,\theta)\ge 2.5.
-  \end{cases}
-  \label{eq:binary-mask}
-\end{equation}
-随后沿方位方向求平均，得到深度方向的一维窜槽比例：
-\begin{equation}
-  p(d)=\frac{1}{N_\theta}\sum_{\theta=1}^{N_\theta} m(d,\theta).
-  \label{eq:percentage-label}
-\end{equation}
-
-该标签的优点是含义直观，避免了 XSI 与 CAST 的方位点对点匹配；缺点是完全丢弃方位结构，并在标签稀疏时使 zero baseline 在 MAE 上具有较强竞争力。因此，本文将其用于 EXP-007 fallback/limitation comparison，而不作为最终方法创新主线。
-
-\placeholderfigure{CAST Zc 到二值窜槽掩膜，再沿方位平均得到一维百分比剖面。}{1D percentage label 构建流程图。该图说明一维标签如何降低方位对齐要求，同时也丢弃方位结构。}{fig:percentage-label}
-
-\section{severity map 构建}
-
-为了保留窜槽严重度而非仅使用二值掩膜，本文采用式 \ref{eq:severity} 将 CAST Zc 转换为 severity map。与二值标签相比，severity map 对低声阻抗异常区域赋予连续强度，有助于描述窜槽严重度和环向分布。
-
-\placeholderfigure{CAST Zc 图像、阈值函数和 severity map 的对应关系。}{severity map 构建示意图。该图说明 CAST 声阻抗如何转换为连续严重度标签。}{fig:severity-construction}
-
-\section{基于方位向 FFT magnitude 的旋转不变标签}
-
-对于每个深度位置 $d$，将 severity map 沿方位方向记为序列 $s_d(\theta)$。对其进行离散傅里叶变换：
-\begin{equation}
-  S_d(k)=\sum_{n=0}^{N_\theta-1}s_d(n)\exp\left(-j2\pi kn/N_\theta\right),
-  \label{eq:fft}
-\end{equation}
-并取幅度谱作为标签：
-\begin{equation}
-  y_d(k)=|S_d(k)|.
-  \label{eq:fft-mag}
-\end{equation}
-
-若方位序列发生循环平移，傅里叶变换的相位将发生变化，而幅度保持不变。因此，FFT magnitude 标签能够降低对绝对方位匹配的依赖。需要强调的是，该标签并不保留完整方位位置信息，也不能表述为完全解决方位失配问题。它的作用是在保留部分环向结构频率信息的同时，避免将不可靠相位作为监督目标。
-
-\placeholderfigure{同一环向 severity 序列旋转前后，FFT phase 改变而 magnitude 基本保持的示意。}{方位旋转对 FFT phase 与 magnitude 的影响示意图。该图用于说明 FFT magnitude 标签的旋转不变性来源。}{fig:fft-invariance}
-
-\placeholderfigure{CAST Zc、severity map、方位向 FFT、magnitude 截取和最终回归标签形状。}{severity map 到 FFT magnitude label 的构建流程图。该图对应 EXP-008 主线标签路线。}{fig:fft-label}
-
-\section{XSI 波形 CWT 时频图构建}
-
-声波全波列是典型非平稳信号。本文采用连续小波变换将每个通道的一维时间序列转换为二维时频图：
-\begin{equation}
-  W_x(a,b)=\frac{1}{\sqrt{a}}\int x(t)\psi^\ast\left(\frac{t-b}{a}\right)\mathrm{d}t,
-  \label{eq:cwt}
-\end{equation}
-其中 $a$ 为尺度，$b$ 为时间平移，$\psi$ 为小波基函数。参考材料和代码证据表明，CWT 输入可表述为多通道时频张量，用于 EfficientNet 图像回归模型。
-
-\placeholderfigure{多通道 XSI 波形分别进行 CWT，形成可输入卷积模型的时频张量。}{XSI 波形到 CWT 时频图的转换示意图。该图用于说明模型输入特征的构建方式。}{fig:cwt-construction}
-
-\section{CWT-EfficientNetV2B0 回归模型}
-
-本文采用 EfficientNetV2B0 作为 CWT 图像特征提取主干。由于 CWT 输入包含多个声波通道，模型前端可使用 $1\times1$ 卷积进行通道适配，随后经过 EfficientNetV2B0、全局平均池化、Dropout 和全连接回归头输出目标标签。对于 EXP-008，输出为 FFT severity magnitude 标签；对于 EXP-007，输出为一维 percentage profile 标签。
-
-\placeholderfigure{CWT 多通道输入、1x1 通道适配、EfficientNetV2B0、Global Average Pooling、Dropout、Dense 回归头。}{CWT-EfficientNetV2B0 回归模型结构图。该图用于说明本文主线模型结构，不作为性能证明。}{fig:efficientnet-architecture}
-
-\section{训练目标与评价指标}
-
-回归训练采用 Huber loss 或旧代码中对应的稳健回归损失设置。模型评价指标包括 MAE、RMSE、R2、Pearson 相关系数和 Spearman 相关系数。MAE 衡量平均绝对误差，RMSE 对较大误差更敏感，R2 衡量相对于均值基线的解释能力，Pearson 和 Spearman 分别衡量线性相关和排序相关。
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.96\textwidth]{figures/revision/method_pipeline.png}
+  \caption{XSI 时频输入、CAST 派生标签与回归验证流程}
+  \label{fig:method-pipeline}
+\end{figure}
 
 \begin{table}[htbp]
   \centering
-  \caption{模型训练与评价指标说明}
-  \label{tab:metrics}
-  \begin{tabular}{p{0.22\textwidth}p{0.26\textwidth}p{0.42\textwidth}}
+  \caption{方法各阶段的数据维度}
+  \label{tab:method-shapes}
+  \begin{tabular}{p{0.28\textwidth}p{0.25\textwidth}p{0.35\textwidth}}
     \toprule
-    指标 & 含义 & 本文使用方式 \\
+    阶段 & 输出维度 & 含义 \\
     \midrule
-    Huber loss & 稳健回归损失 & 用于训练过程，降低局部异常误差对优化的影响。 \\
-    MAE & 平均绝对误差 & 必须与 zero baseline 对比，EXP-008/EXP-007 均未优于 zero baseline MAE。 \\
-    RMSE & 均方根误差 & 对大误差更敏感，EXP-008/EXP-007 均优于 zero baseline RMSE。 \\
-    R2 & 决定系数 & EXP-008 测试 R2 为正，EXP-007 测试 R2 略为负。 \\
-    Pearson & 线性相关系数 & 用于描述预测与标签的线性相关，不单独等同于高精度。 \\
-    Spearman & 排序相关系数 & 用于描述排序一致性，不替代误差指标。 \\
+    单通道 XSI 时间窗 & $400$ & 4.00~ms 波形 \\
+    单通道 CWT & $150\times400$ & 频率/尺度与时间 \\
+    多通道 CWT & $150\times400\times8$ & 第 3 接收环的 8 个周向通道 \\
+    CAST 严重度窗口 & $70\times180$ & 深度窗口与周向采样 \\
+    一维占比标签 & $70$ & 各深度位置的异常方位占比 \\
+    FFT 幅值标签 & $70\times30$ & 各深度位置的低阶方位频谱幅值 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
+\section{一维窜槽占比标签}
+
+为分析标签维度与预测难度之间的关系，本文首先构建一维窜槽占比标签作为简化对照方案。对深度位置 $d$ 和第 $n$ 个 CAST 周向采样，定义阈值指示量
+\begin{equation}
+  b(d,n)=
+  \begin{cases}
+    1, & Z_c(d,n)<\tau,\\
+    0, & Z_c(d,n)\geq\tau,
+  \end{cases}
+  \qquad \tau=2.5 .
+  \label{eq:binary-cast}
+\end{equation}
+沿 $N_\theta=180$ 个周向采样求平均，并转换为百分数：
+\begin{equation}
+  p(d)=\frac{100}{N_\theta}\sum_{n=0}^{N_\theta-1} b(d,n).
+  \label{eq:percentage-label}
+\end{equation}
+因此 $p(d)\in[0,100]$，数值表示该深度位置低于项目阈值的方位占比。对 70 个深度位置排列后，标签为 $\mathbf{y}_{p}\in\mathbb{R}^{70}$。
+
+该标签有两个优点：一是物理解释直观，二是完全消除了周向起点差异。其代价同样明确：两个窜槽即使方位数量、连续性和角宽不同，只要异常像素占比相同，就会得到相同标签；它不能区分单个连续宽通道与多个离散窄异常。因此，一维占比标签用于建立低维回归对照，不承担本文的周向结构表达任务。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.88\textwidth]{figures/revision/percentage_label.png}
+  \caption{一维窜槽占比标签的构造过程}
+  \label{fig:percentage-label}
+\end{figure}
+
+\section{CAST 严重度表征}
+
+一维占比只记录阈值以下的方位数量，不区分低于阈值的程度。为保留异常幅值，本文定义
+\begin{equation}
+  S(d,n)=\max\left(0,\tau-Z_c(d,n)\right),\qquad \tau=2.5 .
+  \label{eq:severity-map}
+\end{equation}
+当 $Z_c\geq2.5$ 时，严重度截断为 0；当 $Z_c<2.5$ 时，$Z_c$ 越低，$S$ 越大。非负截断使后续频谱幅值只描述相对于项目阈值的低值偏离，避免阈值以上的数值以相反符号抵消异常。
+
+该定义是项目数据约定，不是由本文重新标定的通用阈值。CAST 声阻抗还受套管、井液、工具和反演处理影响\cite{Froelich1982CementEvaluation,Wang2016AcousticCementMethods}。因此，$S$ 表示“相对于阈值的 CAST 派生严重度”，不能解释为缺陷真实体积、渗流能力或绝对风险。尤其是数据中的少量负 $Z_c$ 值可能使式 \ref{eq:severity-map} 产生较大数值，其有效性需要在最终提交前由数据提供方确认。
+
+\section{方位向 FFT 幅值标签}
+
+\subsection{离散方位旋转与循环平移}
+
+对固定深度 $d$，CAST 严重度可写成长度 $N_\theta=180$ 的离散方位序列
+\begin{equation}
+  \mathbf{s}_d=\left[S(d,0),S(d,1),\ldots,S(d,N_\theta-1)\right].
+\end{equation}
+当同一物理周向结构因方位零点变化而旋转 $m$ 个采样时，在离散序列上表现为循环平移：
+\begin{equation}
+  S_m(d,n)=S\left(d,(n-m)\bmod N_\theta\right).
+  \label{eq:circular-shift}
+\end{equation}
+这里讨论的是一维周向序列的循环平移，不是一般二维图像旋转。
+
+\subsection{傅里叶平移性质}
+
+严重度序列的离散傅里叶变换为
+\begin{equation}
+  F_d(k)=\sum_{n=0}^{N_\theta-1}S(d,n)
+  \exp\left(-\mathrm{i}\frac{2\pi kn}{N_\theta}\right).
+  \label{eq:dft-severity}
+\end{equation}
+将式 \ref{eq:circular-shift} 代入可得
+\begin{equation}
+  F_{d,m}(k)=
+  \exp\left(-\mathrm{i}\frac{2\pi km}{N_\theta}\right)F_d(k).
+  \label{eq:dft-shift}
+\end{equation}
+平移因子模长为 1，故
+\begin{equation}
+  \left|F_{d,m}(k)\right|=\left|F_d(k)\right|.
+  \label{eq:magnitude-invariant}
+\end{equation}
+傅里叶描述子研究长期使用频域系数表达闭合轮廓及其变换性质\cite{Zahn1972FourierDescriptors,Persoon1977FourierDescriptors,Kuhl1982EllipticFourier}。本文不把二维轮廓旋转直接等同于测井方位问题，而是依据式 \ref{eq:dft-shift} 对离散方位序列的循环平移进行推导。
+
+\subsection{系数截取与标签维度}
+
+完整频谱包含 180 个复系数。本文取幅值、保留 $k=0,\ldots,29$ 的前 30 个系数，并进行
+\begin{equation}
+  Y(d,k)=\log\left(1+\left|F_d(k)\right|\right)
+  \label{eq:fft-label}
+\end{equation}
+变换。$\log(1+x)$ 用于压缩不同深度和系数之间的幅值范围，避免极大值主导损失。对 70 个深度位置排列后，标签张量为
+\begin{equation}
+  \mathbf{Y}\in\mathbb{R}^{70\times30}.
+\end{equation}
+
+$k=0$ 表示周向严重度总量；较低的非零阶系数描述较大尺度的周向起伏；高阶系数对应更细的周向变化。保留前 30 个系数是既有实验的数据维度选择，并非理论最优阶数。该表示具有循环平移不变性，却丢弃了傅里叶相位，因此不能恢复绝对方位，也不能区分所有可能的周向结构。本文把这种信息损失视为规避不可靠零点监督所付出的代价。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.90\textwidth]{figures/revision/fft_label.png}
+  \caption{CAST 严重度图到方位向 FFT 幅值标签的构造}
+  \label{fig:fft-label}
+\end{figure}
+
+\section{XSI 波形的连续小波时频表征}
+
+\subsection{预处理}
+
+对每个样本的 8 通道波形，首先执行有限值检查和深度对应，然后选取前 400 点。项目实现使用 4 阶、1~kHz 截止频率的零相位高通，以减弱低频漂移；训练时还对最前 30 个时间采样设置伪影掩膜，对应约 0.3~ms。该掩膜来自既有数据处理策略，用于降低激发近端伪影影响，不应解释为仪器在该时间段没有信号。
+
+训练数据增强包括小幅随机噪声和频率掩膜。增强只在训练集应用，验证集和测试集保持确定性处理。其作用是降低模型对局部频带或固定噪声模式的依赖，而不是生成新的物理样本。
+
+\subsection{CWT 定义与参数}
+
+对时间信号 $x(t)$，连续小波变换定义为
+\begin{equation}
+  W_x(a,b)=\frac{1}{\sqrt{|a|}}\int_{-\infty}^{+\infty}
+  x(t)\psi^*\left(\frac{t-b}{a}\right)\,\mathrm{d}t ,
+  \label{eq:cwt}
+\end{equation}
+其中 $a$ 为尺度，$b$ 为时间平移，$\psi^*$ 为母小波的复共轭。尺度改变时间和频率分辨率，平移保留局部到达位置。小波的时间--频率局部化和多分辨率理论见\cite{Mallat1989Multiresolution,Daubechies1990Wavelet,Torrence1998WaveletGuide}。
+
+本文采用复 Morlet 小波 \texttt{cmor1.5-1.0}，在 1--30~kHz 范围取约 150 个对数间隔尺度。复小波同时提供幅值与相位，本研究将幅值作为 CNN 输入。相较整体 FFT，CWT 可指出某一频率成分出现的时间，更适合包含多个瞬态到达的非平稳声波\cite{Tary2018TimeVaryingCWT,Saito1997WaveletAcoustic}。已有水泥评价研究也使用 CWT 将 VDL 波形转换为二维图像\cite{Abdollahian2024TransferCement}。
+
+对通道 $c$ 的离散波形计算 CWT 幅值并堆叠：
+\begin{equation}
+  \mathbf{X}(:,:,c)=\left|W_{x_c}\right|,\qquad c=1,\ldots,8,
+\end{equation}
+得到 $150\times400\times8$ 的模型输入。该表示增加了输入维度，但使网络能在统一坐标中处理时间、频率和接收通道之间的局部关系。
+
+\section{基于 EfficientNetV2B0 的回归模型}
+
+模型首先使用 $1\times1$ 卷积将 8 个 XSI 通道映射为 3 个学习通道，使输入维度与图像预训练骨干兼容。该映射不是固定复制，而是在训练中学习不同接收通道的线性组合。随后使用 EfficientNetV2B0 提取层级时频特征。EfficientNetV2 的结构设计兼顾训练速度和参数效率\cite{Tan2021EfficientNetV2}，本文只将其作为实现载体，不把网络结构本身作为创新。
+
+骨干输出经全局平均池化、Dropout 和全连接回归头映射到目标维度。主实验输出 2100 个数并重排为 $70\times30$；一维对照实验输出 70 个数。Dropout 比例为 0.5，输出层采用与非负标签一致的 ReLU 激活。模型结构如图 \ref{fig:model-architecture} 所示。
+
+\begin{figure}[htbp]
+  \centering
+  \includegraphics[width=0.92\textwidth]{figures/revision/model_architecture.png}
+  \caption{CWT--EfficientNetV2B0 多输出回归模型}
+  \label{fig:model-architecture}
+\end{figure}
+
+对真实标签 $y$ 和预测 $\hat y$，Huber 损失写为
+\begin{equation}
+  L_\delta(r)=
+  \begin{cases}
+    \frac{1}{2}r^2, & |r|\leq\delta,\\
+    \delta\left(|r|-\frac{1}{2}\delta\right), & |r|>\delta,
+  \end{cases}
+  \quad r=y-\hat y .
+  \label{eq:huber}
+\end{equation}
+该损失在小残差区域保持二次惩罚，在大残差区域转为线性增长，对少量大幅值误差比均方误差更稳健\cite{Huber1964Robust}。
+
+训练使用 Adam 优化器。Adam 根据梯度的一阶矩和二阶矩估计自适应调整更新步长\cite{Kingma2014Adam}。具体学习率、批量大小、最大训练轮数和早停设置在第 4 章给出。
+
+\section{评价指标与解释方法}
+
+\subsection{回归指标与基线}
+
+对 $M$ 个展平后的标签元素，平均绝对误差和均方根误差分别为
+\begin{align}
+  \mathrm{MAE} &= \frac{1}{M}\sum_{i=1}^{M}|y_i-\hat y_i|,\\
+  \mathrm{RMSE} &= \sqrt{\frac{1}{M}\sum_{i=1}^{M}(y_i-\hat y_i)^2}.
+\end{align}
+决定系数为
+\begin{equation}
+  R^2=1-\frac{\sum_i(y_i-\hat y_i)^2}
+  {\sum_i(y_i-\bar y)^2}.
+\end{equation}
+Pearson 系数描述线性相关，Spearman 系数描述秩相关。由于标签稀疏，本文同时比较零值基线、训练集均值基线和训练集中位数基线；任何“优于基线”的结论都必须指明具体指标。
+
+\subsection{Grad-CAM}
+
+设所选卷积层的第 $q$ 个特征图为 $A^q$，针对指定标量目标 $g(\hat{\mathbf{Y}})$，Grad-CAM 权重为
+\begin{equation}
+  \alpha_q=\frac{1}{UV}\sum_{u=1}^{U}\sum_{v=1}^{V}
+  \frac{\partial g}{\partial A^q_{uv}},
+\end{equation}
+响应图为
+\begin{equation}
+  L_{\mathrm{Grad-CAM}}=
+  \mathrm{ReLU}\left(\sum_q\alpha_q A^q\right).
+  \label{eq:gradcam}
+\end{equation}
+其原始方法使用目标输出对卷积特征图的梯度生成粗粒度响应区域\cite{Selvaraju2017GradCAM}。对 $70\times30$ 多输出回归，目标必须明确为某一深度--系数 $\hat Y(d,k)$，或预先定义的加权标量组合；不同目标会得到不同热图。热图上采样并叠加到 CWT 后，可辅助观察指定预测对哪些时间--频率区域敏感。
+
+Grad-CAM 只表示针对特定预测结果的梯度加权特征响应区域。它不能解释为模型权重，不能证明热区具有物理因果性，也不能单独证明模型预测正确。若图件无法核验模型、划分、checkpoint、目标输出和卷积层，本文不把该图作为主要实验的解释证据。
+
 \section{本章小结}
 
-本章给出了本文的标签构建和模型方法。1D percentage label 通过方位平均降低对绝对方位的依赖，但丢弃方位结构；FFT severity magnitude label 通过傅里叶幅度降低旋转影响，并保留一定环向结构频率信息，因此作为本文主线。模型部分采用 CWT-EfficientNetV2B0 回归框架，并使用 MAE、RMSE、R2 和相关系数进行综合评价。
+本章给出了从 XSI 波形到 CAST 派生标签的完整方法。简化的一维占比标签保留异常方位比例但丢弃周向结构；方位向 FFT 幅值标签利用离散循环平移只改变相位的性质，保留低阶结构幅值并放弃绝对方向。XSI 波形通过复 Morlet CWT 形成 $150\times400\times8$ 时频张量，再由 EfficientNetV2B0 回归至 $70\times30$ 标签。方法的有效性需要通过深度区间隔离实验、完整基线和误差结构共同判断。
