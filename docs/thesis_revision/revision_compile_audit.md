@@ -1,6 +1,28 @@
 # Revision compile audit
 
-## Environment
+## Confirmed-data correction validation
+
+- Date: 2026-07-14
+- Job name: `data_correction_validation`
+- Command: `C:\texlive\2026\bin\windows\latexmk.exe -r latexmkrc -jobname=data_correction_validation main.tex`
+- Status: success; latexmk reported all targets up to date after XeLaTeX and BibTeX convergence
+- Pages: 56
+- Undefined citations: 0
+- Undefined references: 0
+- Duplicate labels: 0
+- Missing figures: 0
+- BibTeX fatal errors: 0
+- Overfull boxes: 0
+- Underfull boxes: 2 nonfatal warnings
+- Other warning: unchanged XeCJK `CJKttdefault` warning from the thesis template
+
+The first attempt to expose TeX Live through a temporary `cmd.exe` PATH did not resolve `latexmk`; the successful run invoked the verified absolute executable path. No system environment variable was changed. The independent job name avoided the pre-existing locked `main.pdf`. All `data_correction_validation.*` products were scheduled for cleanup after log inspection and were not staged.
+
+## Earlier evidence-revision baseline
+
+The following entries preserve the initial 55-page evidence-revision compile audit that preceded this confirmed-data correction.
+
+### Environment
 
 - Date: 2026-07-14
 - Platform: Codex in WSL2, Windows TeX Live 2026
@@ -10,7 +32,7 @@
 
 The TeX Live binary directory was not present in the inherited Windows `PATH`. It was added only to the individual `cmd.exe` process; no system environment setting was changed.
 
-## Compile rounds
+### Compile rounds
 
 1. `latexmk -r latexmkrc main.tex` reached XeLaTeX but could not overwrite `main.pdf`, which was locked by another Windows process. The existing PDF was not closed, deleted, or overwritten.
 2. The same source was compiled with the isolated job name `revision_validation`. BibTeX exposed an unescaped underscore in the verified issue string `5_Supplement`.
@@ -25,7 +47,7 @@ pushd C:\Users\Administrator\Desktop\Hal\hal_azi_thesis\thesis_latex
 latexmk -r latexmkrc -jobname=revision_validation main.tex
 ```
 
-## Final result
+### Earlier result
 
 - Compile status: success
 - Validation PDF: 55 pages, A4, PDF 1.7
@@ -40,6 +62,6 @@ latexmk -r latexmkrc -jobname=revision_validation main.tex
 
 The two underfull warnings occur in front matter and a narrow table cell. They do not indicate clipped or overlapping content. No class-file change was made to suppress the XeCJK warning.
 
-## Cleanup
+### Cleanup
 
 The validation PDF and all auxiliary build files are build artifacts. They are excluded from Git and are removed with latexmk cleanup after the audit data have been recorded. The pre-existing locked `main.pdf` is not staged.

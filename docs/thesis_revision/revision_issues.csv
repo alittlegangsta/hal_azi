@@ -1,15 +1,16 @@
 priority,category,file_or_scope,issue,status,resolution,evidence
-P0,label validity,CAST-derived labels,The 2.5 acoustic-impedance threshold is a project convention rather than a verified universal physical boundary,open,Keep the wording as a project data convention and obtain author confirmation,project code and final report
-P0,data validity,CAST.mat,Fourteen finite negative Zc cells exist and the located code has no explicit invalid-value rule,open,Confirm upstream validity handling before final submission,MAT audit and label code
-P1,azimuth reference,orientation metadata,The physical reference of Relative Bearing and the CAST azimuth zero are not documented,open,Do not provide an absolute conversion formula and retain the rotation-invariant formulation,orientation MAT and project materials
-P1,XSI encoding,XSI raw waveforms,Values occur near apparent 24-bit extrema and no explicit saturation repair was found,open,Confirm acquisition encoding and preprocessing policy,MAT audit and processing code
-P1,XSI bandwidth,XSI instrument metadata,The tool paper does not establish the project's original analog response limits,open,Describe 1--30 kHz only as this study's CWT band,official tool paper and project configuration
+P0,label validity,CAST-derived labels,The identity and scope of the 2.5 threshold required confirmation,resolved,State that 2.5 is the project data provider's project-specific CAST interpretation convention and not a universal standard,user-confirmed project fact and historical label code
+P0,data validity,CAST.mat,Fourteen invalid negative Zc cells exist and historical code has no mask,resolved,All 14 values are outside 2732--4132 ft and zero negative cells enter the interpolated target grid or labels,CAST raw-position audit and commit 7ba021c
+P1,azimuth supervision,orientation metadata,A unique XSI-to-CAST absolute azimuth transform cannot be established,resolved_by_scope,Use no absolute-position supervision and state that FFT magnitude cannot recover absolute azimuth,user-confirmed project fact orientation MAT and DFT derivation
+P1,XSI encoding,XSI raw waveforms,Exact signed-24-bit endpoints occur and no dedicated repair exists,resolved_for_reporting,Record counts locations and direct high-pass handling without claiming waveform recovery,XSILMR03.mat and commit 7ba021c preprocessing
+P1,XSI bandwidth,XSI instrument metadata,The 1--30 kHz interval could be confused with instrument bandwidth,resolved,Describe 1--30 kHz only as the study CWT analysis band,user-confirmed project fact and project configuration
 P1,figure provenance,legacy Grad-CAM figures,Checkpoint target output convolutional layer and split linkage cannot be uniquely reconstructed,open,Exclude the figures from the thesis body,legacy plot directory and PPT audit
-P1,disclosure,cooperation background,Permission to publish the Halliburton name is not documented,open,Use an anonymized company description with a source TODO,project materials audit
-P2,CAST units,CAST.mat,Zc units are not encoded in the located data or report,open,Do not state a unit until formal documentation is supplied,MAT and PPT audit
-P2,CAST azimuth bins,CAST.mat,The 180 rows do not by themselves prove a full 360-degree scan or 2-degree spacing,open,State only the verified 180-bin dimension,MAT audit
+P1,disclosure,cooperation background,Permission to publish the Halliburton name is not documented,open,Use 项目数据提供方 or 某国际油田服务公司,project-material audit
+P2,CAST units,CAST.mat,The Zc unit should be checked as MRayl but is not explicit in MAT fields or inspected report text,open,Retain a TODO and do not present MRayl as confirmed,MAT field and PPT text audit
+P2,CAST azimuth zero,CAST and orientation metadata,The 180 points are confirmed as 2-degree full-circumference samples but their absolute zero is undocumented,open,Use relative circular indexing only,user-confirmed project fact and MAT audit
+P2,XSI clipping stage,XSI acquisition chain,The fixed endpoints are confirmed but the ADC versus later digital stage is unknown,open,Describe digital endpoint clipping without assigning the hardware stage,raw endpoint audit
 P3,front matter,thesis_latex/main.tex,Author adviser school major dates and classification fields remain TODO,open,Author must supply administrative metadata before submission,main.tex
-P3,compile,main.pdf,The direct output PDF was locked by another Windows process,resolved,Compiled the same source under the isolated revision_validation job name,latexmk round 1
-P3,bibliography,thesis_latex/refs/references.bib,An underscore in issue 5_Supplement caused a TeX math-mode error,resolved,Normalized the issue text to 5 Supplement,latexmk rounds 2 and 3
-P3,layout,chapter2_data_problem.tex,The data-overview table exceeded the line width by 5.31824 pt,resolved,Reduced table spacing locally,latexmk rounds 3 and 4
-P3,layout,final compile,Two underfull boxes and one undefined CJK monospaced-family warning remain,accepted,No clipping or overlap was reported and thesis-uestc.cls was not modified,revision_validation.log
+P3,compile,main.pdf,The direct output PDF was locked by another Windows process,resolved,Compile the same source under an isolated validation job name,latexmk audit
+P3,bibliography,thesis_latex/refs/references.bib,An underscore in issue 5_Supplement caused a TeX math-mode error,resolved,Normalized the issue text to 5 Supplement,prior latexmk audit
+P3,layout,chapter2_data_problem.tex,The data-overview table exceeded the line width by 5.31824 pt,resolved,Reduced table spacing locally,prior latexmk audit
+P3,layout,final compile,Two underfull boxes and one undefined CJK monospaced-family warning remain,accepted,No clipping or overlap was reported and thesis-uestc.cls was not modified,prior validation log
