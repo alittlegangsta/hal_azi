@@ -16,4 +16,4 @@ Source: `Report20251118.pptx`, 11 slides, SHA256 `a2992c8930067031df8bbf99398fcc
 | 10 | Grad-CAM examples with apparent 0.5--1 ms and 20--23 kHz responses | Candidate qualitative pilot illustration | Model run/checkpoint cannot be uniquely matched; not inserted |
 | 11 | Summary and engineering conclusions | Historical conclusion | Optimistic wording is not used as thesis evidence |
 
-The PPT is byte-identical to the archived `final_project_report.pptx`. It does not establish permission to disclose the cooperating company name.
+The PPT is byte-identical to the archived `final_project_report.pptx`. The PPT itself does not document disclosure permission; final project-participant confirmation dated 2026-07-15 authorizes the thesis to name Halliburton.

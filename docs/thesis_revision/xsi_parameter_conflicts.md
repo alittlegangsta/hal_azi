@@ -17,7 +17,7 @@ All 58,228,736 values in the eight full ring-03 waveform matrices are finite `in
 - `-8388608 = -2^23`: 3,443 occurrences in the full eight-channel matrices;
 - `8388607 = 2^23 - 1`: 2,298 occurrences in the full eight-channel matrices.
 
-These are the endpoints of a signed 24-bit range. Their exact repetition is evidence of digital range clipping. The available MAT fields and code do not identify whether clipping occurred in the ADC hardware or in an upstream digital stage, and no evidence identifies either endpoint as a missing-value code.
+These are the endpoints of a signed 24-bit range. They are reported as sparse acquisition saturation or digital clipping. The available MAT fields and code do not identify the exact acquisition stage, and no evidence identifies either endpoint as a missing-value code.
 
 Within the actual thesis input scope (2732--4132 ft, first 400 samples, 2,846 unique ring-03 depths), 156 endpoint values occur in 75 records:
 
@@ -42,7 +42,7 @@ The EXP-008 preprocessing path at `7ba021cfa6eacd148247258ee28b8527dbbc6c92` per
 3. casts the stacked filtered waveform to `float32`;
 4. computes CWT magnitudes.
 
-No explicit saturation mask, endpoint replacement, artificial `clip`, missing-value substitution, `nan_to_num`, or interpolation is applied to the waveform amplitudes. The filtered outputs are finite and no longer equal the exact integer endpoints, but linear filtering is not a reconstruction of the clipped waveform. The thesis therefore records endpoint clipping as an input-quality limitation without claiming that preprocessing repaired it.
+No explicit saturation mask, endpoint replacement, artificial `clip`, missing-value substitution, `nan_to_num`, or interpolation is applied to the waveform amplitudes. The filtered outputs are finite and no longer equal the exact integer endpoints, but linear filtering is not a reconstruction of the clipped waveform. Project review concluded that 156 endpoint samples across 75 input records are sufficiently sparse for their aggregate effect on the reported model results to be neglected. The thesis records this quality feature without claiming zero effect, waveform repair, retraining, or an ablation study.
 
 ## Parameter conflicts and resolutions
 
@@ -52,9 +52,9 @@ No explicit saturation mask, endpoint replacement, artificial `clip`, missing-va
 | 1--30 kHz | Study CWT band; not the raw instrument response |
 | 13 by 8 geometry | Tool geometry; model uses ring 03 only and has eight channels |
 | 100 kHz / 10 microseconds | Project sampling convention; 400 samples equal 4.00 ms |
-| Fixed extrema | Confirmed signed-24-bit endpoint clipping evidence; hardware stage remains unknown |
+| Fixed extrema | Confirmed sparse signed-24-bit acquisition saturation or digital clipping; aggregate result impact can be neglected |
 | NaN/Inf | None found in ring-03 raw waveform matrices; no special replacement path was used |
 
-## Remaining clarification
+## Reporting boundary
 
-The acquisition-system documentation is still needed to determine whether the fixed endpoints arose at the ADC or in a later digital stage. This distinction does not change the historical preprocessing facts or the frozen experiment metrics.
+Locating the exact clipping stage would require acquisition-system documentation, but this distinction is not needed for the thesis claim. The manuscript reports the observed signed-24-bit endpoint behavior, historical handling, counts, and bounded impact without attributing it to a specific hardware component.

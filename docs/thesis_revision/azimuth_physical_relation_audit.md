@@ -10,13 +10,13 @@ CAST contains 180 azimuth samples at 2-degree intervals, covering the full 360-d
 
 ## Inclination
 
-Within 2732--4132 ft, inclination ranges from 0.1349 to 2.2879 degrees, with mean 0.5218 degrees and median 0.4705 degrees. The interval is therefore near vertical overall. Inclination describes the magnitude of wellbore/tool-axis tilt; it does not encode rotation about that axis and cannot be substituted for an XSI-to-CAST rotation angle.
+Within 2732--4132 ft, inclination ranges from 0.1349 to 2.2879 degrees, with mean 0.5218 degrees and median 0.4705 degrees. The interval is therefore near vertical overall, where the borehole high-side reference is weakly stable. Inclination describes the magnitude of wellbore/tool-axis tilt; it does not encode rotation about that axis and cannot be substituted for an XSI-to-CAST rotation angle.
 
 ## Relative Bearing
 
 Within 2732--4132 ft, circular absolute step changes have median 5.156 degrees, 95th percentile 28.639 degrees, 99th percentile 64.611 degrees, and maximum 178.563 degrees. There are 111 steps greater than 45 degrees and 23 greater than 90 degrees. The changes are frequent and sometimes severe in the near-vertical main interval.
 
-The current evidence does not establish whether the stored reference is magnetic north, borehole high side, another tool face, or a processed convention. The project-confirmed behavior is sufficient to show that Relative Bearing is not a stable absolute correction angle in the main near-vertical interval.
+The stored field alone does not establish whether its reference is magnetic north, borehole high side, another tool face, or a processed convention. The project-confirmed behavior is sufficient to show that Relative Bearing is not a stable absolute correction angle in the main near-vertical interval.
 
 ## Depth sampling
 
@@ -37,4 +37,6 @@ Three observations jointly motivate the label design:
 2. Relative Bearing changes frequently and sharply in that interval;
 3. no metadata establish a unique XSI-to-CAST absolute azimuth-zero transform.
 
-The thesis therefore does not use absolute CAST azimuth position as supervision. It treats a rotation of the 180-point CAST sequence as a circular shift and uses the DFT magnitude to reduce sensitivity to that shift. The representation preserves the frequency composition of circumferential structure but discards phase and absolute azimuth position. It cannot recover the absolute channeling direction.
+The thesis therefore does not use absolute CAST azimuth position as supervision. It treats a rotation of the 180-point CAST sequence as a circular shift and uses the DFT magnitude to reduce sensitivity to that shift. This does not discard all azimuthal structure: it preserves the spatial-frequency composition of circumferential structure while discarding phase and absolute azimuth position. It cannot recover the absolute channeling direction.
+
+This relation is resolved for the thesis scope. A formal external reference definition would only be needed for future work that attempts absolute tool registration.

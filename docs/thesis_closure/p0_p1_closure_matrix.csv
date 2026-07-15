@@ -1,0 +1,10 @@
+priority,item,previous_status,final_status,thesis_resolution,evidence,remaining_boundary
+P0,CAST threshold identity,open,resolved,"Use 2.5 MRayl as Halliburton's project-specific CAST interpretation threshold; not universal",user-confirmed project fact,Threshold transferability to other wells is not claimed
+P0,CAST negative values,open,resolved,"Report 14 invalid negatives outside 2732--4132 ft; none entered target grid labels or model splits",raw-position and historical-code audit,Future expanded intervals require explicit validity control
+P1,XSI endpoint identity,open,resolved,"Report -8388608 and 8388607 as sparse signed-24-bit acquisition saturation or digital clipping",raw endpoint audit and user-confirmed project fact,Exact acquisition hardware stage is not assigned
+P1,XSI endpoint result impact,open,resolved,"Report 156 samples in 75 records and that aggregate result impact can be neglected; no repair or retraining claimed",user-confirmed project fact and preprocessing audit,Not equivalent to claiming zero effect
+P1,CAST acoustic-impedance unit,open,resolved,Use MRayl consistently,user-confirmed project fact,None for current thesis
+P1,CAST circumferential geometry,open,resolved,"State 180 points at exact 2-degree spacing over 360 degrees",user-confirmed project fact,Absolute image zero remains unavailable
+P1,cooperating-company disclosure,open,resolved,"Use 美国哈里伯顿公司/哈里伯顿公司 and Halliburton",user-confirmed project fact,No promotional ranking claim
+P1,absolute-azimuth recovery boundary,open,resolved_by_scope,"Use no absolute-position supervision; FFT magnitude preserves circumferential frequency composition but cannot recover absolute azimuth",orientation audit and DFT shift relation,Future absolute registration requires common reference metadata
+P1,Grad-CAM figure provenance,open,open,"Keep method principle but exclude candidate figures and final-model interpretation claims",branch code model files PPT and figure audit,Individual figure-to-checkpoint-run-depth-split chain remains incomplete

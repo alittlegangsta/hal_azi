@@ -1,37 +1,30 @@
-# Unresolved items after confirmed-data correction
+# Unresolved items after final fact correction
 
-Audit date: 2026-07-14
+Audit date: 2026-07-15
 
 ## P0 - affects correctness
 
-No open P0 item remains from the CAST threshold or negative-value questions.
+No P0 item remains open.
 
-Closed P0 items:
-
-1. **Threshold identity:** 2.5 is confirmed as the project convention used by the project data provider for CAST image interpretation. It is not a threshold proposed by this thesis and is not presented as a universal industry standard.
-2. **Negative-value impact:** all 14 negative `Zc` values are invalid physical values, but all lie outside 2732--4132 ft. Historical code did not mask them; nevertheless, none entered the target grid, severity map, one-dimensional label, FFT label, or training records used by the thesis.
+The CAST threshold identity, CAST unit, CAST negative-value impact, XSI endpoint identity, XSI endpoint impact, circumferential sampling interval, cooperating-company disclosure, and absolute-azimuth recovery boundary are all resolved from project-participant confirmation plus the existing data/code audit.
 
 ## P1 - affects the core argument
 
-Open P1 items:
+No unresolved factual item blocks the thesis's main method or reported metrics.
 
-1. Candidate Grad-CAM figures remain tied to the random-sample pilot output, but their exact checkpoint, target output, convolutional layer, and run cannot be uniquely recovered. They remain excluded from the thesis body.
-2. Permission to publish the cooperation company's name remains undocumented. The thesis uses “项目数据提供方” or “某国际油田服务公司”.
+One interpretability item remains open:
 
-Closed or bounded P1 items:
+1. **Grad-CAM figure provenance:** the candidate figures are only partially verified. Their generating code can be identified, including the `top_conv` layer and the sum of all regression outputs used as the scalar target, but an individual figure cannot be uniquely bound to the checkpoint state, training run, sample depth, and split used when it was generated. The figures remain excluded from the thesis body. This does not affect the prediction metrics or the main conclusions.
 
-1. **Azimuth supervision boundary:** the available data cannot establish a unique transform between XSI and CAST absolute azimuth zeros. The thesis now treats this as the confirmed problem boundary, uses no absolute-position supervision, and makes no absolute-direction recovery claim.
-2. **XSI endpoint values:** exact signed-24-bit endpoints are present. Historical preprocessing applies the high-pass filter without endpoint repair. The existence, counts, affected channels, and handling are now documented; only the hardware stage that produced the clipping remains unknown.
-3. **CWT band identity:** 1--30 kHz is confirmed as the study's CWT analysis band, not the instrument's original bandwidth.
+## P2 - affects completeness but not the current conclusions
 
-## P2 - affects completeness
+1. The formal external reference definitions of Relative Bearing and the CAST image zero are unavailable. The thesis does not infer an absolute conversion and does not use absolute-position supervision.
+2. The precise acquisition stage at which the signed-24-bit endpoint clipping occurred is not identified. The thesis reports the observable endpoint clipping without assigning it to a specific hardware stage.
+3. The XSI instrument's original analog transmit/receive bandwidth is not required by the analysis and is not claimed. The thesis reports only the confirmed 100 kHz sampling rate and the study's 1--30 kHz CWT band.
+4. Multi-well generalization and larger-sample validation remain future research rather than missing evidence for the bounded single-well conclusions.
 
-1. `Zc` should be checked specifically for the unit MRayl, but neither the MAT fields nor the inspected report text explicitly states the unit. The thesis retains a TODO and does not present MRayl as confirmed.
-2. The exact physical reference of `RelBearing` and the CAST azimuth-zero direction remain undocumented. This no longer blocks the method because the thesis explicitly avoids absolute azimuth supervision.
-3. The acquisition documentation does not locate the XSI endpoint clipping at the ADC versus a later digital stage.
-4. Detailed XSI analog frequency-response limits remain unavailable; the thesis states only the verified project sampling rate and study CWT band.
+## P3 - author-supplied presentation items
 
-## P3 - presentation
-
-1. Author, adviser, school, major, dates, and classification fields in `main.tex` remain author-supplied TODOs.
-2. Final figure numbering may change after manual typography review.
+1. Author, adviser, school, major, student number, classification fields, and dates in `main.tex` still require author input.
+2. The acknowledgement remains author supplied.
+3. Experiment one's complete optimizer and batch configuration is not stated because the available record is incomplete; its reported role remains limited to random-sample learnability validation.

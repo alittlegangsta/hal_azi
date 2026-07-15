@@ -14,9 +14,9 @@ All admitted entries have unique semantic keys and recorded metadata sources. Th
 
 ## Evidence and method
 
-The revision separates the 13-by-8 XSI receiver geometry from the eight-channel ring-03 subset used by the model. It distinguishes the 1024-point raw record from the 400-point, 4.00 ms preprocessing window and describes 1--30 kHz only as the CWT analysis band. Exact signed-24-bit endpoints occur 156 times in 75 input records within the study window; historical preprocessing applies the high-pass filter without endpoint repair.
+The revision separates the 13-by-8 XSI receiver geometry from the eight-channel ring-03 subset used by the model. It distinguishes the 1024-point raw record from the 400-point, 4.00 ms preprocessing window and describes 1--30 kHz only as the CWT analysis band. Exact signed-24-bit endpoints occur 156 times in 75 input records within the study window; historical preprocessing applies the high-pass filter without endpoint repair. Project review concluded that their aggregate effect on the reported results can be neglected, while the manuscript retains them as a data-quality feature.
 
-CAST is described as a 180-by-24750 acoustic-impedance matrix with 180 samples at 2-degree intervals over the full circumference. The 2.5 threshold is the project convention used by the project data provider, and CAST-derived labels are not treated as ground truth. Historical code did not mask the 14 invalid negative cells, but every negative cell is outside 2732--4132 ft and none entered a thesis label. The `Zc` unit remains to be confirmed specifically as MRayl from an original label or formal project source.
+CAST is described as a 180-by-24750 acoustic-impedance matrix in MRayl, with 180 samples at 2-degree intervals over the full circumference. The 2.5 MRayl threshold is Halliburton's project-specific interpretation convention, and CAST-derived labels are not treated as ground truth. Historical code did not mask the 14 invalid negative cells, but every negative cell is outside 2732--4132 ft and none entered a thesis label or model split.
 
 Relative Bearing has frequent circular jumps in the near-vertical target interval, whereas Inclination measures tilt magnitude and cannot be used as an azimuth correction. The available evidence does not define a unique XSI-to-CAST absolute azimuth transform. This establishes the physical motivation for a circular-shift-invariant Fourier-magnitude label while preserving the explicit loss of absolute direction.
 
@@ -28,7 +28,7 @@ Chapters 1--6, the abstracts, the experiment appendix, and the bibliography were
 2. 基于一维窜槽占比标签的回归对照实验
 3. 基于方位旋转不变 FFT 幅值标签的窜槽结构特征反演实验
 
-Six verified final depth-interval-held-out result figures were inserted. No Grad-CAM figure was inserted because the available candidate cannot be uniquely tied to the required model, checkpoint, target output, convolutional layer, and test split.
+Six verified final depth-interval-held-out result figures were inserted. No Grad-CAM figure was inserted. The generating route, `top_conv` layer, and aggregate-output target can be identified, but individual figures cannot be uniquely tied to the checkpoint state, run, sample depth, and split.
 
 Chapter 4 now reports validation and test metrics, training and early stopping, all simple baselines, coefficient-wise error, severity distribution, high-value underestimation, and the evidence boundary between random-sample pilot results and single-well depth-interval-held-out results.
 
