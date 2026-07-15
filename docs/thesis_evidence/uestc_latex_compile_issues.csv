@@ -1,0 +1,9 @@
+issue_id,category,severity,file_or_context,description,status,next_action
+UESTC-LATEX-001,must_fix_now,error,Windows TeX invoked from WSL UNC cwd,Direct Windows latexmk from WSL repo cwd failed with `main.w18` missing because cmd.exe cannot use UNC cwd,fixed,Use `cmd.exe /c 'pushd ... && C:\texlive\2026\bin\windows\latexmk.exe ...'`
+UESTC-LATEX-002,must_fix_now,warning,thesis_latex/chapters/chapter2_data_problem.tex,Long `depth_heldout_split_confirmed` texttt token caused overfull paragraph,fixed,Keep long audit status on its own centered line
+UESTC-LATEX-003,must_fix_now,warning,thesis_latex/chapters/chapter4_experiments.tex,EXP-006 baseline table caused large overfull hbox,fixed,Narrowed columns and reduced table column separation
+UESTC-LATEX-004,acceptable_for_draft,warning,thesis_latex/main.log,Several underfull hbox warnings remain in dense table/metric text,open,Polish line breaks and table layout during final typesetting
+UESTC-LATEX-005,acceptable_for_draft,warning,xeCJK/font setup,Unknown CJK family `\CJKttdefault` ignored,open,Optional: define CJK monospaced font if verbatim/code typography becomes important
+UESTC-LATEX-006,requires_real_bibliography,warning,thesis_latex/main.tex,Empty `thebibliography` environment,open,Add verified references to `refs/references.bib` and enable bibliography command
+UESTC-LATEX-007,requires_real_figure,content,thesis_latex/chapters/*.tex,All figures are placeholder boxes by design,open,Replace placeholders with manually redrawn figures
+UESTC-LATEX-008,requires_manual_content,content,thesis_latex/main.tex,Cover metadata and English abstract polish remain TODO,open,Fill author/student/advisor/school/major/date/classification/UDC and polish abstract

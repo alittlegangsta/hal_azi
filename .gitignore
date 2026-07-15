@@ -27,14 +27,18 @@ third_party/
 # Local literature full-text cache (open-access PDFs are never committed)
 docs/literature/fulltext_cache/
 
-# LaTeX build products
+# LaTeX build artifacts (scoped to the thesis project)
+thesis_latex/build/
 thesis_latex/*.aux
 thesis_latex/*.bbl
 thesis_latex/*.blg
 thesis_latex/*.fdb_latexmk
 thesis_latex/*.fls
 thesis_latex/*.log
+thesis_latex/*.lof
 thesis_latex/*.out
 thesis_latex/*.pdf
 thesis_latex/*.toc
 thesis_latex/*.xdv
+thesis_latex/*.lot
+thesis_latex/*.synctex.gz
